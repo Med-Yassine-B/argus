@@ -1,3 +1,5 @@
+import requests as req
+
 def calc(num1,num2,op):
         # Tipp: Auf Ifelse verzichten, wenn davon mehr als 3 Stück entstehen
         match op:
@@ -17,6 +19,8 @@ def calc(num1,num2,op):
                 return num1 % num2
             case '**': 
                 return num1 ** num2
+            case _:
+                return None
 
 def getNum():
     # Tipp: Bool-Werte müssen nicht in Klammern stehen
