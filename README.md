@@ -8,8 +8,9 @@ A growing Python project exploring currency conversion, exchange rate APIs, and 
 
 - Basic calculator (CLI-based)
 - Currency exchange rates via REST API
-- Input validation for user interaction
-- Support for multiple operations (+, -, *, /, %, **)
+- Currency conversion logic
+- Input validation and error handling
+- Support for multiple arithmetic operations
 
 ---
 
@@ -61,3 +62,6 @@ It is a learning environment to understand:
 - data processing
 - system design
 - building useful tools step by step
+
+## Status
+Currently under active development.

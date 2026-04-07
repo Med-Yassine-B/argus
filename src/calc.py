@@ -33,7 +33,7 @@ def getCurr():
             print("Bitt eine gültige Währung eingeben")
       
 def convert():
-    data = getRates
+    data = getRates()
 
 
 def calc(num1,num2,op):
