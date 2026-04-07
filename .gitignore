@@ -1,2 +1,13 @@
+# Python cache files
 __pycache__
+*.pyc
+
+# IDE settings
 .vscode/
+
+# Temporary files (exercise files)
+.temp/
+
+# Virtual environment
+.env/
+venv/
