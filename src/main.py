@@ -1,8 +1,4 @@
-import api_test as api
-
-def getRates():
-    data = api.data["conversion_rates"]
-    return data 
+from clients import exchangerate_client as api
 
 def getNum():
     # Tipp: Bool-Werte müssen nicht in Klammern stehen
@@ -24,16 +20,35 @@ def getOperator():
             print("Bitte erneut eingeben!")
 
 def getCurr():
-    data = getRates()
     while True:
-        resp = input("Welche Währung wollen Sie?")
-        if resp in data:
-            return resp
-        else:
-            print("Bitt eine gültige Währung eingeben")
+        resp1 = api.getResp("Welche erste Währung wollen Sie?")
+        resp2 = api.getResp("Welche zweite Währung wollen Sie?")
+
+        data = api.getRates(resp1, resp2)
+
+        match data['result']:
+            case 'success':
+                return data['conversion_rate'], resp1, resp2
+            case 'error':
+                check_error(data['error-type'])
+
+def check_error(err_type):
+    match err_type:
+        case 'unsupported-code' | 'malformed-request':
+            print("Ungültige Anfrage! Bitter versuchen Sie es später erneut.")
+        case 'invalid-key':
+            print("Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut.")
+        case 'inactive-account':
+            print("Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren.")
+        case 'quota-reached':
+            print("Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden.")
       
-def convert():
-    data = getRates()
+def convert(amount):
+    data = getCurr()
+    if data is not None:
+        return amount * data[0], data[1], data[2]
+    else:
+        return None
 
 
 def calc(num1,num2,op):
@@ -60,12 +75,12 @@ def calc(num1,num2,op):
 
 def displayConvert():
     while True:
-        # Tipp: Man muss nicht die Variable weiterreichen, die zum Speichern des Return-Values da ist
         amount = getNum()
-        from_curr = getCurr()
-        to_curr = getCurr()
-        result = convert(amount,from_curr,to_curr)
-        print(f"Wechelkurs von {from_curr} zu {to_curr} mit {amount} {from_curr} ergibt {result}")
+        result, resp1, resp2 = convert(amount)
+
+        if result is not None:
+            print (f"Der Wechselkurs von {resp1} zu {resp2} mit {amount} {resp1} ergibt {result} {resp2}")
+
         while True:
             repeat = input("Wollen Sie eine neue Berechnung ausführen? (y/n) ")
             match repeat:
@@ -101,7 +116,7 @@ def main():
     print(initConv)
     while True:
         print("Menü: \n(1) Calculator \n(2) Exchnage Rate \n(3) Exit")
-        option = input("Wählen Sie bitte eine Option aus")
+        option = input("Wählen Sie bitte eine Option aus ")
         match option:
             case '1':
                 displayCalc()
