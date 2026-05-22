@@ -60,25 +60,35 @@ def check_currency(question):
             return resp
         else:
             print("Ungültige Währung! Bitte erneut eingeben.")
-            return None
+            # return None
 
+"""
 def get_resp(question):
     while True:
         resp = check_currency(question)
         if resp is not None:
             return resp
+"""
 
-def get_curr():
+def get_conv_rate():
     while True:
-        resp1 = get_resp("Welche erste Währung wollen Sie?")
-        resp2 = get_resp("Welche zweite Währung wollen Sie?")
+        resp1 = check_currency("Welche erste Währung wollen Sie?")
+        resp2 = check_currency("Welche zweite Währung wollen Sie?")
 
         data = api.get_rates(resp1, resp2)
-      
+        if data is not None:
+            return {
+                "rate": data["conversion_rate"],
+                "from": resp1,
+                "to": resp2
+            }
+        else:
+            return None
+
 def convert(amount):
-    data = get_curr()
+    data = get_conv_rate()
     if data is not None:
-        return amount * data[0], data[1], data[2]
+        return amount * data["rate"], data["from"], data["to"]
     else:
         return None
 
@@ -112,16 +122,11 @@ def display_convert():
 
         if result is not None:
             print (f"Der Wechselkurs von {resp1} zu {resp2} mit {amount} {resp1} ergibt {result} {resp2}")
+        else:
+            print("Fehler bei der API-Anfrage! Bitte später erneut versuchen.")
 
-        while True:
-            repeat = input("Wollen Sie eine neue Berechnung ausführen? (y/n) ")
-            match repeat:
-                case 'y':
-                    break
-                case 'n':
-                    return
-                case _:
-                    print("Bitte 'y' oder 'n' eingeben!")
+        if return_to_menu() == 'y':
+            break
 
 def display_calc():
     num1 = 0
@@ -133,15 +138,19 @@ def display_calc():
         op = get_operator()
         result = calc(num1,num2,op)
         print(f"Berechnung: {num1} {op} {num2} = {result}")
-        while True:
-            repeat = input("Wollen Sie eine neue Berechnung ausführen? (y/n) ")
-            match repeat:
-                case 'y':
-                    break
-                case 'n':
-                    return
-                case _:
-                    print("Bitte 'y' oder 'n' eingeben!")
+
+    return_to_menu()
+
+def return_to_menu():
+    while True:
+        repeat = input("Wollen Sie zum Menü zurückkehren? (y/n) ")
+        match repeat:
+            case 'y':
+                return 'y'
+            case 'n':
+                return 'n'
+            case _:
+                print("Bitte 'y' oder 'n' eingeben!")
 
 def main():
     initConv = "Willkommen zum Calculator mit Wechselkurberechnung!"

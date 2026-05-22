@@ -5,32 +5,39 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 api_key = os.getenv("api_key")
 
-dict data = {
+data = {
     "result": "",
-    "error-type": ""
-    "conversion_rate": 0.0
+    "error-type": "",
+    "conversion_rate": None
 }
 
 def get_rates(curr1, curr2):
     url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{curr1}/{curr2}"
     try:
         resp = req.get(url, timeout=5)
-        resp = resp.json()
-        data['result'], data['conversion_rate'], data['error-type'] = resp['result'], resp['conversion_rate'], resp['error-type']
-    except requests.exceptions.Timeout:
+        resp.raise_for_status()
+        payload = resp.json()
+        
+    except req.exceptions.Timeout:
         print("API hat zu lange gebraucht.")
-    except requests.exceptions.ConnectionError:
+    except req.exceptions.ConnectionError:
         print("Keine Verbindung zur API.")
-    except requests.exceptions.RequestException as error:
+    except req.exceptions.RequestException as error:
         print(f"Request fehlgeschlagen: {error}")
     except ValueError:
         print("Fehler beim Verarbeiten der API-Antwort.")
     except KeyError:
         print("Unerwartete API-Antwortstruktur.")
-    except data['result'] == 'error':
-        check_error(data['error-type'])
     
-    return data
+    if payload.get("result") == "success":
+        data["result"] = "success"
+        data["conversion_rate"] = payload.get("conversion_rate")
+        return data
+    else:
+        data["result"] = "error"
+        data["error_type"] = payload.get("error-type")
+        check_error(data["error_type"])
+        return None
  
 
 def check_error(err_type):
