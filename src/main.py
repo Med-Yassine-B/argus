@@ -1,6 +1,39 @@
 from clients import exchangerate_client as api
 
-def getNum():
+VALID_CURRENCY_CODES = {
+    "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN",
+    "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL",
+    "BSD", "BTN", "BWP", "BYN", "BZD",
+    "CAD", "CDF", "CHF", "CLF", "CLP", "CNH", "CNY", "COP", "CRC", "CUP",
+    "CVE", "CZK",
+    "DJF", "DKK", "DOP", "DZD",
+    "EGP", "ERN", "ETB", "EUR",
+    "FJD", "FKP", "FOK",
+    "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD",
+    "HKD", "HNL", "HRK", "HTG", "HUF",
+    "IDR", "ILS", "IMP", "INR", "IQD", "ISK",
+    "JEP", "JMD", "JOD", "JPY",
+    "KES", "KGS", "KHR", "KID", "KMF", "KRW", "KWD", "KYD", "KZT",
+    "LAK", "LBP", "LKR", "LRD", "LSL", "LYD",
+    "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR",
+    "MWK", "MXN", "MYR", "MZN",
+    "NAD", "NGN", "NIO", "NOK", "NPR", "NZD",
+    "OMR",
+    "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG",
+    "QAR",
+    "RON", "RSD", "RUB", "RWF",
+    "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLE", "SOS", "SRD",
+    "SSP", "STN", "SYP", "SZL",
+    "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TVD", "TWD", "TZS",
+    "UAH", "UGX", "USD", "UYU", "UZS",
+    "VES", "VND", "VUV",
+    "WST",
+    "XAF", "XCD", "XDR", "XOF", "XPF",
+    "YER",
+    "ZAR", "ZMW", "ZWL",
+}
+
+def get_num():
     # Tipp: Bool-Werte müssen nicht in Klammern stehen
     while True:
         try:
@@ -9,7 +42,7 @@ def getNum():
         except ValueError:
             print("Bitte eine Zahl eingeben!!")
 
-def getOperator():
+def get_operator():
     # Tipp: Liste verwenden, wenn mehr als 2 Optionen für etwas besteht
     valid_ops = ['+', '-', '*', '/', '%', '**']
     while True:
@@ -19,32 +52,31 @@ def getOperator():
         else:
             print("Bitte erneut eingeben!")
 
-def getCurr():
+def check_currency(question):
     while True:
-        resp1 = api.getResp("Welche erste Währung wollen Sie?")
-        resp2 = api.getResp("Welche zweite Währung wollen Sie?")
+        resp = input(question)
+        resp = resp.strip().upper()
+        if resp in VALID_CURRENCY_CODES:
+            return resp
+        else:
+            print("Ungültige Währung! Bitte erneut eingeben.")
+            return None
 
-        data = api.getRates(resp1, resp2)
+def get_resp(question):
+    while True:
+        resp = check_currency(question)
+        if resp is not None:
+            return resp
 
-        match data['result']:
-            case 'success':
-                return data['conversion_rate'], resp1, resp2
-            case 'error':
-                check_error(data['error-type'])
+def get_curr():
+    while True:
+        resp1 = get_resp("Welche erste Währung wollen Sie?")
+        resp2 = get_resp("Welche zweite Währung wollen Sie?")
 
-def check_error(err_type):
-    match err_type:
-        case 'unsupported-code' | 'malformed-request':
-            print("Ungültige Anfrage! Bitter versuchen Sie es später erneut.")
-        case 'invalid-key':
-            print("Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut.")
-        case 'inactive-account':
-            print("Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren.")
-        case 'quota-reached':
-            print("Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden.")
+        data = api.get_rates(resp1, resp2)
       
 def convert(amount):
-    data = getCurr()
+    data = get_curr()
     if data is not None:
         return amount * data[0], data[1], data[2]
     else:
@@ -73,9 +105,9 @@ def calc(num1,num2,op):
             case _:
                 return None
 
-def displayConvert():
+def display_convert():
     while True:
-        amount = getNum()
+        amount = get_num()
         result, resp1, resp2 = convert(amount)
 
         if result is not None:
@@ -91,14 +123,14 @@ def displayConvert():
                 case _:
                     print("Bitte 'y' oder 'n' eingeben!")
 
-def displayCalc():
+def display_calc():
     num1 = 0
     num2 = 0
     while True:
         # Tipp: Man muss nicht die Variable weiterreichen, die zum Speichern des Return-Values da ist
-        num1 = getNum()
-        num2 = getNum()
-        op = getOperator()
+        num1 = get_num()
+        num2 = get_num()
+        op = get_operator()
         result = calc(num1,num2,op)
         print(f"Berechnung: {num1} {op} {num2} = {result}")
         while True:
@@ -119,9 +151,9 @@ def main():
         option = input("Wählen Sie bitte eine Option aus ")
         match option:
             case '1':
-                displayCalc()
+                display_calc()
             case '2':
-                displayConvert()
+                display_convert()
             case '3':
                 break
             case _:
