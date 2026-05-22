@@ -5,14 +5,14 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 api_key = os.getenv("api_key")
 
-data = {
-    "result": "",
-    "error-type": "",
-    "conversion_rate": None
-}
-
 def get_rates(curr1, curr2):
     url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{curr1}/{curr2}"
+    data = {
+        "result": "",
+        "error_type": "",
+        "conversion_rate": None
+    }
+    
     try:
         resp = req.get(url, timeout=5)
         resp.raise_for_status()
@@ -20,14 +20,19 @@ def get_rates(curr1, curr2):
         
     except req.exceptions.Timeout:
         print("API hat zu lange gebraucht.")
+        return None
     except req.exceptions.ConnectionError:
         print("Keine Verbindung zur API.")
+        return None
     except req.exceptions.RequestException as error:
         print(f"Request fehlgeschlagen: {error}")
+        return None
     except ValueError:
         print("Fehler beim Verarbeiten der API-Antwort.")
+        return None
     except KeyError:
         print("Unerwartete API-Antwortstruktur.")
+        return None
     
     if payload.get("result") == "success":
         data["result"] = "success"
@@ -35,7 +40,7 @@ def get_rates(curr1, curr2):
         return data
     else:
         data["result"] = "error"
-        data["error_type"] = payload.get("error-type")
+        data["error_type"] = payload.get("error_type")
         check_error(data["error_type"])
         return None
  

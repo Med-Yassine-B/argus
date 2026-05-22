@@ -121,7 +121,7 @@ def display_convert():
         result, resp1, resp2 = convert(amount)
 
         if result is not None:
-            print (f"Der Wechselkurs von {resp1} zu {resp2} mit {amount} {resp1} ergibt {result} {resp2}")
+            print (f"Der Wechselkurs von {resp1} zu {resp2} mit {amount} {resp1} ergibt {result:,.2f} {resp2}")
         else:
             print("Fehler bei der API-Anfrage! Bitte später erneut versuchen.")
 
