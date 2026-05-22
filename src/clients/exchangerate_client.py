@@ -2,68 +2,47 @@ import requests as req
 import os
 from dotenv import load_dotenv, find_dotenv
 
-VALID_CURRENCY_CODES = {
-    "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN",
-    "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL",
-    "BSD", "BTN", "BWP", "BYN", "BZD",
-    "CAD", "CDF", "CHF", "CLF", "CLP", "CNH", "CNY", "COP", "CRC", "CUP",
-    "CVE", "CZK",
-    "DJF", "DKK", "DOP", "DZD",
-    "EGP", "ERN", "ETB", "EUR",
-    "FJD", "FKP", "FOK",
-    "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD",
-    "HKD", "HNL", "HRK", "HTG", "HUF",
-    "IDR", "ILS", "IMP", "INR", "IQD", "ISK",
-    "JEP", "JMD", "JOD", "JPY",
-    "KES", "KGS", "KHR", "KID", "KMF", "KRW", "KWD", "KYD", "KZT",
-    "LAK", "LBP", "LKR", "LRD", "LSL", "LYD",
-    "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR",
-    "MWK", "MXN", "MYR", "MZN",
-    "NAD", "NGN", "NIO", "NOK", "NPR", "NZD",
-    "OMR",
-    "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG",
-    "QAR",
-    "RON", "RSD", "RUB", "RWF",
-    "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLE", "SOS", "SRD",
-    "SSP", "STN", "SYP", "SZL",
-    "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TVD", "TWD", "TZS",
-    "UAH", "UGX", "USD", "UYU", "UZS",
-    "VES", "VND", "VUV",
-    "WST",
-    "XAF", "XCD", "XDR", "XOF", "XPF",
-    "YER",
-    "ZAR", "ZMW", "ZWL",
-}
-
-def check_currency(question):
-    while True:
-        resp = input(question)
-        resp = resp.strip().upper()
-        if resp in VALID_CURRENCY_CODES:
-            return resp
-        else:
-            print("Ungültige Währung! Bitte erneut eingeben.")
-            return None
-
-def getResp(question):
-    while True:
-        resp = check_currency(question)
-        if resp is not None:
-            return resp
-
 load_dotenv(find_dotenv())
 api_key = os.getenv("api_key")
 
-curr1 = ""
-curr2 = ""
+dict data = {
+    "result": "",
+    "error-type": ""
+    "conversion_rate": 0.0
+}
 
-
-def getRates(curr1, curr2):
+def get_rates(curr1, curr2):
     url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{curr1}/{curr2}"
-    resp = req.get(url)
-    data = resp.json()
+    try:
+        resp = req.get(url, timeout=5)
+        resp = resp.json()
+        data['result'], data['conversion_rate'], data['error-type'] = resp['result'], resp['conversion_rate'], resp['error-type']
+    except requests.exceptions.Timeout:
+        print("API hat zu lange gebraucht.")
+    except requests.exceptions.ConnectionError:
+        print("Keine Verbindung zur API.")
+    except requests.exceptions.RequestException as error:
+        print(f"Request fehlgeschlagen: {error}")
+    except ValueError:
+        print("Fehler beim Verarbeiten der API-Antwort.")
+    except KeyError:
+        print("Unerwartete API-Antwortstruktur.")
+    except data['result'] == 'error':
+        check_error(data['error-type'])
+    
     return data
+ 
+
+def check_error(err_type):
+    match err_type:
+        case 'unsupported-code' | 'malformed-request':
+            print("Ungültige Anfrage! Bitter versuchen Sie es später erneut.")
+        case 'invalid-key':
+            print("Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut.")
+        case 'inactive-account':
+            print("Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren.")
+        case 'quota-reached':
+            print("Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden.")
 
 # Testen, ob die API funktioniert
-#data = getRates("EUR", "USD")
-print("API funktioniert! Hier ein Beispiel für die Umrechnung von EUR zu USD:")
+#data = get_rates("EUR", "USD")
