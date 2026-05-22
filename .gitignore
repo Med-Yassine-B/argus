@@ -6,7 +6,7 @@ __pycache__
 .vscode/
 
 # Temporary files (exercise files)
-.temp/
+temp/
 
 # Virtual environment
 .env
