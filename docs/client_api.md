@@ -24,10 +24,10 @@ Beispiel
 # Beispielaufruf
 data = get_rates("EUR", "USD")
 if data is not None and data.get("result") == "success":
-	rate = data["conversion_rate"]
-	# weiterverarbeiten
+    rate = data["conversion_rate"]
+    # weiterverarbeiten
 else:
-	# Fehlerbehandlung (siehe Konsolenausgaben)
+    # Fehlerbehandlung (siehe Konsolenausgaben)
 ```
 
 Hinweis: Der Client liefert ein vereinfachtes, rohes Dictionary zurück; die Aufbereitung für Anzeige oder weitere Logik erfolgt in der aufrufenden Anwendung.
