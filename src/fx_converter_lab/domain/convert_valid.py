@@ -31,8 +31,13 @@ VALID_CURRENCY_CODES = {
     "ZAR", "ZMW", "ZWL",
 }
 
+VALID_OPS = {'+', '-', '*', '/', '%', '**'}
+
 def normalize_input_string(input:str) -> str:
     return input.strip().upper()
 
 def is_valid_curr_code(code:str) -> bool:
     return code in VALID_CURRENCY_CODES
+
+def is_valid_op(op:str) -> bool:
+    return op in VALID_OPS
