@@ -2,6 +2,7 @@
 __pycache__
 .pytest_cache
 *.pyc
+/src/fx_converter_lab.egg-info
 
 # IDE settings
 .vscode/

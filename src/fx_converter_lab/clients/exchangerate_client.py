@@ -22,6 +22,7 @@ def get_rates(curr1, curr2):
         return None
     except req.exceptions.RequestException as error:
         print(f"Request fehlgeschlagen: {error}")
+        # Request fehlgeschlagen: 403 Client Error: Forbidden for url: https://v6.exchangerate-api.com/v6/None/pair/EUR/USD -> sollte nicht gezeigt werden!!!
         return None
     except ValueError:
         print("Fehler beim Verarbeiten der API-Antwort.")

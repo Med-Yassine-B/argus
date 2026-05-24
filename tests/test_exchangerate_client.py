@@ -1,7 +1,7 @@
 import pytest
 import requests as req
 from unittest.mock import Mock
-from src.clients.exchangerate_client import *
+from fx_converter_lab.clients.exchangerate_client import *
 
 def test_check_currency_timeout(monkeypatch):
     def test_get_resp(url, timeout):

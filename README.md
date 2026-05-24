@@ -16,8 +16,20 @@ A growing Python project exploring currency conversion, exchange rate APIs, and 
 
 ## Project Structure
 
-- `src/` – main application logic
-- `temp/` – experiments and early learning code (not part of final system)
+```text
+docs/
+src/ 
+  fx_converter_lab/
+    cli/
+    clients/
+    services/
+    domain/
+    config.py
+    main.py
+tests/
+pyproject.toml
+README.md
+```
 
 ---
 
