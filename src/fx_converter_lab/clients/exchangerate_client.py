@@ -1,12 +1,8 @@
 import requests as req
-import os
-from dotenv import load_dotenv, find_dotenv
-
-load_dotenv(find_dotenv())
-api_key = os.getenv("api_key")
+from fx_converter_lab.config import (EXCHANGE_RATE_BASE_URL ,EXCHANGE_RATE_API_KEY,REQUEST_TIMEOUT_SECONDS)
 
 def get_rates(curr1, curr2):
-    url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{curr1}/{curr2}"
+    url = f"{EXCHANGE_RATE_BASE_URL}/{EXCHANGE_RATE_API_KEY}/pair/{curr1}/{curr2}"
     data = {
         "result": "",
         "error_type": "",
@@ -14,7 +10,7 @@ def get_rates(curr1, curr2):
     }
     
     try:
-        resp = req.get(url, timeout=5)
+        resp = req.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
         resp.raise_for_status()
         payload = resp.json()
         
@@ -26,6 +22,7 @@ def get_rates(curr1, curr2):
         return None
     except req.exceptions.RequestException as error:
         print(f"Request fehlgeschlagen: {error}")
+        # Request fehlgeschlagen: 403 Client Error: Forbidden for url: https://v6.exchangerate-api.com/v6/None/pair/EUR/USD -> sollte nicht gezeigt werden!!!
         return None
     except ValueError:
         print("Fehler beim Verarbeiten der API-Antwort.")

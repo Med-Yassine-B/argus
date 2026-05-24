@@ -1,6 +1,8 @@
 # Python cache files
 __pycache__
+.pytest_cache
 *.pyc
+/src/fx_converter_lab.egg-info
 
 # IDE settings
 .vscode/
@@ -10,5 +12,3 @@ temp/
 
 # Virtual environment
 .env
-.env/
-venv/
