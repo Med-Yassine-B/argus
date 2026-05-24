@@ -5,7 +5,7 @@ def check_currency(question):
     while True:
         resp = normalize_input_string(input(question))
 
-        if is_valid_curr_code:
+        if is_valid_curr_code(resp):
             return resp
         
         print("Ungültige Währung! Bitte erneut eingeben.")
