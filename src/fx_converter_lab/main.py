@@ -1,37 +1,7 @@
-from clients import exchangerate_client as api
+from fx_converter_lab.clients import exchangerate_client as ex_client
+from fx_converter_lab.domain.currency import normalize_input_string,is_valid_curr_code
 
-VALID_CURRENCY_CODES = {
-    "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN",
-    "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL",
-    "BSD", "BTN", "BWP", "BYN", "BZD",
-    "CAD", "CDF", "CHF", "CLF", "CLP", "CNH", "CNY", "COP", "CRC", "CUP",
-    "CVE", "CZK",
-    "DJF", "DKK", "DOP", "DZD",
-    "EGP", "ERN", "ETB", "EUR",
-    "FJD", "FKP", "FOK",
-    "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD",
-    "HKD", "HNL", "HRK", "HTG", "HUF",
-    "IDR", "ILS", "IMP", "INR", "IQD", "ISK",
-    "JEP", "JMD", "JOD", "JPY",
-    "KES", "KGS", "KHR", "KID", "KMF", "KRW", "KWD", "KYD", "KZT",
-    "LAK", "LBP", "LKR", "LRD", "LSL", "LYD",
-    "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR",
-    "MWK", "MXN", "MYR", "MZN",
-    "NAD", "NGN", "NIO", "NOK", "NPR", "NZD",
-    "OMR",
-    "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG",
-    "QAR",
-    "RON", "RSD", "RUB", "RWF",
-    "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLE", "SOS", "SRD",
-    "SSP", "STN", "SYP", "SZL",
-    "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TVD", "TWD", "TZS",
-    "UAH", "UGX", "USD", "UYU", "UZS",
-    "VES", "VND", "VUV",
-    "WST",
-    "XAF", "XCD", "XDR", "XOF", "XPF",
-    "YER",
-    "ZAR", "ZMW", "ZWL",
-}
+
 
 def get_num():
     # Tipp: Bool-Werte müssen nicht in Klammern stehen
@@ -54,36 +24,28 @@ def get_operator():
 
 def check_currency(question):
     while True:
-        resp = input(question)
-        resp = resp.strip().upper()
-        if resp in VALID_CURRENCY_CODES:
-            return resp
-        else:
-            print("Ungültige Währung! Bitte erneut eingeben.")
-            # return None
+        resp = normalize_input_string(input(question))
 
-"""
-def get_resp(question):
-    while True:
-        resp = check_currency(question)
-        if resp is not None:
+        if is_valid_curr_code:
             return resp
-"""
+        
+        print("Ungültige Währung! Bitte erneut eingeben.")
+
 
 def get_conv_rate():
-    while True:
-        resp1 = check_currency("Welche erste Währung wollen Sie?")
-        resp2 = check_currency("Welche zweite Währung wollen Sie?")
+    resp1 = check_currency("Welche erste Währung wollen Sie?")
+    resp2 = check_currency("Welche zweite Währung wollen Sie?")
 
-        data = api.get_rates(resp1, resp2)
-        if data is not None:
-            return {
-                "rate": data["conversion_rate"],
-                "from": resp1,
-                "to": resp2
-            }
-        else:
-            return None
+    data = ex_client.get_rates(resp1, resp2)
+        
+    if data is None:
+        return None
+        
+    return {
+        "rate": data["conversion_rate"],
+        "from": resp1,
+        "to": resp2
+    }
 
 def convert(amount):
     data = get_conv_rate()
