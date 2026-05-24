@@ -1,5 +1,5 @@
-from fx_converter_lab.service.conversion_service import convert
-from fx_converter_lab.service.calculator_service import get_num,get_op,calc
+from fx_converter_lab.services.conversion_service import convert
+from fx_converter_lab.services.calculator_service import get_num,get_op,calc
 
 
 def display_convert() -> None:
