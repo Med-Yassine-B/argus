@@ -1,9 +1,10 @@
-from fx_converter_lab.cli.interface import dev_interface
-from fx_converter_lab.gui.app import root
+# from fx_converter_lab.cli.interface import dev_interface
+from fx_converter_lab.gui.app import app
 
 def main():
-    dev_interface()
-    root
+
+    #dev_interface()
+    app()
 
 main()
 
