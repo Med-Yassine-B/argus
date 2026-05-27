@@ -1,40 +1,66 @@
 import tkinter as tk
 
+def show_menu():
+    menu_frame.pack(side="right", expand=True, fill="both")
+    app_frame.pack_forget()
+
+def show_calc():
+    conv_frame.pack_forget()
+    menu_frame.pack_forget()
+
+    app_frame.pack()
+    sidebar.pack(side="top",fill="x")
+    content.pack(side="top", expand=True, fill="both")
+    calc_frame.pack()
+
+def show_conv():
+    calc_frame.pack_forget()
+    menu_frame.pack_forget()
+
+    app_frame.pack()
+    sidebar.pack(side="top")
+    content.pack(side="bottom", expand=True, fill="both")
+    conv_frame.pack()
+
 root = tk.Tk()
 root.title("FX-Converter Lab")
 root.geometry("500x400") # Width x Length
 
-content = tk.Frame(root)
-content.pack(side="right", expand=True, fill="both")
+menu_frame = tk.Frame(root)
+app_frame = tk.Frame(root)
 
-menu_frame = tk.Frame(content)
+sidebar = tk.Frame(app_frame)
+content = tk.Frame(app_frame)
+
 conv_frame = tk.Frame(content)
 calc_frame = tk.Frame(content)
 
-sidebar_calc = tk.Frame(calc_frame,width=160, bg="lightgray")
-sidebar_calc.pack(side="top", fill="y")
-sidebar_conv = tk.Frame(conv_frame,width=160, bg="lightgray")
-sidebar_conv.pack(side="top", fill="y")
+menu_label = tk.Label(menu_frame, text="Menu", font=("Arial", 20))
+calc_label = tk.Label(calc_frame, text="Calculator", font=("Arial", 20))
+conv_label = tk.Label(conv_frame, text="Converter", font=("Arial", 20))
 
-for frame in (menu_frame, calc_frame, conv_frame):
-    frame.grid(row=0, column=0, sticky="nsew")
+menu_label.pack(pady=20)
+calc_label.pack(pady=20)
+conv_label.pack(pady=20)
 
-content.grid_rowconfigure(0, weight=1)
-content.grid_columnconfigure(0, weight=1)
+from_menu_calc = tk.Button(menu_frame, text="Calculator",command=show_calc)
+from_menu_conv = tk.Button(menu_frame, text="Converter",command=show_conv)
 
-def show_frame(Frame):
-    Frame.tkraise()
+from_menu_calc.pack(fill="x", padx=100, pady=10)
+from_menu_conv.pack(fill="x", padx=100, pady=10)
 
-tk.Label(menu_frame, text="Menu", font=("Arial", 20)).pack(pady=20)
-tk.Label(calc_frame, text="Calculator", font=("Arial", 20)).pack(pady=20)
-tk.Label(conv_frame, text="Converter", font=("Arial", 20)).pack(pady=20)
+from_sidebar_calc = tk.Button(sidebar, text="Calculator",command=show_calc)
+from_sidebar_conv = tk.Button(sidebar, text="Converter",command=show_conv)
+return_menu = tk.Button(sidebar, text="Back to menu",command=show_menu)
 
-button_conv = tk.Button(menu_frame, text="Converter",command=lambda: show_frame(conv_frame)).pack(fill="x", padx=10, pady=10)
-button_calc = tk.Button(menu_frame, text="Calculator",command=lambda: show_frame(calc_frame)).pack(fill="x", padx=10, pady=10)
+from_sidebar_calc.pack(side="left")
+from_sidebar_conv.pack(side="left")
+return_menu.pack(side="left")
 
-show_frame(menu_frame)
+show_menu()
 
 # Immer zum Ende - Tkiniter soll zuerst alle Elemente bekommen
-root.mainloop()
+def app():
+    root.mainloop()
 
 
