@@ -1,12 +1,19 @@
 import tkinter as tk
+from fx_converter_lab.services.calculator_service import calc, check_num, check_op
 
 def show_menu():
     menu_frame.pack(side="right", expand=True, fill="both")
     app_frame.pack_forget()
+    num1.delete("0",tk.END)
+    num2.delete("0",tk.END)
+    op_e.delete("0",tk.END)
 
 def show_calc():
     conv_frame.grid_forget()
     menu_frame.pack_forget()
+    num1.delete("0",tk.END)
+    num2.delete("0",tk.END)
+    op_e.delete("0",tk.END)
 
     app_frame.pack()
     sidebar.pack(side="top",fill="x")
@@ -16,6 +23,9 @@ def show_calc():
 def show_conv():
     calc_frame.grid_forget()
     menu_frame.pack_forget()
+    num1.delete("0",tk.END)
+    num2.delete("0",tk.END)
+    op_e.delete("0",tk.END)
 
     app_frame.pack()
     sidebar.pack(side="top")
@@ -23,7 +33,25 @@ def show_conv():
     conv_frame.grid()
 
 def act_calculate():
-    result_label.config(text="Button clicked")
+    value1 = num1.get()
+    value1 = check_num(value1)
+    value2 = num2.get()
+    value2 = check_num(value2)
+    op = op_e.get()
+    if value1 is None:
+        result_label.config(text="Bitte eine gültige Zahl für 'Number 1' eingeben")
+        return 
+    if value2 is None:
+        result_label.config(text="Bitte eine gültige Zahl für 'Number 2' eingeben")     
+        return
+    if check_op(op) is False:
+        result_label.config(text="Bitte eine gültige Operation für 'Operation' eingeben")  
+        return
+    result = calc(value1,value2,op)
+    if result is None:
+        result_label.config(text="Division durch 0 nicht möglich")  
+        return
+    result_label.config(text=f"{value1} {op} {value2} = {result}")
 
 # Window
 root = tk.Tk()
@@ -62,11 +90,13 @@ result_label.grid(column=1,row=5)
 # Entries
 num1 = tk.Entry(calc_frame)
 num2 = tk.Entry(calc_frame)
-op = tk.Entry(calc_frame)
+op_e = tk.Entry(calc_frame)
 
 num1.grid(pady=5,column=1,row=1)
 num2.grid(pady=5,column=1,row=2)
-op.grid(pady=5,column=1,row=3)
+op_e.grid(pady=5,column=1,row=3)
+
+num1.focus()
 
 # Buttons
 
