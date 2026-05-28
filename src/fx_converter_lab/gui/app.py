@@ -2,7 +2,7 @@ import tkinter as tk
 from fx_converter_lab.services.calculator_service import calc, check_num, check_op
 from fx_converter_lab.services.conversion_service import convert,check_currency
 
-def show_menu():
+def show_menu() -> None:
     menu_frame.pack(side="right", expand=True, fill="both")
     app_frame.pack_forget()
     for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
@@ -10,7 +10,7 @@ def show_menu():
     result_calc_label.config(text='')
     result_conv_label.config(text='')
 
-def show_calc():
+def show_calc() -> None:
     conv_frame.grid_forget()
     menu_frame.pack_forget()
     for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
@@ -36,7 +36,7 @@ def show_conv():
     content.pack(side="bottom", expand=True, fill="both")
     conv_frame.grid()
 
-def act_calculate():
+def act_calculate() -> None:
     resp1 = num1.get()
     resp1 = check_num(resp1)
     resp2 = num2.get()
@@ -57,7 +57,7 @@ def act_calculate():
         return
     result_calc_label.config(text=f"{resp1} {op} {resp2} = {result}")
 
-def act_convert():
+def act_convert() -> None:
     resp1 = check_currency(curr1.get())
     resp2 = check_currency(curr2.get())
     amount = check_num(amount_e.get())
@@ -77,7 +77,7 @@ def act_convert():
     result = response
     result_conv_label.config(text=f"The exchange rate from {resp1} to {resp2} for {amount} {resp1} is {result} {resp2}")
 
-def app():
+def app() -> None:
     root.mainloop()
 
 # Window
