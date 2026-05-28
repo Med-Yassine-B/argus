@@ -1,11 +1,19 @@
-from fx_converter_lab.services.conversion_service import convert
 from fx_converter_lab.services.calculator_service import get_num,get_op,calc
+from fx_converter_lab.services.conversion_service import convert,check_currency
 
 
 def display_convert() -> None:
     while True:
         amount = get_num()
-        response = convert(amount)
+        resp1 = check_currency(input("Welche erste Währung wollen Sie?"))
+        if resp1 is None:
+            print("Ungültige Währung! Bitte erneut eingeben.")
+            continue
+        resp2 = check_currency(input("Welche zweite Währung wollen Sie?"))
+        if resp1 is None:
+            print("Ungültige Währung! Bitte erneut eingeben.")
+            continue
+        response = convert(amount,resp1,resp2)
 
         if response is not None:
             result, resp1, resp2 = response
