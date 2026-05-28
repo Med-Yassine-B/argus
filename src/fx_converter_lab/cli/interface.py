@@ -1,42 +1,64 @@
-from fx_converter_lab.services.calculator_service import get_num,get_op,calc
+from fx_converter_lab.services.calculator_service import check_num,check_op,calc
 from fx_converter_lab.services.conversion_service import convert,check_currency
 
 
 def display_convert() -> None:
     while True:
-        amount = get_num()
-        resp1 = check_currency(input("Which first currency would you like?"))
+        amount = check_num(input("Amount: "))
+        if amount is None:
+            print("Please enter a valid amount in the 'Amount' field.")
+            continue
+        break
+    while True:
+        resp1 = check_currency(input("First currency: "))
         if resp1 is None:
             print("Unvalid currency! Please enter again.")
             continue
-        resp2 = check_currency(input("Which second currency would you like??"))
-        if resp1 is None:
+        break
+    while True:
+        resp2 = check_currency(input("Second currency: "))
+        if resp2 is None:
             print("Unvalid currency! Please enter again..")
             continue
+        break
+    while True:
         response = convert(amount,resp1,resp2)
         if response is None:
             print("Error with the API request! Please try again later.")
             continue
+        break
         
-        result = response
-        print (f"The exchange rate from {resp1} to {resp2} for {amount} {resp1} is {result} {resp2}")
-            
-
-        if return_to_menu() == 'y':
-            break
+    result = response
+    print (f"The exchange rate from {resp1} to {resp2} for {amount} {resp1} is {result} {resp2}")
+        
+    if return_to_menu() == 'y':
+        return
 
 def display_calc() -> None:
-    num1 = 0
-    num2 = 0
     while True:
-        num1 = get_num()
-        num2 = get_num()
-        op = get_op()
-        result = calc(num1,num2,op)
-        print(f"Berechnung: {num1} {op} {num2} = {result}")
+        num1 = check_num(input("First number: "))
+        if num1 is None:
+            print("Please enter again!")
+            continue
+        break
+    while True:
+        num2 = check_num(input("Second number: "))
+        if num2 is None:
+            print("Please enter again!")
+            continue
+        break
+    while True:
+        op = input("Which operation do you wanna apply? (+,-,*,/,%,**) ")
+        if check_op(op) is False:
+            print("Please enter again!")
+            continue
+        break
         
-        if return_to_menu() == 'y':
-            break
+    result = calc(num1,num2,op)
+    print(f"Berechnung: {num1} {op} {num2} = {result}")
+        
+    if return_to_menu() == 'y':
+        return
 
 def return_to_menu() -> str:
     while True:

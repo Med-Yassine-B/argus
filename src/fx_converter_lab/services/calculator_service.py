@@ -1,14 +1,5 @@
 from fx_converter_lab.domain.convert_valid import is_valid_op
 
-def get_num() -> float | None:
-    # Tipp: Bool-Werte müssen nicht in Klammern stehen
-    while True:
-        try:
-            num = float(input("Gib die Zahl ein:"))
-            return num 
-        except ValueError:
-            print("Bitte eine Zahl eingeben!")
-
 def check_num(value:str) -> float | None:
     while True:
         try:
@@ -16,15 +7,6 @@ def check_num(value:str) -> float | None:
             return num
         except ValueError:
             return None
-
-def get_op() -> str | None:
-    # Tipp: Liste verwenden, wenn mehr als 2 Optionen für etwas besteht
-    while True:
-        op = input("Welche Rechenoperation wollen Sie anwenden? (+,-,*,/,%,**) ")
-        if is_valid_op(op):
-            return op
-        else:
-            print("Bitte erneut eingeben!")
 
 def check_op(op:str) -> bool:
     # Tipp: Liste verwenden, wenn mehr als 2 Optionen für etwas besteht
