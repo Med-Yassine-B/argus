@@ -1,34 +1,25 @@
 from fx_converter_lab.clients import exchangerate_client as ex_client
 from fx_converter_lab.domain.convert_valid import normalize_input_string,is_valid_curr_code
 
-def check_currency(question):
-    while True:
-        resp = normalize_input_string(input(question))
+def check_currency(question:str) -> str | None:
+    resp = normalize_input_string(question)
 
-        if is_valid_curr_code(resp):
-            return resp
-        
-        print("Ungültige Währung! Bitte erneut eingeben.")
+    if is_valid_curr_code(resp):
+        return resp
+    
+    return None
 
-
-def get_conv_rate():
-    resp1 = check_currency("Welche erste Währung wollen Sie?")
-    resp2 = check_currency("Welche zweite Währung wollen Sie?")
-
+def get_conv_rate(resp1:str,resp2:str) -> float | None:
     data = ex_client.get_rates(resp1, resp2)
         
     if data is None:
         return None
         
-    return {
-        "rate": data["conversion_rate"],
-        "from": resp1,
-        "to": resp2
-    }
+    return float(data["conversion_rate"])
 
-def convert(amount):
-    data = get_conv_rate()
+def convert(amount:float,resp1:str,resp2:str) -> float | None:
+    data = get_conv_rate(resp1,resp2)
     if data is not None:
-        return amount * data["rate"], data["from"], data["to"]
+        return amount * data
     else:
         return None

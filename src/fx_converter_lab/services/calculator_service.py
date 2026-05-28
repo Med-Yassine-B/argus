@@ -1,25 +1,22 @@
 from fx_converter_lab.domain.convert_valid import is_valid_op
 
-def get_num():
-    # Tipp: Bool-Werte müssen nicht in Klammern stehen
+def check_num(value:str) -> float | None:
     while True:
         try:
-            num = float(input("Gib die Zahl ein:"))
-            return num 
+            num = float(value)
+            return num
         except ValueError:
-            print("Bitte eine Zahl eingeben!!")
+            return None
 
-def get_op():
+def check_op(op:str) -> bool:
     # Tipp: Liste verwenden, wenn mehr als 2 Optionen für etwas besteht
-    while True:
-        op = input("Welche Rechenoperation wollen Sie anwenden? (+,-,*,/,%,**) ")
-        if is_valid_op:
-            return op
-        else:
-            print("Bitte erneut eingeben!")
+    if is_valid_op(op):
+        return True
+    else:
+        return False
 
 
-def calc(num1,num2,op):
+def calc(num1:float,num2:float,op:str) -> float | None:
         # Tipp: Auf Ifelse verzichten, wenn davon mehr als 3 Stück entstehen
         match op:
             case '+':
@@ -32,7 +29,6 @@ def calc(num1,num2,op):
                 try:
                     return num1 / num2
                 except ZeroDivisionError:
-                    print("Divison durch null nicht möglich!")
                     return None
             case '%': 
                 return num1 % num2
