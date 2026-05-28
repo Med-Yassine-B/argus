@@ -6,11 +6,10 @@ A growing Python project exploring currency conversion, exchange rate APIs, and 
 
 ## Current Features
 
-- CLI-based calculator
-- Currency exchange rates via REST API
-- Currency conversion logic
+- Calculator (GUI and CLI)
+- Currency conversion using live exchange rates (REST API)
 - Input validation and error handling
-- Support for multiple arithmetic operations
+- Basic arithmetic operations (+, -, *, /, %, **)
 
 ---
 
@@ -22,6 +21,7 @@ src/
   fx_converter_lab/
     cli/
     clients/
+    gui/
     services/
     domain/
     config.py
@@ -30,6 +30,13 @@ tests/
 pyproject.toml
 README.md
 ```
+
+## User Interfaces
+
+The project exposes two interfaces:
+
+- **GUI:** A user-friendly Tkinter desktop app providing Calculator and Currency Converter modes. Implementation: `src/fx_converter_lab/gui/app.py`. See [docs/gui.md](docs/gui.md) for developer details.
+- **CLI:** A command-line interface for faster, developer-oriented interaction with the same features (`src/fx_converter_lab/cli/interface.py`). The CLI is useful for development and quick testing but is not a separate dev tool yet.
 
 ---
 
