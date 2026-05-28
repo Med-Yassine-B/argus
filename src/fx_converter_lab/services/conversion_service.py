@@ -15,15 +15,11 @@ def get_conv_rate(resp1,resp2):
     if data is None:
         return None
         
-    return {
-        "rate": data["conversion_rate"],
-        "from": resp1,
-        "to": resp2
-    }
+    return data["conversion_rate"]
 
 def convert(amount,resp1,resp2):
     data = get_conv_rate(resp1,resp2)
     if data is not None:
-        return amount * data["rate"], data["from"], data["to"]
+        return amount * data
     else:
         return None
