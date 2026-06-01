@@ -16,27 +16,30 @@ The project is evolving from a simple currency converter into a larger financial
 
 The selected UI technology should support this long-term direction without creating unnecessary complexity.
 
+The research is not only about choosing a GUI framework.  
+It is also about choosing an application direction that can grow from a local learning project into a small financial data and analytics platform.
+
 ---
 
 # GUI / Frontend Comparison
 
 ## Data & Analytics Focus
 
-| Technology | Strengths                                                                                      | Weaknesses                                                              | Fit for Project |
-| ---------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------- |
-| Streamlit  | Extremely fast prototyping, very popular in Data Science, easy ML demos                        | Less flexible for larger applications, architecture can become limiting | Good            |
-| Dash       | Strong analytics and dashboard ecosystem, widely used in finance and BI contexts               | More complex than Streamlit, dashboard-focused                          | Very Good       |
-| Panel      | Designed for data exploration and analytical workflows, integrates well with Pandas and Plotly | Smaller community and ecosystem                                         | Very Good       |
+| Technology | Strengths | Weaknesses | Fit for Project |
+| ---------- | --------- | ---------- | --------------- |
+| Streamlit | Extremely fast prototyping, very popular in Data Science, easy ML and data app demos | Less flexible for larger application structures, architecture can become limiting | Good |
+| Dash | Strong analytics and dashboard ecosystem, widely used for analytical web apps and finance/BI-style dashboards | More complex than Streamlit, dashboard-focused, less suitable as the whole application platform | Very Good |
+| Panel | Designed for data exploration and analytical workflows, integrates well with the PyData ecosystem, supports dashboards and complex applications | Smaller community and ecosystem than Streamlit/Dash | Very Good |
 
 ## General Application Focus
 
-| Technology | Strengths                                                                          | Weaknesses                                                 | Fit for Project |
-| ---------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------- | --------------- |
-| NiceGUI    | Python-first, FastAPI-based, supports dashboards, APIs and multi-page applications | Smaller ecosystem than major frontend frameworks           | Excellent       |
-| Reflex     | Modern architecture, scalable web apps                                             | More frontend complexity and abstraction                   | Good            |
-| Anvil      | Fast development, many built-in features                                           | Less transparent architecture, more platform-oriented      | Medium          |
-| PySide6    | Powerful desktop applications, professional UI capabilities                        | Higher learning curve, desktop-focused architecture        | Medium          |
-| Tkinter    | Simple, built into Python, useful for learning GUI basics                          | Outdated for larger analytics platforms and web deployment | Low (long-term) |
+| Technology | Strengths | Weaknesses | Fit for Project |
+| ---------- | --------- | ---------- | --------------- |
+| NiceGUI | Python-first, browser-based UI, FastAPI-based, supports dashboards, APIs, routing and multi-page applications | Smaller ecosystem than major frontend frameworks | Excellent |
+| Reflex | Modern architecture, scalable web apps | More frontend complexity and abstraction | Good |
+| Anvil | Fast development, many built-in features | Less transparent architecture, more platform-oriented | Medium |
+| PySide6 | Powerful desktop applications, professional UI capabilities | Higher learning curve, desktop-focused architecture, less aligned with web/dashboard/cloud direction | Good technically, Medium strategically |
+| Tkinter | Simple, built into Python, useful for learning GUI basics | Outdated for larger analytics platforms and web deployment | Learning phase only |
 
 ---
 
@@ -72,6 +75,40 @@ Conclusion:
 
 Tkinter is useful as a learning step and prototype phase, but should not become the long-term platform architecture.
 
+Tkinter should be finished for the current GUI prototype ticket, but future UI development should move toward NiceGUI.
+
+---
+
+# PySide6 Evaluation
+
+PySide6 is a strong option for professional desktop applications.
+
+It is technically more powerful than Tkinter and suitable for serious desktop software with:
+
+* advanced widgets
+* complex layouts
+* professional desktop UI patterns
+* larger local applications
+
+However, PySide6 introduces a different type of complexity:
+
+* Qt concepts
+* signals and slots
+* widget hierarchies
+* layout management
+* desktop-specific UI architecture
+
+This is not necessarily too difficult, but it would cost additional learning time.
+
+For this project, the main direction is not desktop software engineering.  
+The project is moving toward data engineering, analytics, dashboards, APIs, ETL, ML and future cloud deployment.
+
+Conclusion:
+
+PySide6 is technically strong, but not the best strategic next step for this project right now.
+
+NiceGUI fits the project direction better because it connects UI work with web apps, dashboards, APIs and future deployment.
+
 ---
 
 # Recommended Project Structure
@@ -91,87 +128,3 @@ src/
      │
      ├─ tkinter_legacy/
      └─ nicegui/
-```
-
-Long-term direction:
-
-```text
-CLI
- ↓
-Tkinter Prototype
- ↓
-NiceGUI Dashboard
- ↓
-Analytics Platform
- ↓
-ETL + ML + Connectors
-```
-
-NiceGUI becomes the main UI layer.
-
-Plotly, Pandas and analytics modules remain independent from the UI implementation.
-
----
-
-# Recommended Technology Direction
-
-## Primary Choice
-
-### NiceGUI
-
-Reasons:
-
-* Python-first workflow
-* built on FastAPI
-* easy transition into APIs and web services
-* suitable for dashboards and analytics tools
-* supports future deployment and scaling
-* aligns with data engineering and AI-oriented goals
-
-NiceGUI is currently the best balance between:
-
-* learning value
-* development speed
-* long-term scalability
-
-## Secondary Future Addition
-
-### Panel
-
-Panel can later be integrated for:
-
-* research dashboards
-* advanced analytics views
-* experimentation environments
-* data exploration interfaces
-
-This makes NiceGUI the platform layer and Panel the analytics layer.
-
----
-
-# Concrete Next Steps
-
-1. Finish current Tkinter prototype ticket.
-2. Keep business logic separated from UI code.
-3. Create a new research branch for NiceGUI exploration.
-4. Build a minimal NiceGUI dashboard:
-
-   * currency conversion
-   * API request
-   * result display
-5. Add a simple Plotly chart.
-6. Reuse existing service layer instead of rewriting logic.
-7. Evaluate deployment with Docker after the first dashboard prototype.
-8. Investigate Panel integration after analytics features are introduced.
-
----
-
-# Final Recommendation
-
-Use Tkinter as a temporary learning and prototype step.
-
-Adopt NiceGUI as the primary UI architecture for future development.
-
-Introduce Panel later if the project grows into a stronger analytics and research platform.
-
-Avoid committing to PySide6, Reflex or Anvil for now because they provide less direct value for the project's current direction and learning goals.
