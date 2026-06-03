@@ -1,6 +1,7 @@
 import tkinter as tk
-from fx_converter_lab.services.calculator_service import calc, check_num, check_op
+from fx_converter_lab.services.calculator_service import calc, check_op
 from fx_converter_lab.services.conversion_service import convert,check_currency
+from fx_converter_lab.domain.validation import parse_amount
 
 def show_menu() -> None:
     menu_frame.pack(side="right", expand=True, fill="both")
@@ -38,9 +39,9 @@ def show_conv():
 
 def act_calculate() -> None:
     resp1 = num1.get()
-    resp1 = check_num(resp1)
+    resp1 = parse_amount(resp1)
     resp2 = num2.get()
-    resp2 = check_num(resp2)
+    resp2 = parse_amount(resp2)
     op = op_e.get()
     if resp1 is None:
         result_calc_label.config(text="Please enter a valid number for 'Number 1'.")
@@ -60,7 +61,7 @@ def act_calculate() -> None:
 def act_convert() -> None:
     resp1 = check_currency(curr1.get())
     resp2 = check_currency(curr2.get())
-    amount = check_num(amount_e.get())
+    amount = parse_amount(amount_e.get())
     if resp1 is None:
         result_conv_label.config(text="Please enter a valid currency for 'Currency 1'")
         return 

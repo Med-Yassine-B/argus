@@ -1,10 +1,11 @@
-from fx_converter_lab.services.calculator_service import check_num,check_op,calc
+from fx_converter_lab.services.calculator_service import check_op,calc
 from fx_converter_lab.services.conversion_service import convert,check_currency
+from fx_converter_lab.domain.validation import parse_amount
 
 
 def display_convert() -> None:
     while True:
-        amount = check_num(input("Amount: "))
+        amount = parse_amount(input("Amount: "))
         if amount is None:
             print("Please enter a valid amount in the 'Amount' field.")
             continue
@@ -36,13 +37,13 @@ def display_convert() -> None:
 
 def display_calc() -> None:
     while True:
-        num1 = check_num(input("First number: "))
+        num1 = parse_amount(input("First number: "))
         if num1 is None:
             print("Please enter again!")
             continue
         break
     while True:
-        num2 = check_num(input("Second number: "))
+        num2 = parse_amount(input("Second number: "))
         if num2 is None:
             print("Please enter again!")
             continue
