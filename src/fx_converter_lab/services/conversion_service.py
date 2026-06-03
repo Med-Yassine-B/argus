@@ -1,5 +1,5 @@
 from fx_converter_lab.clients import exchangerate_client as ex_client
-from fx_converter_lab.domain.convert_valid import normalize_input_string,is_valid_curr_code
+from fx_converter_lab.domain.validation import normalize_input_string,is_valid_curr_code
 
 def check_currency(question:str) -> str | None:
     resp = normalize_input_string(question)
