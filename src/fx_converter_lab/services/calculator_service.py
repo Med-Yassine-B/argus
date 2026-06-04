@@ -1,12 +1,4 @@
-from fx_converter_lab.domain.convert_valid import is_valid_op
-
-def check_num(value:str) -> float | None:
-    while True:
-        try:
-            num = float(value)
-            return num
-        except ValueError:
-            return None
+from fx_converter_lab.domain.validation import is_valid_op
 
 def check_op(op:str) -> bool:
     # Tipp: Liste verwenden, wenn mehr als 2 Optionen für etwas besteht

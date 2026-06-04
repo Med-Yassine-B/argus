@@ -36,6 +36,12 @@ VALID_OPS = {'+', '-', '*', '/', '%', '**'}
 def normalize_input_string(input:str) -> str:
     return input.strip().upper()
 
+def parse_amount(value: str) -> float | None:
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
 def is_valid_curr_code(code:str) -> bool:
     return code in VALID_CURRENCY_CODES
 
