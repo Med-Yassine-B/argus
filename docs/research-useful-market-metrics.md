@@ -93,3 +93,92 @@ Exchange Rate
 * **Priority**: Sprint 1
 
 ---
+
+## Recommended Sprint 1 Visualization
+
+All Sprint 1 metrics can be displayed within a single dashboard.
+
+### Main Chart
+
+```text
+Exchange Rate Line
++
+Rolling Average Line
++
+Min / Max Markers
+```
+
+### Secondary Chart
+
+```text
+Daily Percentage Change
+```
+
+---
+
+## Movement & Performance Metrics (Sprint 2)
+
+These metrics provide additional context about exchange-rate behavior.
+
+---
+
+### Absolute Change
+
+* **What it is**: Measures the raw difference between two exchange-rate values.
+* **Why it is useful**:
+  * Easy to understand
+  * Complements percentage change
+  * Useful for quick comparisons
+* **Chart Idea**: Additional line or metric card.
+* **Priority**: Sprint 2
+
+---
+
+### Cumulative Return
+
+* **What it is**: Measures the total percentage change between the first and last value in the selected period.
+* **Why it is useful**:
+  * Shows overall performance
+  * Easy for users to interpret
+  * Useful for comparing periods
+* **Chart Idea**: Performance chart from a normalized starting value.
+* **Priority**: Sprint 2
+
+---
+
+### Strongest / Weakest Movement
+
+* **What it is**: Identifies the largest positive and largest negative daily movement.
+* **Why it is useful**:
+  * Highlights important events
+  * Creates interesting insights for users
+  * Easy to calculate
+* **Chart Idea**: Top / Bottom movement table or bar chart.
+* **Priority**: Sprint 2
+
+---
+
+## Risk & Volatility Metrics (Sprint 2)
+
+These metrics introduce more finance-oriented analysis concepts.
+
+---
+
+### Volatility (Standard Deviation)
+
+* **What it is**: Measures how strongly exchange rates fluctuate over time. Volatility is commonly approximated using the standard deviation of returns and is one of the most widely used measures of financial risk.
+* **Why it is useful**:
+  * Introduces risk analysis
+  * Provides a bridge toward forecasting and ML
+  * Commonly used in financial analytics
+* **Chart Idea**: Rolling volatility chart.
+
+```text
+Date
+↓
+Volatility
+```
+
+* **Priority**: Sprint 2
+
+---
