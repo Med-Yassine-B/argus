@@ -21,9 +21,9 @@ It is also about choosing an application direction that can grow from a local le
 
 ---
 
-# GUI / Frontend Comparison
+## GUI / Frontend Comparison
 
-## Data & Analytics Focus
+### Data & Analytics Focus
 
 | Technology | Strengths | Weaknesses | Fit for Project |
 | ---------- | --------- | ---------- | --------------- |
@@ -31,7 +31,7 @@ It is also about choosing an application direction that can grow from a local le
 | Dash | Strong analytics and dashboard ecosystem, widely used for analytical web apps and finance/BI-style dashboards | More complex than Streamlit, dashboard-focused, less suitable as the whole application platform | Very Good |
 | Panel | Designed for data exploration and analytical workflows, integrates well with the PyData ecosystem, supports dashboards and complex applications | Smaller community and ecosystem than Streamlit/Dash | Very Good |
 
-## General Application Focus
+### General Application Focus
 
 | Technology | Strengths | Weaknesses | Fit for Project |
 | ---------- | --------- | ---------- | --------------- |
@@ -43,7 +43,7 @@ It is also about choosing an application direction that can grow from a local le
 
 ---
 
-# Tkinter Evaluation
+## Tkinter Evaluation
 
 Tkinter is suitable for:
 
@@ -79,7 +79,7 @@ Tkinter should be finished for the current GUI prototype ticket, but future UI d
 
 ---
 
-# PySide6 Evaluation
+## PySide6 Evaluation
 
 PySide6 is a strong option for professional desktop applications.
 
@@ -111,7 +111,7 @@ NiceGUI fits the project direction better because it connects UI work with web a
 
 ---
 
-# Recommended Project Structure
+## Recommended Project Structure
 
 ```text
 src/
