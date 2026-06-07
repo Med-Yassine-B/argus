@@ -156,14 +156,6 @@ These metrics provide additional context about exchange-rate behavior.
 * **Chart Idea**: Top / Bottom movement table or bar chart.
 * **Priority**: Sprint 2
 
----
-
-## Risk & Volatility Metrics (Sprint 2)
-
-These metrics introduce more finance-oriented analysis concepts.
-
----
-
 ### Volatility (Standard Deviation)
 
 * **What it is**: Measures how strongly exchange rates fluctuate over time. Volatility is commonly approximated using the standard deviation of returns and is one of the most widely used measures of financial risk.
@@ -182,3 +174,75 @@ Volatility
 * **Priority**: Sprint 2
 
 ---
+
+## Recommended Sprint 2 Visualization
+
+### Performance Chart
+
+```text
+Cumulative Return
++
+Strongest Day Marker
++
+Weakest Day Marker
+```
+
+Why?
+
+* Cumulative Return already visualizes overall performance.
+* Strongest and weakest movements are events, not standalone time series.
+* Marking them on the same chart avoids creating unnecessary additional charts.
+
+---
+
+### Risk Chart
+
+```text
+Rolling Volatility
+```
+
+Why?
+
+* Volatility represents a different analytical dimension.
+* It focuses on risk and fluctuation intensity rather than trend or performance.
+* Keeping it separate improves readability.
+
+---
+
+### Resulting Dashboard Structure
+
+#### Trend Analytics
+
+```text
+Exchange Rate
++
+Rolling Average
++
+Min / Max
+```
+
+```text
+Daily Percentage Change
+```
+
+---
+
+#### Performance Analytics
+
+```text
+Cumulative Return
++
+Strongest Day
++
+Weakest Day
+```
+
+---
+
+#### Risk Analytics
+
+```text
+Rolling Volatility
+```
+
+This structure keeps the dashboard compact while still allowing future expansion.
