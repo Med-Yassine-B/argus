@@ -1,6 +1,5 @@
 # Useful metrics for the fx market
 
-
 ## Intro To Research
 
 Identify simple but meaningful metrics for analyzing exchange-rate data.
@@ -116,21 +115,11 @@ Daily Percentage Change
 
 ---
 
-## Movement & Performance Metrics (Sprint 2)
+## Movement, Performance & Risk Metrics (Sprint 2)
 
 These metrics provide additional context about exchange-rate behavior.
 
----
-
-### Absolute Change
-
-* **What it is**: Measures the raw difference between two exchange-rate values.
-* **Why it is useful**:
-  * Easy to understand
-  * Complements percentage change
-  * Useful for quick comparisons
-* **Chart Idea**: Additional line or metric card.
-* **Priority**: Sprint 2
+They should extend the existing dashboard without adding too many separate charts.
 
 ---
 
@@ -141,20 +130,30 @@ These metrics provide additional context about exchange-rate behavior.
   * Shows overall performance
   * Easy for users to interpret
   * Useful for comparing periods
-* **Chart Idea**: Performance chart from a normalized starting value.
+  * Works well as a higher-level performance metric
+* **Chart Idea**:
+  * Cumulative Return
+  * Strongest Day Marker
+  * Weakest Day Marker
 * **Priority**: Sprint 2
 
 ---
 
-### Strongest / Weakest Movement
+### Strongest / Weakest Day
 
-* **What it is**: Identifies the largest positive and largest negative daily movement.
+* **What it is**: Identifies the largest positive and largest negative daily percentage movement in the selected period.
 * **Why it is useful**:
   * Highlights important events
   * Creates interesting insights for users
-  * Easy to calculate
-* **Chart Idea**: Top / Bottom movement table or bar chart.
+  * Easy to calculate from daily percentage change
+  * Works best as markers instead of a separate chart
+* **Chart Idea**:
+  * Performance Chart
+  * Strongest Day Marker
+  * Weakest Day Marker
 * **Priority**: Sprint 2
+
+---
 
 ### Volatility (Standard Deviation)
 
@@ -163,49 +162,61 @@ These metrics provide additional context about exchange-rate behavior.
   * Introduces risk analysis
   * Provides a bridge toward forecasting and ML
   * Commonly used in financial analytics
-* **Chart Idea**: Rolling volatility chart.
-
-```text
-Date
-↓
-Volatility
-```
-
+  * Adds a different perspective than trend or performance metrics
+* **Chart Idea**:
+  * Date
+  * Rolling Volatility
 * **Priority**: Sprint 2
 
 ---
 
 ## Recommended Sprint 2 Visualization
 
+Sprint 2 should extend the dashboard with one performance chart and one risk chart.
+
+The goal is to keep the number of charts low while still making the metrics visually useful.
+
 ### Performance Chart
 
-```text
-Cumulative Return
-+
-Strongest Day Marker
-+
-Weakest Day Marker
-```
+Contains:
+
+* Cumulative Return
+* Strongest Day Marker
+* Weakest Day Marker
 
 Why?
 
-* Cumulative Return already visualizes overall performance.
-* Strongest and weakest movements are events, not standalone time series.
-* Marking them on the same chart avoids creating unnecessary additional charts.
+* Cumulative Return shows the overall movement during the selected period.
+* Strongest and weakest days are events, not standalone time series.
+* Showing them as markers avoids adding another unnecessary chart.
 
 ---
 
 ### Risk Chart
 
-```text
-Rolling Volatility
-```
+Contains:
+
+* Rolling Volatility
 
 Why?
 
-* Volatility represents a different analytical dimension.
-* It focuses on risk and fluctuation intensity rather than trend or performance.
+* Volatility describes fluctuation intensity.
+* It answers a different question than trend or performance.
 * Keeping it separate improves readability.
+
+---
+
+### Resulting Sprint 2 Dashboard
+
+#### Performance Analytics
+
+* Cumulative Return
+* Strongest Day Marker
+* Weakest Day Marker
+
+#### Risk Analytics
+
+* Rolling Volatility
 
 ---
 
@@ -246,3 +257,102 @@ Rolling Volatility
 ```
 
 This structure keeps the dashboard compact while still allowing future expansion.
+
+## Explaination for the decision
+
+### First Implementation
+
+The first implementation should include:
+
+1. Daily Percentage Change
+2. Rolling Average
+3. Min / Max Rate
+
+Reasons:
+
+* Easy to calculate with Pandas
+* Easy to visualize with Plotly
+* Provide immediate analytical value
+* Introduce core time-series concepts
+* Create a strong foundation for future metrics
+
+### Future Direction
+
+Potential future additions:
+
+* Volatility
+* Currency rankings
+* Multi-currency comparisons
+* Signal generation
+* Forecasting experiments
+* ML features
+
+These features should be added only after the core analytical dashboard is completed.
+
+## Analytics Architecture
+
+The analytics layer should remain independent from the UI layer.
+
+Future metrics should be implemented inside a dedicated analytics package rather than directly inside GUI code.
+
+### Suggested Structure
+
+```text
+docs/
+
+src/
+  fx_converter_lab/
+    cli/
+    clients/
+    gui/
+    services/
+    analytics/
+      metrics/
+      charts/
+    domain/
+    config.py
+    main.py
+
+tests/
+```
+
+### Responsibilities
+
+* **analytics/metrics/**
+  
+  *Contains metric calculations:*
+
+  * daily percentage change
+  * rolling average
+  * min / max
+  * cumulative return
+  * volatility
+  * strongest / weakest day
+
+* **analytics/charts/**
+
+  *Contains chart preparation logic:*
+
+  * trend charts
+  * performance charts
+  * risk charts
+
+* **gui/**
+
+  *Responsible only for just displaying data.*
+
+---
+
+### Long-Term Direction
+
+```text
+clients
+↓
+services
+↓
+analytics
+  ├─ metrics
+  └─ charts
+↓
+gui
+```
