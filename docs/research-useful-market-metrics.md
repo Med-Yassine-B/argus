@@ -236,26 +236,6 @@ Min / Max
 Daily Percentage Change
 ```
 
----
-
-#### Performance Analytics
-
-```text
-Cumulative Return
-+
-Strongest Day
-+
-Weakest Day
-```
-
----
-
-#### Risk Analytics
-
-```text
-Rolling Volatility
-```
-
 This structure keeps the dashboard compact while still allowing future expansion.
 
 ## Explaination for the decision
