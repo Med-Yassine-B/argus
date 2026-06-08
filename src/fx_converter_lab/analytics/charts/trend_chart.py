@@ -19,18 +19,35 @@ def create_trendchart() -> None:
     df = add_daily_percentage_change(df)
     df = add_rolling_average(df)
     min_max_rates = get_min_max_rates(df)
+    min_date = min_max_rates["min_date"][0]
+    min_rate = min_max_rates["min_rate"][0]
+    max_date = min_max_rates["max_date"][0]
+    max_rate = min_max_rates["max_rate"][0]
     
+    # Rate and Rolling Average needs seperat x-Achse von Daily Percentage Chnage erhalten
     fig, ax1 = plt.subplots()
 
-    ax1.plot(df["date"], df["rate"], color="red", label="Exchange Rate")
+    # Subplot 1
+    ax1.plot(df["date"], df["rate"], color="black", label="Exchange Rate")
     ax1.plot(df["date"], df["roll_avg"], color="blue", label="Rolling Average")
+
+    # Scatter and Annote Min/Max Rate
+    ax1.scatter(min_date, min_rate,color="red")
+    ax1.scatter(max_date, max_rate,color="green")
+    ax1.annotate("Min", (min_date, min_rate))
+    ax1.annotate("Max", (max_date, max_rate))
+
+    # Rotate date values for better visibillity
     ax1.tick_params(axis='x', rotation=45)
 
+    # Subplot 2
     ax2 = ax1.twinx()
     bar_colors = ["green" if x >= 0 else "red" for x in df["d_change_rate"]]
     ax2.bar(df["date"], df["d_change_rate"], color=bar_colors,alpha=0.4)
     ax2.legend(loc="upper left")
     ax2.set_ylabel("Percentage Scale")
+
+    # Adjust the layout 
     plt.tight_layout()
     plt.show()
 
