@@ -1,6 +1,9 @@
 import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from fx_converter_lab.analytics.charts.trend_chart import create_trendchart
 from fx_converter_lab.services.calculator_service import calc, check_op
 from fx_converter_lab.services.conversion_service import convert,check_currency
+from fx_converter_lab.analytics.charts.trend_chart import create_trendchart
 from fx_converter_lab.domain.validation import parse_amount
 
 def show_menu() -> None:
@@ -25,6 +28,19 @@ def show_calc() -> None:
     calc_frame.grid()
 
 def show_conv():
+    calc_frame.grid_forget()
+    menu_frame.pack_forget()
+    for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
+        entry.delete("0",tk.END)
+    result_calc_label.config(text='')
+    result_conv_label.config(text='')
+
+    app_frame.pack()
+    sidebar.pack(side="top")
+    content.pack(side="bottom", expand=True, fill="both")
+    conv_frame.grid()
+
+def show_trend():
     calc_frame.grid_forget()
     menu_frame.pack_forget()
     for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
@@ -93,6 +109,7 @@ sidebar = tk.Frame(app_frame)
 content = tk.Frame(app_frame)
 conv_frame = tk.Frame(content)
 calc_frame = tk.Frame(content)
+trend_frame = tk.Frame(content)
 
 # Labels
 menu_label = tk.Label(menu_frame, text="Menu", font=("Arial", 20))
@@ -141,19 +158,29 @@ amount_e.focus()
 
 from_menu_calc = tk.Button(menu_frame, text="Calculator",command=show_calc)
 from_menu_conv = tk.Button(menu_frame, text="Converter",command=show_conv)
+from_menu_trend_chart = tk.Button(menu_frame, text="Trend Chart",command=show_trend)
 from_sidebar_calc = tk.Button(sidebar, text="Calculator",command=show_calc)
 from_sidebar_conv = tk.Button(sidebar, text="Converter",command=show_conv)
+from_sidebar_trend_chart = tk.Button(sidebar, text="Trend Chart",command=show_trend)
 return_menu = tk.Button(sidebar, text="Back to menu",command=show_menu)
 click_calculate = tk.Button(calc_frame, text="Calculate",command=act_calculate)
 click_converter = tk.Button(conv_frame, text="Convert",command=act_convert)
 
 from_menu_calc.pack(fill="x", padx=100, pady=10)
 from_menu_conv.pack(fill="x", padx=100, pady=10)
+from_menu_trend_chart.pack(fill="x", padx=100, pady=10)
 from_sidebar_calc.pack(side="left")
 from_sidebar_conv.pack(side="left")
+from_sidebar_trend_chart.pack(side="left")
 return_menu.pack(side="left")
 click_calculate.grid(column=1,row=4)
 click_converter.grid(column=1,row=4)
+
+# Erstellen Sie Ihren Frame (z.B. mein_frame = tk.Frame(...))
+# Wenn Sie FigureCanvasTkAgg aufrufen, setzen Sie:
+fig,ax1 = create_trendchart()
+canvas = FigureCanvasTkAgg(fig, master=trend_frame)
+
 
 show_menu()
 
