@@ -34,5 +34,5 @@ def create_trendchart():
     ax2.set_ylabel("Percentage Scale")
 
     # Adjust the layout 
-    plt.tight_layout()
-    return fig,ax1
+    fig.tight_layout()
+    return fig
