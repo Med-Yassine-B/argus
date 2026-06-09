@@ -323,16 +323,6 @@ Current documentation:
 - [`docs/gui.md`](docs/gui.md) — notes about the current Tkinter GUI prototype
 - metric and UI research notes for future analytics and interface decisions
 
-Planned documentation:
-
-- architecture notes
-- data source notes
-- metric definitions and assumptions
-- release notes
-
-> [!NOTE]
-> Repository-level collaboration files such as `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` and `LICENSE` belong in the repository root, not in `docs/`.
-
 ---
 
 ## Status
