@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from fx_converter_lab.services.timeseries_service import prepare_trend_analysis
 
-def create_trendchart() -> None:
+def create_trendchart():
     df = pd.DataFrame()
     df,min_max_rates = prepare_trend_analysis()
     min_date = min_max_rates["min_date"][0]
@@ -11,7 +11,7 @@ def create_trendchart() -> None:
     max_rate = min_max_rates["max_rate"][0]
     
     # Rate and Rolling Average needs seperat x-Achse von Daily Percentage Chnage erhalten
-    fig, ax1 = plt.subplots()
+    fig, ax1 = plt.subplots(figsize=(5, 3.5), dpi=100)
 
     # Subplot 1
     ax1.plot(df["date"], df["rate"], color="black", label="Exchange Rate")
@@ -29,9 +29,10 @@ def create_trendchart() -> None:
     # Subplot 2
     ax2 = ax1.twinx()
     bar_colors = ["green" if x >= 0 else "red" for x in df["d_change_rate"]]
-    ax2.bar(df["date"], df["d_change_rate"], color=bar_colors,alpha=0.4)
+    ax2.bar(df["date"], df["d_change_rate"], color=bar_colors,alpha=0.4,label="Daily Change")
     ax2.legend(loc="upper left")
     ax2.set_ylabel("Percentage Scale")
 
     # Adjust the layout 
     plt.tight_layout()
+    return fig,ax1

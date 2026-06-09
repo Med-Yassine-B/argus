@@ -7,51 +7,46 @@ from fx_converter_lab.analytics.charts.trend_chart import create_trendchart
 from fx_converter_lab.domain.validation import parse_amount
 
 def show_menu() -> None:
-    menu_frame.pack(side="right", expand=True, fill="both")
     app_frame.pack_forget()
-    for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
-        entry.delete("0",tk.END)
-    result_calc_label.config(text='')
-    result_conv_label.config(text='')
+    calc_frame.pack_forget()
+    conv_frame.pack_forget()
+    trend_chart_widget.pack_forget()
+
+    menu_frame.pack(side="right", fill=tk.BOTH, expand=True)
 
 def show_calc() -> None:
-    conv_frame.grid_forget()
+    conv_frame.pack_forget()
+    trend_chart_widget.pack_forget()
     menu_frame.pack_forget()
-    for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
-        entry.delete("0",tk.END)
-    result_calc_label.config(text='')
-    result_conv_label.config(text='')
 
-    app_frame.pack()
-    sidebar.pack(side="top",fill="x")
-    content.pack(side="top", expand=True, fill="both")
-    calc_frame.grid()
+    app_frame.pack(fill=tk.BOTH, expand=True)
+    sidebar.pack(side="top", fill="x")
+    content.pack(side="top", fill=tk.BOTH, expand=True)
+
+    calc_frame.pack(fill=tk.BOTH, expand=True)
 
 def show_conv():
-    calc_frame.grid_forget()
+    calc_frame.pack_forget()
+    trend_chart_widget.pack_forget()
     menu_frame.pack_forget()
-    for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
-        entry.delete("0",tk.END)
-    result_calc_label.config(text='')
-    result_conv_label.config(text='')
 
-    app_frame.pack()
-    sidebar.pack(side="top")
-    content.pack(side="bottom", expand=True, fill="both")
-    conv_frame.grid()
+    app_frame.pack(fill=tk.BOTH, expand=True)
+    sidebar.pack(side="top", fill="x")
+    content.pack(side="top", fill=tk.BOTH, expand=True)
+
+    conv_frame.pack(fill=tk.BOTH, expand=True)
 
 def show_trend():
-    calc_frame.grid_forget()
+    calc_frame.pack_forget()
+    conv_frame.pack_forget()
     menu_frame.pack_forget()
-    for entry in [num1,num2,op_e,curr1,curr2,amount_e]:
-        entry.delete("0",tk.END)
-    result_calc_label.config(text='')
-    result_conv_label.config(text='')
 
-    app_frame.pack()
-    sidebar.pack(side="top")
-    content.pack(side="bottom", expand=True, fill="both")
-    conv_frame.grid()
+    app_frame.pack(fill=tk.BOTH, expand=True)
+    sidebar.pack(side="top", fill="x")
+    content.pack(side="top", fill=tk.BOTH, expand=True)
+
+    trend_canvas.draw()
+    trend_chart_widget.pack(fill=tk.BOTH, expand=True)
 
 def act_calculate() -> None:
     resp1 = num1.get()
@@ -100,7 +95,7 @@ def app() -> None:
 # Window
 root = tk.Tk()
 root.title("FX-Converter Lab")
-root.geometry("500x400") # Width x Length
+root.geometry("800x600") # Width x Length
 
 # Frames
 menu_frame = tk.Frame(root)
@@ -109,7 +104,10 @@ sidebar = tk.Frame(app_frame)
 content = tk.Frame(app_frame)
 conv_frame = tk.Frame(content)
 calc_frame = tk.Frame(content)
-trend_frame = tk.Frame(content)
+fig,ax1 = create_trendchart()
+fig.set_size_inches(7, 4)
+trend_canvas = FigureCanvasTkAgg(fig, master=content)
+trend_chart_widget = trend_canvas.get_tk_widget()
 
 # Labels
 menu_label = tk.Label(menu_frame, text="Menu", font=("Arial", 20))
@@ -166,21 +164,15 @@ return_menu = tk.Button(sidebar, text="Back to menu",command=show_menu)
 click_calculate = tk.Button(calc_frame, text="Calculate",command=act_calculate)
 click_converter = tk.Button(conv_frame, text="Convert",command=act_convert)
 
-from_menu_calc.pack(fill="x", padx=100, pady=10)
-from_menu_conv.pack(fill="x", padx=100, pady=10)
-from_menu_trend_chart.pack(fill="x", padx=100, pady=10)
+from_menu_calc.pack(fill="x", padx=50, pady=15)
+from_menu_conv.pack(fill="x", padx=50, pady=15)
+from_menu_trend_chart.pack(fill="x", padx=50, pady=15)
 from_sidebar_calc.pack(side="left")
 from_sidebar_conv.pack(side="left")
 from_sidebar_trend_chart.pack(side="left")
 return_menu.pack(side="left")
 click_calculate.grid(column=1,row=4)
 click_converter.grid(column=1,row=4)
-
-# Erstellen Sie Ihren Frame (z.B. mein_frame = tk.Frame(...))
-# Wenn Sie FigureCanvasTkAgg aufrufen, setzen Sie:
-fig,ax1 = create_trendchart()
-canvas = FigureCanvasTkAgg(fig, master=trend_frame)
-
 
 show_menu()
 
