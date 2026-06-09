@@ -1,15 +1,79 @@
-# FX Converter Lab
+# ARGUS
 
-A growing Python project exploring currency conversion, exchange rate APIs, and financial data workflows.
+<div align="center">
+  <img src="docs/pictures/banner.png" alt="Banner" width="2000">
+</div>
+
+---
+
+ARGUS is a Python-based market analytics project evolving from a small FX converter into a broader data-oriented platform for exchange rates, market data, analytics, dashboards, and future AI-assisted monitoring workflows.
+
+> [!NOTE]
+> This project started as **FX Converter Lab** and is being renamed to **ARGUS** as the scope grows beyond simple currency conversion.
+
+ARGUS is currently focused on building a clean local foundation:
+
+- currency conversion using live exchange-rate data
+- calculator and conversion logic
+- input validation and error handling
+- Tkinter GUI prototype
+- legacy CLI/debug interface
+- first pandas/matplotlib-based analytics prototype
+- tests and documentation
+
+> [!IMPORTANT]
+> ARGUS is not a finished trading tool or financial advisor.  
+> It is a portfolio and learning project for building reliable data, analytics, visualization and future automation workflows.
+
+---
+
+## Project Direction
+
+ARGUS is designed to grow step by step from a local Python application into a market analytics and monitoring system.
+
+The long-term direction includes:
+
+- market data ingestion
+- historical FX and market data analysis
+- reusable analytics and metric layers
+- dashboards and visualizations
+- local and cloud-based storage
+- data quality checks
+- reporting workflows
+- future AI-assisted research and agentic monitoring
+
+> [!TIP]
+> The goal is to keep each development step usable and testable instead of building a large system all at once.
+
+---
+
+## Roadmap
+
+The full project roadmap is maintained separately in [`docs/roadmap.md`](docs/roadmap.md).
+
+Each roadmap phase is treated as a separate development sprint. The roadmap describes how ARGUS is planned to grow from a local Python application into a broader market analytics, data engineering and future AI-assisted monitoring system.
+
+> [!TIP]
+> The README gives a compact project overview.  
+> Detailed planning, sprint scope and long-term architecture notes live in the documentation files.
 
 ---
 
 ## Current Features
 
 - Calculator
-- Currency conversion using live exchange rates (REST API)
+- Currency conversion using live exchange rates
 - Input validation and error handling
-- Basic arithmetic operations (+, -, *, /, %, **)
+- Tkinter GUI prototype
+- Legacy CLI/debug interface
+- Basic pandas-based trend metrics
+- Matplotlib-based trend visualization
+- Mock time-series data for early analytics development
+- Basic test suite
+
+> [!CAUTION]
+> Historical market data support is still limited.  
+> The current live exchange-rate client is useful for simple conversion, but future analytics work will require additional data sources such as Frankfurter or yfinance.
 
 ---
 
@@ -17,12 +81,15 @@ A growing Python project exploring currency conversion, exchange rate APIs, and 
 
 ```text
 docs/
-src/ 
+src/
   fx_converter_lab/
+    analytics/
+      charts/
+      metrics/
     clients/
+    domain/
     gui/
     services/
-    domain/
     config.py
     main.py
   legacy/
@@ -32,76 +99,241 @@ pyproject.toml
 README.md
 ```
 
-## User Interface
+---
 
-The project currently offers a user-friendly Tkinter GUI. You can access a simple calculator, a currency converter and a trend chart with basic metrics.
+## Current Tech Stack
+
+### Language
+
+- Python 3.11+
+
+### Core libraries
+
+- requests
+- python-dotenv
+- pandas
+- NumPy
+- matplotlib
+- Tkinter
+- pytest
+
+### Current data source
+
+- ExchangeRate API for live currency conversion
+
+---
+
+## Planned / Future Tech Stack
+
+ARGUS is expected to grow into a broader data and analytics system.
+
+Planned or likely future technologies include:
+
+### Data sources
+
+- Frankfurter API for historical FX data
+- yfinance for broader market data
+- possible additional market-data APIs later
+
+### Data processing
+
+- pandas
+- NumPy
+- possibly Polars later for larger datasets
+
+### Storage
+
+- PostgreSQL
+- DuckDB
+- Parquet
+- optional cloud storage
+
+### Visualization and UI
+
+- matplotlib
+- Plotly
+- NiceGUI
+
+### DevOps and deployment
+
+- GitHub Actions
+- Docker
+- Docker Compose
+- cloud deployment later
+
+### Cloud and data engineering
+
+- Azure, GCP or AWS depending on project direction
+- scheduled ingestion
+- data quality checks
+- reporting pipelines
+
+### AI and agentic workflows
+
+- LLM-assisted summaries
+- RAG over stored reports or notes
+- agentic data checks
+- anomaly monitoring
+- human-in-the-loop signal review
+
+> [!CAUTION]
+> AI and agentic features are future-stage ideas.  
+> They should only be added after the data, storage, service and reporting layers are stable.
+
+---
+
+## Requirements
+
+Before running ARGUS locally, make sure you have:
+
+- Python 3.11 or newer
+- Git
+- pip
+- an ExchangeRate API key for live currency conversion
+
+Recommended for development:
+
+- VS Code
+- a virtual environment
+- pytest
 
 > [!NOTE]
-> Implementation: `src/fx_converter_lab/gui/app.py`. See [docs/gui.md](docs/gui.md) for developer details.
->
-> A command-line interface still exists as a legacy component for local debugging and quick checks.
-> It is no longer the main user-facing interface and is expected to be deprecated around Sprint 3.
-> Implementation: `src/legacy/cli/interface.py`.
+> Runtime dependencies are managed through `pyproject.toml`.
 
 ---
 
-## Tech Stack
+## Setup
 
-**Language:**
+Clone the repository:
 
-- Python
+```bash
+git clone https://github.com/BytecodeBrewer/fx-converter-lab.git
+cd fx-converter-lab
+```
 
-**Framework:**
+Create a virtual environment:
 
-- Matplotlib
-- Tkinter
-- Numpy
-- Requests
+```bash
+python -m venv .venv
+```
 
-**API:**
+Activate the virtual environment.
 
-- REST API (ExchangeRate API)
+On Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+On macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Install the project in editable mode:
+
+```bash
+pip install -e .
+```
+
+> [!TIP]
+> Editable install keeps the project linked to your local source files.
+> This means code changes are picked up without reinstalling the project after every edit.
 
 ---
 
-## Roadmap (Sprint 1)
+## API Key Setup
 
-### Phase 1 (current)
+ARGUS currently uses the ExchangeRate API for live currency conversion.
 
-- CLI calculator
-- API integration
-- basic currency conversion
+### 1. Create an API key
 
-### Phase 2
+Create a free account at ExchangeRate API and generate your personal API key.
 
-- improve conversion logic
-- better structure (modules, separation)
-- error handling & validation
+### 2. Create a `.env` file
 
-### Phase 3
+Create a file named `.env` in the project root:
 
-- visualization (matplotlib / plotly)
-- historical exchange rates
-- data analysis features
+```text
+.env
+```
+
+Add your API key:
+
+```env
+api_key=your_api_key_here
+```
+
+### 3. Keep secrets private
+
+The `.env` file must stay local and should never be committed.
 
 > [!WARNING]
-> This roadmap is outdated. The big roadmap will come with the updates. Stay tuned!
+> Never commit API keys, tokens or secrets to the repository.
+> Make sure `.env` is listed in `.gitignore`.
 
 ---
 
-## Goal
+## Running ARGUS
 
-This project is not just a calculator.
+Start the current Tkinter GUI:
 
-It is a learning environment to understand:
+```bash
+python -m fx_converter_lab.main
+```
 
-- API integration
-- data processing
-- system design
-- building useful tools step by step
+This starts the local ARGUS prototype with calculator, currency conversion and basic analytics views.
+
+### Legacy CLI / Debug Interface
+
+The legacy CLI is still available for quick local checks and debugging:
+
+```bash
+python src/legacy/debug_main.py
+```
+
+> [!NOTE]
+> The Tkinter GUI is the current main local interface.
+> The CLI is kept as a legacy/debug interface and is not the long-term product interface.
+
+---
+
+## Running Tests
+
+Run the test suite:
+
+```bash
+pytest
+```
+
+> [!TIP]
+> Run tests after changing clients, services, validation logic or analytics functions.
+
+---
+
+## Documentation
+
+More detailed project documentation lives in [`docs/`](docs/).
+
+Current documentation:
+
+- [`docs/roadmap.md`](docs/roadmap.md) — sprint-based project roadmap
+- [`docs/gui.md`](docs/gui.md) — notes about the current Tkinter GUI prototype
+- metric and UI research notes for future analytics and interface decisions
+
+---
 
 ## Status
 
-Currently under active development.
+ARGUS is under active development.
 
+The project is currently transitioning from a small FX converter into a broader market analytics platform.
 
+Current focus:
+
+- finish Sprint 1 foundation
+- prepare first public release
+- improve README and project documentation
+- keep the application runnable and testable
+- prepare the next analytics and data-source expansion

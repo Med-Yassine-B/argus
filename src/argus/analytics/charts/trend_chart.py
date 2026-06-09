@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from fx_converter_lab.services.timeseries_service import prepare_trend_analysis
+from argus.services.timeseries_service import prepare_trend_analysis
 
 def create_trendchart(curr:str,dates:pd.DataFrame):
     df = pd.DataFrame()

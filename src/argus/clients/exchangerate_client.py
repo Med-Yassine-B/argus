@@ -1,5 +1,5 @@
 import requests as req
-from fx_converter_lab.config import (EXCHANGE_RATE_BASE_URL ,EXCHANGE_RATE_API_KEY,REQUEST_TIMEOUT_SECONDS)
+from argus.config import (EXCHANGE_RATE_BASE_URL ,EXCHANGE_RATE_API_KEY,REQUEST_TIMEOUT_SECONDS)
 
 def get_rates(curr1, curr2):
     url = f"{EXCHANGE_RATE_BASE_URL}/{EXCHANGE_RATE_API_KEY}/pair/{curr1}/{curr2}"

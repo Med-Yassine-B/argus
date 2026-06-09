@@ -1,6 +1,6 @@
-from fx_converter_lab.services.calculator_service import check_op,calc
-from fx_converter_lab.services.conversion_service import convert,check_currency
-from fx_converter_lab.domain.validation import parse_amount
+from argus.services.calculator_service import check_op,calc
+from argus.services.conversion_service import convert,check_currency
+from argus.domain.validation import parse_amount
 
 
 def display_convert() -> None:

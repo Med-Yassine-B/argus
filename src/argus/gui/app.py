@@ -1,10 +1,10 @@
 import tkinter as tk
 import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from fx_converter_lab.analytics.charts.trend_chart import create_trendchart
-from fx_converter_lab.services.calculator_service import calc, check_op
-from fx_converter_lab.services.conversion_service import convert, check_currency
-from fx_converter_lab.domain.validation import parse_amount
+from argus.analytics.charts.trend_chart import create_trendchart
+from argus.services.calculator_service import calc, check_op
+from argus.services.conversion_service import convert, check_currency
+from argus.domain.validation import parse_amount
 
 def on_close() -> None:
     if trend_chart_widget is not None:

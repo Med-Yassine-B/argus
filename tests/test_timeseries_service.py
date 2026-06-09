@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import pandas.testing as pdt
 import numpy as np
-from fx_converter_lab.services.timeseries_service import prepare_trend_analysis
+from argus.services.timeseries_service import prepare_trend_analysis
 def test_is_pct_change_added():
     test_curr = "USD"
     test_dates = {
@@ -13,7 +13,7 @@ def test_is_pct_change_added():
     expect_result = {
         "date": ["2026-06-01","2026-06-02","2026-06-03"],
         "rate": [1.08,1.1,1.14],
-        "d_change_rate": [np.nan,1.85185185185186,3.6363636363636154],
+        "daily_pct_change": [np.nan,1.85185185185186,3.6363636363636154],
         "roll_avg": [1.08,1.09,1.1066666666666667]
     }
     expect_dict = {

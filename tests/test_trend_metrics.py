@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import pandas.testing as pdt
 import numpy as np
-from fx_converter_lab.analytics.metrics.trend_metrics import add_daily_percentage_change,add_rolling_average,get_min_max_rates
+from argus.analytics.metrics.trend_metrics import add_daily_percentage_change,add_rolling_average,get_min_max_rates
 
 def test_is_pct_change_added():
     test_timesseries = {
@@ -13,7 +13,7 @@ def test_is_pct_change_added():
     expect_result = {
         "date": ["2026-05-01","2026-05-02","2026-05-03"],
         "rate": [1.00,1.10,1.21],
-        "d_change_rate": [np.nan,10.0,10.0]
+        "daily_pct_change": [np.nan,10.0,10.0]
 
     }
     test_df = pd.DataFrame(test_timesseries)
