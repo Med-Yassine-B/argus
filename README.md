@@ -176,43 +176,16 @@ Planned or likely future technologies include:
 
 ---
 
-## Roadmap (Sprint 1)
+## Setup
 
-### Phase 1 (current)
+Clone the repository:
 
-- CLI calculator
-- API integration
-- basic currency conversion
-
-### Phase 2
-
-- improve conversion logic
-- better structure (modules, separation)
-- error handling & validation
-
-### Phase 3
-
-- visualization (matplotlib / plotly)
-- historical exchange rates
-- data analysis features
-
-> [!WARNING]
-> This roadmap is outdated. The big roadmap will come with the updates. Stay tuned!
-
+```bash
+git clone https://github.com/BytecodeBrewer/fx-converter-lab.git
+cd fx-converter-lab
 ---
-
-## Goal
-
-This project is not just a calculator.
-
-It is a learning environment to understand:
-
-- API integration
-- data processing
-- system design
-- building useful tools step by step
-
----
+Create a virtual environment:
+python -m venv .venv
 
 ## Status
 
