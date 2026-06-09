@@ -1,5 +1,11 @@
 # ARGUS
 
+<div align="center">
+  <img src="docs/pictures/banner.png" alt="Banner" width="2000">
+</div>
+
+
+
 **Automated Research & Guidance Utility for Signals**
 ARGUS is a Python-based market analytics project evolving from a small FX converter into a broader data-oriented platform for exchange rates, market data, analytics, dashboards, and future AI-assisted monitoring workflows.
 
@@ -93,17 +99,6 @@ tests/
 pyproject.toml
 README.md
 ```
-
-## User Interface
-
-The project currently offers a user-friendly Tkinter GUI. You can access a simple calculator, a currency converter and a trend chart with basic metrics.
-
-> [!NOTE]
-> Implementation: `src/fx_converter_lab/gui/app.py`. See [docs/gui.md](docs/gui.md) for developer details.
->
-> A command-line interface still exists as a legacy component for local debugging and quick checks.
-> It is no longer the main user-facing interface and is expected to be deprecated around Sprint 3.
-> Implementation: `src/legacy/cli/interface.py`.
 
 ---
 
