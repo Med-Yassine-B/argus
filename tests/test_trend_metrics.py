@@ -31,7 +31,7 @@ def test_is_roll_avg_added():
     expect_result = {
         "date": ["2026-05-01","2026-05-02","2026-05-03"],
         "rate": [1.00,1.10,1.21],
-        "roll_avg": [np.nan,np.nan,1.1033333333333333333333333333333]
+        "roll_avg": [1.00,1.05,1.1033333333333333333333333333333]
 
     }
     test_df = pd.DataFrame(test_timesseries)

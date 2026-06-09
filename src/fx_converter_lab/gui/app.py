@@ -67,12 +67,14 @@ def show_trend() -> None:
     content.pack(side="top", fill=tk.BOTH, expand=True)
 
     if trend_canvas is None:
-        fig, ax1 = create_trendchart()
+        fig = create_trendchart()
         fig.set_size_inches(7, 4)
 
         trend_canvas = FigureCanvasTkAgg(fig, master=content)
         trend_chart_widget = trend_canvas.get_tk_widget()
 
+    if trend_chart_widget is None:
+        return
     trend_canvas.draw()
     trend_chart_widget.pack(fill=tk.BOTH, expand=True)
 
