@@ -176,6 +176,26 @@ Planned or likely future technologies include:
 
 ---
 
+## Requirements
+
+Before running ARGUS locally, make sure you have:
+
+- Python 3.11 or newer
+- Git
+- pip
+- an ExchangeRate API key for live currency conversion
+
+Recommended for development:
+
+- VS Code
+- a virtual environment
+- pytest
+
+> [!NOTE]
+> Runtime dependencies are managed through `pyproject.toml`.
+
+---
+
 ## Setup
 
 Clone the repository:
@@ -183,9 +203,106 @@ Clone the repository:
 ```bash
 git clone https://github.com/BytecodeBrewer/fx-converter-lab.git
 cd fx-converter-lab
----
+```
+
 Create a virtual environment:
+
+```bash
 python -m venv .venv
+```
+
+Activate the virtual environment.
+
+On Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+On macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Install the project in editable mode:
+
+```bash
+pip install -e .
+```
+
+> [!TIP]
+> Editable install keeps the project linked to your local source files.
+> This means code changes are picked up without reinstalling the project after every edit.
+
+---
+
+## API Key Setup
+
+ARGUS currently uses the ExchangeRate API for live currency conversion.
+
+### 1. Create an API key
+
+Create a free account at ExchangeRate API and generate your personal API key.
+
+### 2. Create a `.env` file
+
+Create a file named `.env` in the project root:
+
+```text
+.env
+```
+
+Add your API key:
+
+```env
+api_key=your_api_key_here
+```
+
+### 3. Keep secrets private
+
+The `.env` file must stay local and should never be committed.
+
+> [!WARNING]
+> Never commit API keys, tokens or secrets to the repository.
+> Make sure `.env` is listed in `.gitignore`.
+
+---
+
+## Running ARGUS
+
+Start the current Tkinter GUI:
+
+```bash
+python -m fx_converter_lab.main
+```
+
+This starts the local ARGUS prototype with calculator, currency conversion and basic analytics views.
+
+### Legacy CLI / Debug Interface
+
+The legacy CLI is still available for quick local checks and debugging:
+
+```bash
+python src/legacy/debug_main.py
+```
+
+> [!NOTE]
+> The Tkinter GUI is the current main local interface.
+> The CLI is kept as a legacy/debug interface and is not the long-term product interface.
+
+---
+
+## Running Tests
+
+Run the test suite:
+
+```bash
+pytest
+```
+
+> [!TIP]
+> Run tests after changing clients, services, validation logic or analytics functions.
 
 ## Status
 
