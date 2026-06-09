@@ -80,6 +80,7 @@ src/
 tests/
 pyproject.toml
 README.md
+```
 
 ## User Interface
 
