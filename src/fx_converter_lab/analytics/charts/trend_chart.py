@@ -28,8 +28,8 @@ def create_trendchart(curr:str,dates:pd.DataFrame):
 
     # Subplot 2
     ax2 = ax1.twinx()
-    bar_colors = ["green" if x >= 0 else "red" for x in df["d_change_rate"]]
-    ax2.bar(df["date"], df["d_change_rate"], color=bar_colors,alpha=0.4,label="Daily Change")
+    bar_colors = ["green" if x >= 0 else "red" for x in df["daily_pct_change"]]
+    ax2.bar(df["date"], df["daily_pct_change"], color=bar_colors,alpha=0.4,label="Daily Change")
     ax2.legend(loc="upper left")
     ax2.set_ylabel("Percentage Scale")
 

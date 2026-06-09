@@ -2,7 +2,7 @@ import pandas as pd
 
 def add_daily_percentage_change(df: pd.DataFrame) -> pd.DataFrame:
     result = df.copy()
-    result["d_change_rate"] = result["rate"].pct_change() * 100
+    result["daily_pct_change"] = result["rate"].pct_change() * 100
     return result
 
 def add_rolling_average(df: pd.DataFrame) -> pd.DataFrame:

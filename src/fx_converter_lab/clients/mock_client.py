@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 mock_resp_data = {
     "date": ["2026-06-01","2026-06-02","2026-06-03",
@@ -16,10 +17,10 @@ mock_resp_data = {
             ],
 }
 
-def get_mock_timeseries(curr: str, date: str) -> int | None:
+def get_mock_timeseries(curr: str, date: str) -> int | float:
     if(curr=="USD"):
         index = mock_resp_data["date"].index(date)
         rate = mock_resp_data["rate"][index]
         return rate 
     else:
-        return None
+        return np.nan
