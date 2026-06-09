@@ -42,6 +42,18 @@ The long-term direction includes:
 
 ---
 
+## Roadmap
+
+The full project roadmap is maintained separately in [`docs/roadmap.md`](docs/roadmap.md).
+
+Each roadmap phase is treated as a separate development sprint. The roadmap describes how ARGUS is planned to grow from a local Python application into a broader market analytics, data engineering and future AI-assisted monitoring system.
+
+> [!TIP]
+> The README gives a compact project overview.  
+> Detailed planning, sprint scope and long-term architecture notes live in the documentation files.
+
+---
+
 ## Current Features
 
 - Calculator
@@ -303,6 +315,30 @@ pytest
 
 > [!TIP]
 > Run tests after changing clients, services, validation logic or analytics functions.
+
+---
+
+## Documentation
+
+More detailed project documentation lives in [`docs/`](docs/).
+
+Current documentation:
+
+- [`docs/roadmap.md`](docs/roadmap.md) — sprint-based project roadmap
+- [`docs/gui.md`](docs/gui.md) — notes about the current Tkinter GUI prototype
+- metric and UI research notes for future analytics and interface decisions
+
+Planned documentation:
+
+- architecture notes
+- data source notes
+- metric definitions and assumptions
+- release notes
+
+> [!NOTE]
+> Repository-level collaboration files such as `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` and `LICENSE` belong in the repository root, not in `docs/`.
+
+---
 
 ## Status
 
