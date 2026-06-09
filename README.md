@@ -22,12 +22,41 @@ ARGUS is currently focused on building a clean local foundation:
 
 ---
 
+## Project Direction
+
+ARGUS is designed to grow step by step from a local Python application into a market analytics and monitoring system.
+
+The long-term direction includes:
+
+- market data ingestion
+- historical FX and market data analysis
+- reusable analytics and metric layers
+- dashboards and visualizations
+- local and cloud-based storage
+- data quality checks
+- reporting workflows
+- future AI-assisted research and agentic monitoring
+
+> [!TIP]
+> The goal is to keep each development step usable and testable instead of building a large system all at once.
+
+---
+
 ## Current Features
 
 - Calculator
-- Currency conversion using live exchange rates (REST API)
+- Currency conversion using live exchange rates
 - Input validation and error handling
-- Basic arithmetic operations (+, -, *, /, %, **)
+- Tkinter GUI prototype
+- Legacy CLI/debug interface
+- Basic pandas-based trend metrics
+- Matplotlib-based trend visualization
+- Mock time-series data for early analytics development
+- Basic test suite
+
+> [!CAUTION]
+> Historical market data support is still limited.  
+> The current live exchange-rate client is useful for simple conversion, but future analytics work will require additional data sources such as Frankfurter or yfinance.
 
 ---
 
@@ -35,12 +64,15 @@ ARGUS is currently focused on building a clean local foundation:
 
 ```text
 docs/
-src/ 
+src/
   fx_converter_lab/
+    analytics/
+      charts/
+      metrics/
     clients/
+    domain/
     gui/
     services/
-    domain/
     config.py
     main.py
   legacy/
@@ -48,7 +80,6 @@ src/
 tests/
 pyproject.toml
 README.md
-```
 
 ## User Interface
 
@@ -63,22 +94,84 @@ The project currently offers a user-friendly Tkinter GUI. You can access a simpl
 
 ---
 
-## Tech Stack
+## Current Tech Stack
 
-**Language:**
+### Language
 
-- Python
+- Python 3.11+
 
-**Framework:**
+### Core libraries
 
-- Matplotlib
+- requests
+- python-dotenv
+- pandas
+- NumPy
+- matplotlib
 - Tkinter
-- Numpy
-- Requests
+- pytest
 
-**API:**
+### Current data source
 
-- REST API (ExchangeRate API)
+- ExchangeRate API for live currency conversion
+
+---
+
+## Planned / Future Tech Stack
+
+ARGUS is expected to grow into a broader data and analytics system.
+
+Planned or likely future technologies include:
+
+### Data sources
+
+- Frankfurter API for historical FX data
+- yfinance for broader market data
+- possible additional market-data APIs later
+
+### Data processing
+
+- pandas
+- NumPy
+- possibly Polars later for larger datasets
+
+### Storage
+
+- PostgreSQL
+- DuckDB
+- Parquet
+- optional cloud storage
+
+### Visualization and UI
+
+- matplotlib
+- Plotly
+- NiceGUI
+
+### DevOps and deployment
+
+- GitHub Actions
+- Docker
+- Docker Compose
+- cloud deployment later
+
+### Cloud and data engineering
+
+- Azure, GCP or AWS depending on project direction
+- scheduled ingestion
+- data quality checks
+- reporting pipelines
+
+### AI and agentic workflows
+
+- LLM-assisted summaries
+- RAG over stored reports or notes
+- agentic data checks
+- anomaly monitoring
+- human-in-the-loop signal review
+
+> [!CAUTION]
+> AI and agentic features are future-stage ideas.  
+> They should only be added after the data, storage, service and reporting layers are stable.
 
 ---
 
