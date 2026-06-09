@@ -2,7 +2,7 @@
 
 ## Key functions
 
-- `app()` — launches Tkinter main loop (entry in `src/fx_converter_lab/main.py`)
+- `app()` — launches Tkinter main loop (entry in `src/argus/main.py`)
 - `show_menu()` — show main menu and clear inputs/results
 - `show_calc()` / `show_conv()` — switch views
 - `act_calculate()` — validate inputs and call calculator service
@@ -32,8 +32,8 @@
 
 ## Interaction
 
-- GUI delegates business logic to `src/fx_converter_lab/services/*` and uses the client in `src/fx_converter_lab/clients/` for rates.
+- GUI delegates business logic to `src/argus/services/*` and uses the client in `src/argus/clients/` for rates.
 
 ## See also
 
-- `src/fx_converter_lab/gui/app.py` — implementation (UI & handlers)
+- `src/argus/gui/app.py` — implementation (UI & handlers)

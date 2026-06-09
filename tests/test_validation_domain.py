@@ -1,7 +1,7 @@
 import pytest
 import requests as req
 from unittest.mock import Mock
-from fx_converter_lab.domain.validation import *
+from argus.domain.validation import *
 
 def test_op_is_valid():
     data = is_valid_op('+')
