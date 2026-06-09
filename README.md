@@ -34,12 +34,14 @@ README.md
 
 ## User Interface
 
-The project currently offers an user-friendly Tkinter GUI. You can access a simple calculator, a currency converter and a trendchchart with basic metrices.
+The project currently offers a user-friendly Tkinter GUI. You can access a simple calculator, a currency converter and a trend chart with basic metrics.
 
 > [!NOTE]
 > Implementation: `src/fx_converter_lab/gui/app.py`. See [docs/gui.md](docs/gui.md) for developer details.
 >
-> There is a command-line interface beside the Tkinter GUI. It's an legacy component and will depraced with the 3.Sprint. The CLI is developer-oriented and simply for debugging. You can find here the implementation: `src/legacy/cli/interface.py`
+> A command-line interface still exists as a legacy component for local debugging and quick checks.
+> It is no longer the main user-facing interface and is expected to be deprecated around Sprint 3.
+> Implementation: `src/legacy/cli/interface.py`.
 
 ---
 
