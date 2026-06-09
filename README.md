@@ -1,6 +1,24 @@
-# FX Converter Lab
+# ARGUS
 
-A growing Python project exploring currency conversion, exchange rate APIs, and financial data workflows.
+**Automated Research & Guidance Utility for Signals**
+ARGUS is a Python-based market analytics project evolving from a small FX converter into a broader data-oriented platform for exchange rates, market data, analytics, dashboards, and future AI-assisted monitoring workflows.
+
+> [!NOTE]
+> This project started as **FX Converter Lab** and is being renamed to **ARGUS** as the scope grows beyond simple currency conversion.
+
+ARGUS is currently focused on building a clean local foundation:
+
+- currency conversion using live exchange-rate data
+- calculator and conversion logic
+- input validation and error handling
+- Tkinter GUI prototype
+- legacy CLI/debug interface
+- first pandas/matplotlib-based analytics prototype
+- tests and documentation
+
+> [!IMPORTANT]
+> ARGUS is not a finished trading tool or financial advisor.  
+> It is a portfolio and learning project for building reliable data, analytics, visualization and future automation workflows.
 
 ---
 
@@ -103,5 +121,3 @@ It is a learning environment to understand:
 ## Status
 
 Currently under active development.
-
-
