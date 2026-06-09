@@ -1,12 +1,10 @@
 import tkinter as tk
-
+import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 from fx_converter_lab.analytics.charts.trend_chart import create_trendchart
 from fx_converter_lab.services.calculator_service import calc, check_op
 from fx_converter_lab.services.conversion_service import convert, check_currency
 from fx_converter_lab.domain.validation import parse_amount
-
 
 def on_close() -> None:
     if trend_chart_widget is not None:
@@ -58,6 +56,17 @@ def show_trend() -> None:
     global trend_canvas
     global trend_chart_widget
 
+    mock_dates = {
+        "date": ["2026-06-01","2026-06-02","2026-06-03",
+                "2026-06-04","2026-06-05","2026-06-06",
+                "2026-06-07","2026-06-08","2026-06-09",
+                "2026-06-10","2026-06-11","2026-06-12",
+                "2026-06-13","2026-06-14","2026-06-15"
+        ]
+    }
+    mock_dates = pd.DataFrame(mock_dates)
+    mock_curr = "USD"
+
     calc_frame.pack_forget()
     conv_frame.pack_forget()
     menu_frame.pack_forget()
@@ -67,7 +76,7 @@ def show_trend() -> None:
     content.pack(side="top", fill=tk.BOTH, expand=True)
 
     if trend_canvas is None:
-        fig = create_trendchart()
+        fig = create_trendchart(mock_curr,mock_dates)
         fig.set_size_inches(7, 4)
 
         trend_canvas = FigureCanvasTkAgg(fig, master=content)
