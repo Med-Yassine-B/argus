@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import pandas.testing as pdt
 import numpy as np
-from fx_converter_lab.analytics.metrics.trend_metrics import add_daily_percentage_change,add_rolling_average,get_min_max_rates
+from argus.analytics.metrics.trend_metrics import add_daily_percentage_change,add_rolling_average,get_min_max_rates
 
 def test_is_pct_change_added():
     test_timesseries = {

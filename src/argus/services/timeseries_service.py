@@ -1,6 +1,6 @@
 import pandas as pd
-from fx_converter_lab.clients.mock_client import get_mock_timeseries
-from fx_converter_lab.analytics.metrics.trend_metrics import add_rolling_average,add_daily_percentage_change,get_min_max_rates
+from argus.clients.mock_client import get_mock_timeseries
+from argus.analytics.metrics.trend_metrics import add_rolling_average,add_daily_percentage_change,get_min_max_rates
 
 def prepare_trend_analysis(mock_curr:str,df:pd.DataFrame) -> tuple[pd.DataFrame,dict]:
     df["rate"] = 0.0

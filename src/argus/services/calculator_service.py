@@ -1,4 +1,4 @@
-from fx_converter_lab.domain.validation import is_valid_op
+from argus.domain.validation import is_valid_op
 
 def check_op(op:str) -> bool:
     # Tipp: Liste verwenden, wenn mehr als 2 Optionen für etwas besteht

@@ -1,4 +1,4 @@
-from fx_converter_lab.gui.app import app
+from argus.gui.app import app
 
 def main() -> None:
     app()

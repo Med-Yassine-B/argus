@@ -4,9 +4,8 @@
   <img src="docs/pictures/banner.png" alt="Banner" width="2000">
 </div>
 
+---
 
-
-**Automated Research & Guidance Utility for Signals**
 ARGUS is a Python-based market analytics project evolving from a small FX converter into a broader data-oriented platform for exchange rates, market data, analytics, dashboards, and future AI-assisted monitoring workflows.
 
 > [!NOTE]
