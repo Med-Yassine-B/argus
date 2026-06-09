@@ -211,6 +211,18 @@ It is a learning environment to understand:
 - system design
 - building useful tools step by step
 
+---
+
 ## Status
 
-Currently under active development.
+ARGUS is under active development.
+
+The project is currently transitioning from a small FX converter into a broader market analytics platform.
+
+Current focus:
+
+- finish Sprint 1 foundation
+- prepare first public release
+- improve README and project documentation
+- keep the application runnable and testable
+- prepare the next analytics and data-source expansion
