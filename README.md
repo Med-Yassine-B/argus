@@ -6,7 +6,7 @@ A growing Python project exploring currency conversion, exchange rate APIs, and 
 
 ## Current Features
 
-- Calculator (GUI and CLI)
+- Calculator
 - Currency conversion using live exchange rates (REST API)
 - Input validation and error handling
 - Basic arithmetic operations (+, -, *, /, %, **)
@@ -19,36 +19,50 @@ A growing Python project exploring currency conversion, exchange rate APIs, and 
 docs/
 src/ 
   fx_converter_lab/
-    cli/
     clients/
     gui/
     services/
     domain/
     config.py
     main.py
+  legacy/
+    cli/
 tests/
 pyproject.toml
 README.md
 ```
 
-## User Interfaces
+## User Interface
 
-The project exposes two interfaces:
+The project currently offers an user-friendly Tkinter GUI. You can access a simple calculator, a currency converter and a trendchchart with basic metrices.
 
-- **GUI:** A user-friendly Tkinter desktop app providing Calculator and Currency Converter modes. Implementation: `src/fx_converter_lab/gui/app.py`. See [docs/gui.md](docs/gui.md) for developer details.
-- **CLI:** A command-line interface for faster, developer-oriented interaction with the same features (`src/fx_converter_lab/cli/interface.py`). The CLI is useful for development and quick testing but is not a separate dev tool yet.
+> [!NOTE]
+> Implementation: `src/fx_converter_lab/gui/app.py`. See [docs/gui.md](docs/gui.md) for developer details.
+>
+> There is a command-line interface beside the Tkinter GUI. It's an legacy component and will depraced with the 3.Sprint. The CLI is developer-oriented and simply for debugging. You can find here the implementation: `src/legacy/cli/interface.py`
 
 ---
 
 ## Tech Stack
 
+**Language:**
+
 - Python
+
+**Framework:**
+
+- Matplotlib
+- Tkinter
+- Numpy
+- Requests
+
+**API:**
+
 - REST API (ExchangeRate API)
-- requests
 
 ---
 
-## Roadmap
+## Roadmap (Sprint 1)
 
 ### Phase 1 (current)
 
@@ -68,11 +82,8 @@ The project exposes two interfaces:
 - historical exchange rates
 - data analysis features
 
-### Phase 4 (vision)
-
-- web interface (JS / frontend)
-- integration with Excel / Power BI
-- cloud-based data processing
+> [!WARNING]
+> This roadmap is outdated. The big roadmap will come with the updates. Stay tuned!
 
 ---
 
@@ -90,3 +101,5 @@ It is a learning environment to understand:
 ## Status
 
 Currently under active development.
+
+
