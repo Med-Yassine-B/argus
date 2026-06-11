@@ -27,6 +27,10 @@ ARGUS is currently focused on building a clean local foundation:
 
 ---
 
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).  
+
 ## Project Direction
 
 ARGUS is designed to grow step by step from a local Python application into a market analytics and monitoring system.
