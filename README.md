@@ -86,7 +86,7 @@ Each roadmap phase is treated as a separate development sprint. The roadmap desc
 ```text
 docs/
 src/
-  fx_converter_lab/
+  argus/
     analytics/
       charts/
       metrics/
@@ -211,7 +211,7 @@ Recommended for development:
 Clone the repository:
 
 ```bash
-git clone https://github.com/BytecodeBrewer/fx-converter-lab.git
+git clone https://github.com/BytecodeBrewer/argus.git
 cd fx-converter-lab
 ```
 
@@ -239,6 +239,12 @@ Install the project in editable mode:
 
 ```bash
 pip install -e .
+```
+
+For development and tests, install the development dependencies:
+
+```bash
+pip install -e ".[dev]"
 ```
 
 > [!TIP]
@@ -284,7 +290,7 @@ The `.env` file must stay local and should never be committed.
 Start the current Tkinter GUI:
 
 ```bash
-python -m fx_converter_lab.main
+python -m argus.main
 ```
 
 This starts the local ARGUS prototype with calculator, currency conversion and basic analytics views.
