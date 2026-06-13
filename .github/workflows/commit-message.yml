@@ -21,7 +21,7 @@ jobs:
       - name: Fetch base branch
         run: git fetch origin "${{ github.base_ref }}"
       - name: Validate commit message
-        shell: bashs
+        shell: bash
         run: |
           pattern='^(feat|fix|docs|style|refactor|test|chore|ci|build|perf)\(#[0-9]+\): .{1,50}$'
           invalid=0
