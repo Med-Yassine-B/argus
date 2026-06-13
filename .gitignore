@@ -2,7 +2,10 @@
 __pycache__
 .pytest_cache
 *.pyc
-/src/fx_converter_lab.egg-info
+/src/argus.egg-info
+
+# Ruff cache
+.ruff_cache
 
 # IDE settings
 .vscode/
