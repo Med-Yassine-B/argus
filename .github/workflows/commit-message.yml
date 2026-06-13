@@ -1,3 +1,4 @@
+# This workflow is needed to validate commit messages in pull requests, if the githook was bypassed
 name: Commit Message
 
 on:
@@ -10,6 +11,7 @@ permissions:
 jobs:
   validate-commit-messages:
     name: Validate commit messages
+    shell: bash
     runs-on: ubuntu-latest
 
     steps:
