@@ -1,7 +1,6 @@
-import pytest
 import requests as req
 from unittest.mock import Mock
-from argus.clients.exchangerate_client import *
+from argus.clients.exchangerate_client import get_rates, check_error
 
 def test_check_currency_timeout(monkeypatch):
     def test_get_resp(url, timeout):
@@ -96,7 +95,7 @@ def test_check_currency_invalid(monkeypatch):
     monkeypatch.setattr("requests.get", test_get_resp)
 
     data = get_rates("EUR", "USD")
-    assert data == None
+    assert data is None
 
 def test_check_error(capsys):
     check_error("unsupported-code")

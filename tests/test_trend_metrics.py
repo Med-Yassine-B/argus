@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 import pandas.testing as pdt
 import numpy as np

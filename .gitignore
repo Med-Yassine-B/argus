@@ -10,8 +10,8 @@ __pycache__
 # IDE settings
 .vscode/
 
-# Temporary files (exercise files)
-temp/
+# ruff cache
+.ruff_cache
 
 # Virtual environment
 .env
