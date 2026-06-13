@@ -212,7 +212,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/BytecodeBrewer/argus.git
-cd fx-converter-lab
+cd argus
 ```
 
 Create a virtual environment:

@@ -22,3 +22,5 @@ Describe what should happen instead.
 ## Error output
 
 ```text
+
+```
