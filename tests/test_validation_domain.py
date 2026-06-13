@@ -1,7 +1,4 @@
-import pytest
-import requests as req
-from unittest.mock import Mock
-from argus.domain.validation import *
+from argus.domain.validation import is_valid_op, is_valid_curr_code, parse_amount, normalize_input_string
 
 def test_op_is_valid():
     data = is_valid_op('+')
