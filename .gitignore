@@ -4,11 +4,9 @@ __pycache__
 *.pyc
 /src/argus.egg-info
 
-# Ruff cache
-.ruff_cache
 
 # IDE settings
-.vscode/
+.vscode
 
 # ruff cache
 .ruff_cache

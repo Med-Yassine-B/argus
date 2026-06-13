@@ -1,19 +1,20 @@
 import requests as req
-from argus.config import (EXCHANGE_RATE_BASE_URL ,EXCHANGE_RATE_API_KEY,REQUEST_TIMEOUT_SECONDS)
+from argus.config import (
+    EXCHANGE_RATE_BASE_URL,
+    EXCHANGE_RATE_API_KEY,
+    REQUEST_TIMEOUT_SECONDS,
+)
+
 
 def get_rates(curr1, curr2):
     url = f"{EXCHANGE_RATE_BASE_URL}/{EXCHANGE_RATE_API_KEY}/pair/{curr1}/{curr2}"
-    data = {
-        "result": "",
-        "error_type": "",
-        "conversion_rate": None
-    }
-    
+    data = {"result": "", "error_type": "", "conversion_rate": None}
+
     try:
         resp = req.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
         resp.raise_for_status()
         payload = resp.json()
-        
+
     except req.exceptions.Timeout:
         print("API hat zu lange gebraucht.")
         return None
@@ -30,7 +31,7 @@ def get_rates(curr1, curr2):
     except KeyError:
         print("Unerwartete API-Antwortstruktur.")
         return None
-    
+
     if payload.get("result") == "success":
         data["result"] = "success"
         data["conversion_rate"] = payload.get("conversion_rate")
@@ -40,18 +41,25 @@ def get_rates(curr1, curr2):
         data["error_type"] = payload.get("error_type")
         check_error(data["error_type"])
         return None
- 
+
 
 def check_error(err_type):
     match err_type:
-        case 'unsupported-code' | 'malformed-request':
+        case "unsupported-code" | "malformed-request":
             print("Ungültige Anfrage! Bitter versuchen Sie es später erneut.")
-        case 'invalid-key':
-            print("Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut.")
-        case 'inactive-account':
-            print("Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren.")
-        case 'quota-reached':
-            print("Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden.")
+        case "invalid-key":
+            print(
+                "Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut."
+            )
+        case "inactive-account":
+            print(
+                "Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren."
+            )
+        case "quota-reached":
+            print(
+                "Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden."
+            )
+
 
 # Testen, ob die API funktioniert
-#data = get_rates("EUR", "USD")
+# data = get_rates("EUR", "USD")
