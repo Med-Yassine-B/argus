@@ -1,0 +1,21 @@
+#!/bin/sh
+
+commit_msg_file="$1"
+commit_msg="$(head -n 1 "$commit_msg_file")"
+
+pattern='^(feat|fix|docs|style|refactor|test|chore|ci|build|perf)\(#[0-9]+\): .+'
+
+if echo "$commit_msg" | grep -Eq "$pattern"; then
+  exit 0
+fi
+
+echo "Invalid commit message:"
+echo "  $commit_msg"
+echo ""
+echo "Expected format:"
+echo "  feat(#1): add trend metrics"
+echo ""
+echo "Allowed types:"
+echo "  feat, fix, docs, style, refactor, test, chore, ci, build, perf"
+
+exit 1
