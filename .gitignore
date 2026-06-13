@@ -1,13 +1,15 @@
 # Python cache files
 __pycache__
+.pytest_cache
 *.pyc
+/src/argus.egg-info
+
 
 # IDE settings
-.vscode/
+.vscode
 
-# Temporary files (exercise files)
-.temp/
+# ruff cache
+.ruff_cache
 
 # Virtual environment
-.env/
-venv/
+.env
