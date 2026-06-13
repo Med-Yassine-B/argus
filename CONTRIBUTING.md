@@ -189,16 +189,12 @@ A good pull request should include:
 
 Pull requests should be focused and reviewable.
 
-Recommended PR structure:
+Before opening a pull request, run:
 
-```md
-## What changed?
-
-## Why?
-
-## Tests
-
-## Notes
+```bash
+pytest
+ruff check .
+ruff format --check .
 ```
 
 ---
