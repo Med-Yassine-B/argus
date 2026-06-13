@@ -31,8 +31,12 @@ jobs:
       - name: Run tests
         run: pytest
 
-      - name: Check code formatting
+      - name: Install ruff
         run: pip install ruff
+
+      - name: Check code quality
         run: ruff check .
+        
+      - name: Check code formatting
         run: ruff format --check .
         
