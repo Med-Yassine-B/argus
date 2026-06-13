@@ -1,10 +1,8 @@
+# This workflow ensures that the code is tested and meets quality standards on every push and pull request 
 name: Tests
 
 on:
   push:
-    branches:
-      - main
-      - develop
   pull_request:
     branches:
       - main
@@ -31,12 +29,9 @@ jobs:
       - name: Run tests
         run: pytest
 
-      - name: Install ruff
-        run: pip install ruff
-
       - name: Check code quality
         run: ruff check .
-        
+
       - name: Check code formatting
         run: ruff format --check .
         
