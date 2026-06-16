@@ -108,7 +108,10 @@ def test_check_error(capsys):
 
     check_error("invalid-key")
     captured = capsys.readouterr()
-    assert captured.out == "Invalid API key! Please check your API key and try again.\n"
+    assert (
+        captured.out
+        == "Invalid API key! Please check your API key and try again.\n"
+    )
 
     check_error("inactive-account")
     captured = capsys.readouterr()
