@@ -104,25 +104,25 @@ def test_check_currency_invalid(monkeypatch):
 def test_check_error(capsys):
     check_error("unsupported-code")
     captured = capsys.readouterr()
-    assert captured.out == "Ungültige Anfrage! Bitter versuchen Sie es später erneut.\n"
+    assert captured.out == "Invalid request! Please try again later.\n"
 
     check_error("invalid-key")
     captured = capsys.readouterr()
     assert (
         captured.out
-        == "Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut.\n"
+        == "Invalid API key! Please check your API key and try again.\n"
     )
 
     check_error("inactive-account")
     captured = capsys.readouterr()
     assert (
         captured.out
-        == "Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren.\n"
+        == "Inactive account! Please go to exchangerate-api.com and activate your account.\n"
     )
 
     check_error("quota-reached")
     captured = capsys.readouterr()
     assert (
         captured.out
-        == "Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden.\n"
+        == "Request limit reached! Please try again later or upgrade to exchangerate-api.com.\n"
     )
