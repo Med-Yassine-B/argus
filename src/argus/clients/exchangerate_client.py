@@ -62,10 +62,10 @@ def check_error(err_type: str) -> None:
     """
     match err_type:
         case "unsupported-code" | "malformed-request":
-            print("Invalid request! Please try again later.\n")
+            print("Invalid request! Please try again later.")
         case "invalid-key":
-            print("Invalid API key! Please check your API key and try again.\n")
+            print("Invalid API key! Please check your API key and try again.")
         case "inactive-account":
-            print("Inactive account! Please go to exchangerate-api.com and activate your account.\n")
+            print("Inactive account! Please go to exchangerate-api.com and activate your account.")
         case "quota-reached":
-            print("Request limit reached! Please try again later or upgrade to exchangerate-api.com.\n")
+            print("Request limit reached! Please try again later or upgrade to exchangerate-api.com.")
