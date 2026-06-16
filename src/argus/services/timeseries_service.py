@@ -7,9 +7,18 @@ from argus.analytics.metrics.trend_metrics import (
 )
 
 
-def prepare_trend_analysis(
-    mock_curr: str, df: pd.DataFrame
-) -> tuple[pd.DataFrame, dict]:
+def prepare_trend_analysis(mock_curr: str, df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """
+    Prepares the data for trend analysis by adding conversion rates, daily percentage change, and rolling average.
+    
+    Arg1: mock_curr: str - the currency code for which the trend analysis is to
+    be performed
+    Arg2: df: pd.DataFrame - the DataFrame containing the dates for which the
+    conversion rates are to be added
+
+    Return: tuple[pd.DataFrame, dict] - a tuple containing the updated DataFrame with conversion rates, 
+    daily percentage change, and rolling average, and a dictionary with the minimum and maximum rates
+    """
     df["rate"] = 0.0
     # For each date one API call to get the rate
     for i in range(len(df)):
