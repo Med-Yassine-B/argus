@@ -6,11 +6,11 @@ from argus.config import (
 )
 
 
-def get_rates(curr1: str, curr2: str):
+def get_rates(curr1: str, curr2: str) :
     """
     Get the exchange rate between two currencies using the ExchangeRate-API.
 
-    Args:
+    Args: 
         curr1 (str): The base currency code (e.g., "USD").
         curr2 (str): The target currency code (e.g., "EUR").
 
@@ -62,14 +62,10 @@ def check_error(err_type: str) -> None:
     """
     match err_type:
         case "unsupported-code" | "malformed-request":
-            print("Invalid request! Please try again later.")
+            print("Invalid request! Please try again later.\n")
         case "invalid-key":
-            print("Invalid API key! Please check your API key and try again.")
+            print("Invalid API key! Please check your API key and try again.\n")
         case "inactive-account":
-            print(
-                "Inactive account! Please go to exchangerate-api.com and activate your account."
-            )
+            print("Inactive account! Please go to exchangerate-api.com and activate your account.\n")
         case "quota-reached":
-            print(
-                "Request limit reached! Please try again later or upgrade to exchangerate-api.com."
-            )
+            print("Request limit reached! Please try again later or upgrade to exchangerate-api.com.\n")
