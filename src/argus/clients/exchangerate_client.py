@@ -6,7 +6,16 @@ from argus.config import (
 )
 
 
-def get_rates(curr1, curr2):
+def get_rates(curr1: str, curr2: str) :
+    """
+    Get the exchange rate between two currencies using the ExchangeRate-API.
+
+    Args: 
+        curr1 (str): The base currency code (e.g., "USD").
+        curr2 (str): The target currency code (e.g., "EUR").
+
+    Returns: A dictionary containing the result status, error type (if any), and conversion rate (if successful).
+    """
     url = f"{EXCHANGE_RATE_BASE_URL}/{EXCHANGE_RATE_API_KEY}/pair/{curr1}/{curr2}"
     data = {"result": "", "error_type": "", "conversion_rate": None}
 
@@ -43,23 +52,20 @@ def get_rates(curr1, curr2):
         return None
 
 
-def check_error(err_type):
+def check_error(err_type: str) -> None:
+    """
+    Check the error type returned by the API and print an appropriate message.
+
+    Args: err_type (str): The error type returned by the API.
+
+    Returns: None
+    """
     match err_type:
         case "unsupported-code" | "malformed-request":
-            print("Ungültige Anfrage! Bitter versuchen Sie es später erneut.")
+            print("Invalid request! Please try again later.")
         case "invalid-key":
-            print(
-                "Ungültiger API-Key! Checken Sie Ihren API-Key und versuchen Sie es erneut."
-            )
+            print("Invalid API key! Please check your API key and try again.")
         case "inactive-account":
-            print(
-                "Inaktives Konto! Bitte auf exchangerate-api.com gehen und Konto aktivieren."
-            )
+            print("Inactive account! Please go to exchangerate-api.com and activate your account.")
         case "quota-reached":
-            print(
-                "Anfrage-Limit erreicht! Bitte später erneut versuchen oder auf exchangerate-api.com upgraden."
-            )
-
-
-# Testen, ob die API funktioniert
-# data = get_rates("EUR", "USD")
+            print("Request limit reached! Please try again later or upgrade to exchangerate-api.com.")

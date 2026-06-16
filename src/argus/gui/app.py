@@ -8,6 +8,10 @@ from argus.domain.validation import parse_amount
 
 
 def on_close() -> None:
+    """
+    Handles the closing of the application window. It ensures that any open trend chart is destroyed and
+    the application is properly closed.
+    """
     if trend_chart_widget is not None:
         trend_chart_widget.destroy()
 
@@ -16,11 +20,17 @@ def on_close() -> None:
 
 
 def hide_trend_chart() -> None:
+    """
+    Hides the trend chart from the GUI if it is currently displayed.
+    """
     if trend_chart_widget is not None:
         trend_chart_widget.pack_forget()
 
 
 def show_menu() -> None:
+    """
+    Displays the main menu in the application. It updates the GUI to show the menu interface.
+    """
     app_frame.pack_forget()
     calc_frame.pack_forget()
     conv_frame.pack_forget()
@@ -30,6 +40,9 @@ def show_menu() -> None:
 
 
 def show_calc() -> None:
+    """
+    Displays the calculator in the application. It updates the GUI to show the calculator interface.
+    """
     conv_frame.pack_forget()
     hide_trend_chart()
     menu_frame.pack_forget()
@@ -42,6 +55,9 @@ def show_calc() -> None:
 
 
 def show_conv() -> None:
+    """
+    Displays the currency converter in the application. It updates the GUI to show the converter interface.
+    """
     calc_frame.pack_forget()
     hide_trend_chart()
     menu_frame.pack_forget()
@@ -54,6 +70,10 @@ def show_conv() -> None:
 
 
 def show_trend() -> None:
+    """
+    Displays the trend chart in the application. It prepares the data for trend analysis, 
+    creates the trend chart, and updates the GUI to show the chart.
+    """
     global trend_canvas
     global trend_chart_widget
 
@@ -101,6 +121,11 @@ def show_trend() -> None:
 
 
 def act_calculate() -> None:
+    """
+    Handles the calculation action when the "Calculate" button is clicked.
+    It checks the validity of the input numbers and operator, performs the calculation,
+    and updates the result label accordingly.
+    """
     resp1 = num1.get()
     resp1 = parse_amount(resp1)
 
@@ -131,6 +156,11 @@ def act_calculate() -> None:
 
 
 def act_convert() -> None:
+    """
+    Handles the conversion action when the "Convert" button is clicked. 
+    It checks the validity of the input currencies and amount, performs the conversion, 
+    and updates the result label accordingly.
+    """
     resp1 = check_currency(curr1.get())
     resp2 = check_currency(curr2.get())
     amount = parse_amount(amount_e.get())
@@ -162,6 +192,9 @@ def act_convert() -> None:
 
 
 def app() -> None:
+    """
+    The main function that initializes and starts the GUI application. It sets up the main window, frames, labels, entries, and buttons, and defines the layout of the application.
+    """
     root.mainloop()
 
 
