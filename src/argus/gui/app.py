@@ -71,7 +71,7 @@ def show_conv() -> None:
 
 def show_trend() -> None:
     """
-    Displays the trend chart in the application. It prepares the data for trend analysis, 
+    Displays the trend chart in the application. It prepares the data for trend analysis,
     creates the trend chart, and updates the GUI to show the chart.
     """
     global trend_canvas
@@ -157,8 +157,8 @@ def act_calculate() -> None:
 
 def act_convert() -> None:
     """
-    Handles the conversion action when the "Convert" button is clicked. 
-    It checks the validity of the input currencies and amount, performs the conversion, 
+    Handles the conversion action when the "Convert" button is clicked.
+    It checks the validity of the input currencies and amount, performs the conversion,
     and updates the result label accordingly.
     """
     resp1 = check_currency(curr1.get())
