@@ -502,6 +502,78 @@ This makes FRED valuable for analysis and reporting.
 
 ---
 
+## Alpaca
+
+### What it is
+
+Alpaca is a developer-first trading and market data platform.
+
+It provides APIs for:
+
+* market data
+* paper trading
+* live trading
+* stocks
+* options
+* crypto
+* order execution
+* account state
+* portfolio activity
+
+This makes Alpaca different from Frankfurter or yfinance.
+
+Frankfurter and yfinance mainly provide data.
+
+Alpaca provides both:
+
+```text
+market data
++
+broker / execution API
+```
+
+---
+
+### Why Alpaca matters for ARGUS
+
+Alpaca is relevant if ARGUS eventually moves toward:
+
+* paper trading
+* portfolio simulation
+* strategy testing
+* order execution
+* real broker connection
+* live account monitoring
+* trading workflow automation
+
+This is closer to commercial or production-like usage than yfinance.
+
+---
+
+### Alpaca Fit
+
+Alpaca should not be the first Sprint 2 data client.
+
+It is too much for the first real analytics step.
+
+However, it is very relevant later when ARGUS moves from:
+
+```text
+market analysis
+```
+
+to:
+
+```text
+market analysis
++
+paper trading
++
+strategy execution
+```
+
+---
+
 ### Commercial Usage Consideration
 
 FRED is useful, but it should not be treated as automatically commercial-safe for every dataset.
