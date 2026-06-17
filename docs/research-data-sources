@@ -1,0 +1,151 @@
+# ARGUS Data Source Research
+
+## Goal
+
+Research and choose a real data source for ARGUS analytics.
+
+ARGUS should evolve from a simple FX converter into a broader market analysis tool.
+
+The first real data source should replace the mock time-series client and provide useful historical data for beginner-friendly analytics.
+
+The selected source should be:
+
+* free or usable without relevant cost
+* easy to integrate in Python
+* pandas-friendly
+* useful for historical analysis
+* suitable for future market analytics
+* not limited to pure experimentation if the project becomes more serious later
+
+---
+
+## Why
+
+ARGUS currently uses mock time-series data for early analytics development.
+
+Sprint 2 needs a real data client so market metrics can be calculated from real data.
+
+The existing ExchangeRate API client was useful for the first live currency conversion feature, but ARGUS now needs stronger historical data support.
+
+The project should not become a pure FX trading tool.
+
+FX data is a useful entry point because it is simpler than stock analysis:
+
+* exchange-rate data is easier to model
+* fewer external fundamentals are needed
+* one clean time series is enough for first analytics
+* beginner-friendly metrics can be implemented quickly
+
+However, the long-term direction is broader market analysis:
+
+* stocks
+* ETFs
+* indices
+* currencies
+* simple trading-oriented insights
+* paper trading
+* later possible commercial usage if data licensing allows it
+
+---
+
+## Compared Data Sources
+
+| Source | Best Use Case | Free / Cost | API Key | Python / pandas Fit | Commercial Suitability | Fit for ARGUS |
+|---|---|---:|---:|---|---|---|
+| Frankfurter | Historical FX data | Free | No | Good | Better than unofficial sources, open-source/self-hostable | Very good first client |
+| yfinance | Broad market data for research | Free | No | Excellent | Limited / check Yahoo terms | Very good later client |
+| ExchangeRate API | Live currency conversion | Free tier / paid tiers | Yes | Okay | Depends on plan | Legacy / live conversion only |
+| Alpha Vantage | Stocks, FX, crypto, indicators | Free tier + paid | Yes | Good | More API-like, paid plans available | Possible later |
+| Twelve Data | Stocks, FX, ETFs, crypto, indices | Free tier + paid | Yes | Good | More suitable for serious API usage | Possible later |
+
+---
+
+## Current ExchangeRate API
+
+### What it is
+
+The current ExchangeRate API client is useful for live currency conversion.
+
+It fits the original project stage:
+
+* enter an amount
+* select source currency
+* select target currency
+* receive converted result
+
+### Strengths
+
+* Already integrated
+* Simple for live conversion
+* Good for the original FX converter use case
+* Easy to understand
+
+### Limitations
+
+* Not ideal as the main historical analytics source
+* Historical data support is not the strongest free path for this project
+* Less useful once ARGUS moves toward market analytics
+* Adds less long-term value if Frankfurter covers FX better
+
+### Role in ARGUS
+
+The ExchangeRate API should not be the strategic core client anymore.
+
+It can remain temporarily as:
+
+* legacy live conversion client
+* fallback client
+* comparison point during migration
+
+Long term, it can probably be removed if Frankfurter covers all required FX use cases.
+
+---
+
+## Frankfurter
+
+### What it is
+
+Frankfurter is a free and open-source exchange-rate API.
+
+It provides current and historical exchange-rate data and does not require an API key.
+
+### Strengths
+
+* Free
+* No API key required
+* Simple REST API
+* Historical FX data
+* Time-series data
+* JSON response format
+* Easy to transform into pandas DataFrames
+* Good fit for beginner-friendly analytics
+* Can replace mock FX time-series data directly
+* Can also replace parts of the current ExchangeRate API later
+
+### Limitations
+
+* Focused on exchange rates
+* Not a broad market-data API
+* Does not cover stocks, ETFs or company fundamentals
+* Not enough for long-term stock or portfolio analysis alone
+
+### Example Response Structure
+
+Conceptual response shape:
+
+```json
+{
+  "amount": 1.0,
+  "base": "EUR",
+  "start_date": "2024-01-01",
+  "end_date": "2024-01-31",
+  "rates": {
+    "2024-01-01": {
+      "USD": 1.10
+    },
+    "2024-01-02": {
+      "USD": 1.11
+    }
+  }
+}
+
