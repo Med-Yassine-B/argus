@@ -1,6 +1,9 @@
 # This workflow ensures that the code is tested and meets quality standards on every push and pull request 
 name: Tests
 
+permissions:
+  contents: read
+
 on:
   push:
   pull_request:

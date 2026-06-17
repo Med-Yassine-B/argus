@@ -272,7 +272,7 @@ Create a file named `.env` in the project root:
 Add your API key:
 
 ```env
-api_key=your_api_key_here
+EXCHANGE_RATE_API_KEY=your_api_key_here
 ```
 
 ### 3. Keep secrets private
@@ -336,14 +336,15 @@ Current documentation:
 
 ## Status
 
-ARGUS is under active development.
+ARGUS has completed its first foundation phase.
 
-The project is currently transitioning from a small FX converter into a broader market analytics platform.
+The project now has a runnable local Python application, a Tkinter GUI prototype, basic analytics, tests, documentation, CI checks and open-source readiness files.
 
 Current focus:
 
-- finish Sprint 1 foundation
-- prepare first public release
-- improve README and project documentation
-- keep the application runnable and testable
-- prepare the next analytics and data-source expansion
+- start Sprint 2 — Market Analytics & Data Source Expansion
+- improve historical exchange-rate data support
+- add stronger market metrics
+- expand pandas-based analytics workflows
+- improve dashboard usefulness without adding unnecessary chart noise
+- document metric definitions, assumptions and data-source behavior

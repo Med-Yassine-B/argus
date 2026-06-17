@@ -4,6 +4,33 @@ from argus.services.timeseries_service import prepare_trend_analysis
 
 
 def create_trendchart(curr: str, dates: pd.DataFrame):
+    """
+    Create a trend chart for exchange-rate analysis.
+
+    Builds a Matplotlib figure showing the exchange rate, its rolling
+    average, and the daily percentage change for a selected currency.
+    The minimum and maximum exchange-rate values are highlighted in the
+    chart.
+
+    Args:
+        curr (str): Currency code or currency pair identifier used for
+            the trend analysis.
+        dates (pd.DataFrame): DataFrame containing the date information
+            used to prepare the time-series analysis.
+
+    Returns:
+        matplotlib.figure.Figure: Matplotlib figure containing the trend
+        chart.
+
+    Notes:
+        The chart uses two y-axes:
+
+            - The left y-axis displays the exchange rate and rolling average.
+            - The right y-axis displays the daily percentage change.
+
+        Minimum and maximum exchange-rate values are marked with scatter
+        points and annotations.
+    """
     df = pd.DataFrame()
     df, min_max_rates = prepare_trend_analysis(curr, dates)
     min_date = min_max_rates["min_date"][0]

@@ -167,10 +167,24 @@ VALID_OPS = {"+", "-", "*", "/", "%", "**"}
 
 
 def normalize_input_string(input: str) -> str:
+    """
+    Normalizes the input string by stripping leading and trailing whitespace and converting it to uppercase.
+
+    Arg1: input: str - the input string to be normalized
+
+    Return: str - the normalized input string
+    """
     return input.strip().upper()
 
 
 def parse_amount(value: str) -> float | None:
+    """
+    Parses the input string to a float. If the input is not a valid number, it returns None.
+
+    Arg1: value: str - the input string to be parsed as a float
+
+    Return: float or None - the parsed float value if valid, otherwise None
+    """
     try:
         return float(value)
     except ValueError:
@@ -178,8 +192,22 @@ def parse_amount(value: str) -> float | None:
 
 
 def is_valid_curr_code(code: str) -> bool:
+    """
+    Checks if the given currency code is valid.
+
+    Arg1: code: str - the currency code to be checked
+
+    Return: bool - True if the currency code is valid, otherwise False
+    """
     return code in VALID_CURRENCY_CODES
 
 
 def is_valid_op(op: str) -> bool:
+    """
+    Checks if the given operation is valid.
+
+    Arg1: op: str - the operation to be checked
+
+    Return: bool - True if the operation is valid, otherwise False
+    """
     return op in VALID_OPS

@@ -5,7 +5,7 @@ The roadmap is intentionally iterative: each sprint should leave the project in 
 
 ## Sprint 1 — Product Foundation & First Public Release
 
-**Status:** In progress
+**Status:** Completed
 
 Build a small but usable Python application with a clear structure, tests, documentation and first release readiness.
 
@@ -25,11 +25,11 @@ Scope:
 - Collaboration documentation through `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` and `LICENSE`
 
 Outcome:
-ARGUS can be run locally, tested, understood by other developers and used as a small desktop analytics prototype.
+Sprint 1 established the local ARGUS foundation with package structure, GUI prototype, analytics prototype, tests, documentation, CI, Dependabot and governance files.
 
 ### Sprint 2 — Market Analytics & Data Source Expansion
 
-**Status:** Planned
+**Status:** In progress
 
 Move from simple FX conversion toward broader market analytics.
 
