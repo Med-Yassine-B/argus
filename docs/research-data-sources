@@ -54,7 +54,8 @@ However, the long-term direction is broader market analysis:
 |---|---|---:|---:|---|---|---|
 | Frankfurter | Historical FX data | Free | No | Good | Better than unofficial sources, open-source/self-hostable | Very good first client |
 | yfinance | Broad market data for research | Free | No | Excellent | Limited / check Yahoo terms | Very good later client |
-| ExchangeRate API | Live currency conversion | Free tier / paid tiers | Yes | Okay | Depends on plan | Legacy / live conversion only |
+| ExchangeRate API | Live currency conversion | Free tier / paid tiers | Yes / depends on endpoint | Okay | Depends on plan and terms | Legacy / live conversion only |
+| FRED API | Macroeconomic context data | Free | Yes | Good | Possible, but series-specific rights must be checked | Good later macro context client |
 | Alpha Vantage | Stocks, FX, crypto, indicators | Free tier + paid | Yes | Good | More API-like, paid plans available | Possible later |
 | Twelve Data | Stocks, FX, ETFs, crypto, indices | Free tier + paid | Yes | Good | More suitable for serious API usage | Possible later |
 
@@ -87,7 +88,7 @@ It fits the original project stage:
 * Less useful once ARGUS moves toward market analytics
 * Adds less long-term value if Frankfurter covers FX better
 
-### Role in ARGUS
+### ARGUS Fit
 
 The ExchangeRate API should not be the strategic core client anymore.
 
@@ -129,89 +130,7 @@ It provides current and historical exchange-rate data and does not require an AP
 * Does not cover stocks, ETFs or company fundamentals
 * Not enough for long-term stock or portfolio analysis alone
 
-### Example Response Structure
-
-Conceptual response shape:
-
-```json
-{
-  "amount": 1.0,
-  "base": "EUR",
-  "start_date": "2024-01-01",
-  "end_date": "2024-01-31",
-  "rates": {
-    "2024-01-01": {
-      "USD": 1.10
-    },
-    "2024-01-02": {
-      "USD": 1.11
-    }
-  }
-}
-```
-
-## Internal Normalized Format
-
-For ARGUS analytics, API responses should be normalized into simple internal data formats.
-
-The analytics layer should not depend directly on the original API response structure.
-
-This makes it easier to switch or add data sources later.
-
----
-
-### FX Time Series Format
-
-Used for exchange-rate based analytics.
-
-| date | base | target | rate |
-|---|---|---|---:|
-| 2024-01-01 | EUR | USD | 1.10 |
-| 2024-01-02 | EUR | USD | 1.11 |
-
-For single-pair analytics, this can be simplified to:
-
-| date | rate |
-|---|---:|
-| 2024-01-01 | 1.10 |
-| 2024-01-02 | 1.11 |
-
----
-
-### General Market Time Series Format
-
-Used for broader market analysis such as stocks, ETFs, indices or other symbols.
-
-| date | symbol | value |
-|---|---|---:|
-| 2024-01-01 | AAPL | 185.64 |
-| 2024-01-02 | AAPL | 184.25 |
-
-This format is useful when only one main price value is needed, usually the closing price.
-
----
-
-### Optional OHLC Market Data Format
-
-Used later if ARGUS needs more detailed market analysis.
-
-| date | symbol | open | high | low | close | volume |
-|---|---|---:|---:|---:|---:|---:|
-| 2024-01-01 | AAPL | 184.00 | 187.00 | 183.50 | 185.64 | 50200000 |
-| 2024-01-02 | AAPL | 185.20 | 186.10 | 182.90 | 184.25 | 48100000 |
-
-This format is not required for the first Sprint 2 implementation, but it may become useful later for:
-
-* stock analysis
-* ETF analysis
-* paper trading
-* signal generation
-* backtesting
-* more advanced chart types
-
----
-
-## ARGUS Fit
+### ARGUS Fit
 
 Frankfurter is the best first real data client for Sprint 2.
 
@@ -266,28 +185,6 @@ It is useful for stocks, ETFs, indices and some FX symbols.
 * Less predictable than a dedicated paid market-data API
 * Not ideal as the first serious commercial data backbone
 
-### Example Usage Shape
-
-```python
-import yfinance as yf
-
-data = yf.download("AAPL", start="2024-01-01", end="2024-02-01")
-```
-Expected DataFrame-like structure:
-
-| Date | Open | High | Low | Close | Adj Close | Volume |
-|---|---:|---:|---:|---:|---:|---:|
-
-For ARGUS analytics, the most important fields at the beginning are:
-
-| date | close |
-|---|---:|
-
-or normalized:
-
-| date | symbol | value |
-|---|---|---:|
-
 ### ARGUS Fit
 
 yfinance is a very good later client.
@@ -306,6 +203,65 @@ It is especially useful for:
 * paper trading prototypes
 
 However, yfinance should not be the first mock-client replacement if the immediate Sprint 2 goal is clean historical FX analytics.
+
+---
+
+## FRED API
+
+### What it is
+
+FRED is the Federal Reserve Economic Data API from the Federal Reserve Bank of St. Louis.
+
+It provides access to economic and macroeconomic time series such as:
+
+* interest rates
+* inflation indicators
+* unemployment data
+* GDP-related data
+* yield curves
+* recession indicators
+* money supply
+* economic sentiment and macro context data
+
+FRED is not mainly a market-price API.
+
+It should not replace Frankfurter or yfinance as the main historical price-data client.
+
+Instead, FRED is useful as a macroeconomic context source for ARGUS.
+
+### Strengths
+
+* Very relevant for macroeconomic analysis
+* Strong fit for market context
+* Useful for explaining why markets may move
+* Provides historical economic time series
+* Good for dashboards, reports and later signal context
+* Can support more serious market analysis than pure price charts
+
+### Limitations
+
+* Requires an API key
+* Not a stock, ETF or FX price-data provider
+* Some series may be owned by third parties
+* Copyrighted series may require additional permission for non-personal or commercial use
+* Commercial usage needs careful checking per data series
+* Not ideal as the first replacement for the mock time-series client
+
+### ARGUS Fit
+
+FRED is a strong future addition for ARGUS.
+
+It becomes valuable when ARGUS starts connecting market movements with economic conditions.
+
+FRED can help ARGUS answer questions like:
+
+* Are interest rates rising or falling?
+* Is inflation cooling down?
+* Is the yield curve inverted?
+* Is the macro environment risky?
+* Could market weakness be connected to macro conditions?
+
+This makes FRED useful for analysis and reporting, but not as the first Sprint 2 data client.
 
 ---
 
@@ -381,237 +337,26 @@ It may become relevant when ARGUS moves toward:
 
 It should not be the first implementation choice because Frankfurter is simpler for the current phase.
 
-## FRED API
+---
 
-### What it is
+## Commercial Usage Consideration
 
-FRED is the Federal Reserve Economic Data API from the Federal Reserve Bank of St. Louis.
+ARGUS should avoid locking itself into data sources that are only useful for experiments if the project may later become more serious.
 
-It provides access to economic and macroeconomic time series such as:
+Current interpretation:
 
-* interest rates
-* inflation indicators
-* unemployment data
-* GDP-related data
-* yield curves
-* recession indicators
-* money supply
-* economic sentiment and macro context data
-
-FRED is not mainly a market-price API.
-
-It should not replace Frankfurter or yfinance as the main historical price-data client.
-
-Instead, FRED is useful as a macroeconomic context source for ARGUS.
+| Source | Commercial Direction |
+|---|---|
+| Frankfurter | Best first choice; open-source/self-hostable, but source and data terms should still be checked before commercial use |
+| yfinance | Great for learning and research, but not ideal for commercial use without checking Yahoo terms |
+| ExchangeRate API | Commercial use depends on API plan and terms |
+| FRED API | Useful for macro context, but series-specific rights must be checked |
+| Alpha Vantage | More realistic commercial path through paid plans |
+| Twelve Data | More realistic commercial path through paid plans |
 
 ---
 
-### Strengths
-
-* Very relevant for macroeconomic analysis
-* Strong fit for market context
-* Useful for explaining why markets may move
-* Provides historical economic time series
-* Good for dashboards, reports and later signal context
-* Can support more serious market analysis than pure price charts
-* Used by trading/backtesting tools such as Lumibot for macro data context
-
----
-
-### Limitations
-
-* Requires an API key
-* Not a stock, ETF or FX price-data provider
-* Some series may be owned by third parties
-* Copyrighted series may require additional permission for non-personal or commercial use
-* Commercial usage needs careful checking per data series
-* Not ideal as the first replacement for the mock time-series client
-
----
-
-### Data Format and Response Structure
-
-FRED series data is usually requested by series ID.
-
-Example concept:
-
-```text
-GET /fred/series/observations?series_id=DGS10
-```
-
-Conceptual response shape:
-
-```json
-{
-  "observations": [
-    {
-      "date": "2024-01-01",
-      "value": "3.95"
-    },
-    {
-      "date": "2024-01-02",
-      "value": "4.01"
-    }
-  ]
-}
-```
-
-For ARGUS, this should be normalized into:
-
-| date | indicator | value |
-|---|---|---:|
-| 2024-01-01 | DGS10 | 3.95 |
-| 2024-01-02 | DGS10 | 4.01 |
-
-or more descriptive:
-
-| date | source | category | indicator | value |
-|---|---|---|---|---:|
-| 2024-01-01 | FRED | interest_rate | DGS10 | 3.95 |
-| 2024-01-02 | FRED | interest_rate | DGS10 | 4.01 |
-
----
-
-### ARGUS Fit
-
-FRED is a strong future addition for ARGUS.
-
-It fits the broader goal better than a pure FX-trading direction because ARGUS should become a market analysis tool for normal users.
-
-Normal users are more likely to care about:
-
-* stocks
-* ETFs
-* indices
-* inflation
-* interest rates
-* recession risk
-* market environment
-* basic portfolio context
-* paper trading based on market conditions
-
-FRED can help ARGUS answer questions like:
-
-* Are interest rates rising or falling?
-* Is inflation cooling down?
-* Is the yield curve inverted?
-* Is the macro environment risky?
-* Could market weakness be connected to macro conditions?
-
-This makes FRED valuable for analysis and reporting.
-
----
-
-## Alpaca
-
-### What it is
-
-Alpaca is a developer-first trading and market data platform.
-
-It provides APIs for:
-
-* market data
-* paper trading
-* live trading
-* stocks
-* options
-* crypto
-* order execution
-* account state
-* portfolio activity
-
-This makes Alpaca different from Frankfurter or yfinance.
-
-Frankfurter and yfinance mainly provide data.
-
-Alpaca provides both:
-
-```text
-market data
-+
-broker / execution API
-```
-
----
-
-### Why Alpaca matters for ARGUS
-
-Alpaca is relevant if ARGUS eventually moves toward:
-
-* paper trading
-* portfolio simulation
-* strategy testing
-* order execution
-* real broker connection
-* live account monitoring
-* trading workflow automation
-
-This is closer to commercial or production-like usage than yfinance.
-
----
-
-### Alpaca Fit
-
-Alpaca should not be the first Sprint 2 data client.
-
-It is too much for the first real analytics step.
-
-However, it is very relevant later when ARGUS moves from:
-
-```text
-market analysis
-```
-
-to:
-
-```text
-market analysis
-+
-paper trading
-+
-strategy execution
-```
-
----
-
-### Commercial Usage Consideration
-
-FRED is useful, but it should not be treated as automatically commercial-safe for every dataset.
-
-Important points:
-
-* The FRED API requires an API key.
-* Applications using the FRED API must display the required notice.
-* The app must not imply endorsement by the Federal Reserve Bank of St. Louis.
-* Some data series may belong to third parties.
-* Copyrighted series may require permission from the original data owner for non-personal or commercial use.
-
-Practical conclusion:
-
-FRED is good for learning, research, dashboards and portfolio development.
-
-For commercial usage, ARGUS would need to check the terms of the specific series used.
-
----
-
-## Data Source Portfolio
-
-ARGUS should not rely on one data source for everything.
-
-A better structure is a small data-source portfolio.
-
-| Source | Role in ARGUS | Priority |
-|---|---|---|
-| Frankfurter | First real historical FX data client | Sprint 2 |
-| yfinance | Broader market data for stocks, ETFs and indices | Later |
-| FRED | Macro context and economic indicators | Later / Sprint 3 |
-| Alpha Vantage | More formal market-data API option | Future |
-| Twelve Data | More commercial-friendly market-data option | Future |
-| ExchangeRate API | Existing live conversion client, legacy/fallback | Temporary |
-
----
-
-## Recommendation
+## Final Portfolio Decision
 
 Frankfurter should still be selected as the first real data source for Sprint 2.
 
@@ -635,9 +380,7 @@ FRED should be added as a macro context client, not as the first historical pric
 
 It becomes valuable when ARGUS starts connecting market movements with economic conditions.
 
----
-
-## Final Portfolio Decision
+Alpha Vantage or Twelve Data should be evaluated later if ARGUS needs a more serious or commercial-friendly market-data provider.
 
 ```text
 Sprint 2:
@@ -650,7 +393,6 @@ yfinance
 → broader market data
 → stocks, ETFs, indices, paper trading prototypes
 
-Later / Sprint 3:
 FRED
 → macroeconomic context
 → inflation, rates, unemployment, GDP, yield curve
@@ -661,12 +403,17 @@ Alpha Vantage or Twelve Data
 → better candidate for commercial or production-like use
 ```
 
-This portfolio is stronger than using only yfinance or only Frankfurter.
+---
 
-Frankfurter gives ARGUS a clean first real data source.
+## Out of Scope for This Ticket
 
-yfinance gives ARGUS broader market coverage.
+This research focuses on data sources for analytics.
 
-FRED gives ARGUS macroeconomic intelligence.
+The following topics should be handled in later research tickets:
 
-Alpha Vantage or Twelve Data can be evaluated later if ARGUS becomes more serious, commercial or production-oriented.
+| Topic | Reason |
+|---|---|
+| Alpaca | Broker, paper trading and execution API; relevant later, but not first data-source replacement |
+| CCXT exchanges | Crypto exchange connector layer; useful later for crypto workflows |
+| Broker integrations | Belong to paper trading / execution research |
+
