@@ -272,7 +272,7 @@ Create a file named `.env` in the project root:
 Add your API key:
 
 ```env
-api_key=your_api_key_here
+EXCHANGE_RATE_API_KEY=your_api_key_here
 ```
 
 ### 3. Keep secrets private
