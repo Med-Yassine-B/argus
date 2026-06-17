@@ -149,3 +149,393 @@ Conceptual response shape:
   }
 }
 
+## Internal Normalized Format
+
+For ARGUS analytics, API responses should be normalized into simple internal data formats.
+
+The analytics layer should not depend directly on the original API response structure.
+
+This makes it easier to switch or add data sources later.
+
+---
+
+### FX Time Series Format
+
+Used for exchange-rate based analytics.
+
+| date | base | target | rate |
+|---|---|---|---:|
+| 2024-01-01 | EUR | USD | 1.10 |
+| 2024-01-02 | EUR | USD | 1.11 |
+
+For single-pair analytics, this can be simplified to:
+
+| date | rate |
+|---|---:|
+| 2024-01-01 | 1.10 |
+| 2024-01-02 | 1.11 |
+
+---
+
+### General Market Time Series Format
+
+Used for broader market analysis such as stocks, ETFs, indices or other symbols.
+
+| date | symbol | value |
+|---|---|---:|
+| 2024-01-01 | AAPL | 185.64 |
+| 2024-01-02 | AAPL | 184.25 |
+
+This format is useful when only one main price value is needed, usually the closing price.
+
+---
+
+### Optional OHLC Market Data Format
+
+Used later if ARGUS needs more detailed market analysis.
+
+| date | symbol | open | high | low | close | volume |
+|---|---|---:|---:|---:|---:|---:|
+| 2024-01-01 | AAPL | 184.00 | 187.00 | 183.50 | 185.64 | 50200000 |
+| 2024-01-02 | AAPL | 185.20 | 186.10 | 182.90 | 184.25 | 48100000 |
+
+This format is not required for the first Sprint 2 implementation, but it may become useful later for:
+
+* stock analysis
+* ETF analysis
+* paper trading
+* signal generation
+* backtesting
+* more advanced chart types
+
+---
+
+## ARGUS Fit
+
+Frankfurter is the best first real data client for Sprint 2.
+
+It solves the immediate problem:
+
+* replace mock time-series data
+* fetch real historical exchange-rate data
+* calculate the first real analytics metrics
+* keep the implementation beginner-friendly
+* avoid unnecessary complexity from stock-market data too early
+
+FX data is a useful entry point because it is simpler than stock analysis.
+
+However, ARGUS should not stay limited to FX trading.
+
+The long-term direction is broader market analysis for normal users:
+
+* stocks
+* ETFs
+* indices
+* currencies
+* watchlists
+* basic market insights
+* paper trading
+* later possible commercial usage if data licensing allows it
+
+---
+
+## yfinance
+
+### What it is
+
+yfinance is a Python library for downloading market data from Yahoo Finance.
+
+It is useful for stocks, ETFs, indices and some FX symbols.
+
+### Strengths
+
+* Very easy to use in Python
+* Excellent pandas compatibility
+* Supports broader market data than Frankfurter
+* Good for stocks, ETFs and indices
+* Useful for future market analysis
+* Useful for later signal generation and ML experiments
+
+### Limitations
+
+* Not an official Yahoo Finance API
+* Intended mainly for research and educational use
+* Commercial usage requires checking Yahoo terms
+* Data availability depends on Yahoo symbols
+* Less predictable than a dedicated paid market-data API
+* Not ideal as the first serious commercial data backbone
+
+### Example Usage Shape
+
+```python
+import yfinance as yf
+
+data = yf.download("AAPL", start="2024-01-01", end="2024-02-01")
+```
+Expected DataFrame-like structure:
+
+| Date | Open | High | Low | Close | Adj Close | Volume |
+|---|---:|---:|---:|---:|---:|---:|
+
+For ARGUS analytics, the most important fields at the beginning are:
+
+| date | close |
+|---|---:|
+
+or normalized:
+
+| date | symbol | value |
+|---|---|---:|
+
+### ARGUS Fit
+
+yfinance is a very good later client.
+
+It should be introduced when ARGUS moves from FX-based analytics toward broader market analysis.
+
+It is especially useful for:
+
+* stocks
+* ETFs
+* indices
+* market comparisons
+* watchlists
+* signal experiments
+* ML features
+* paper trading prototypes
+
+However, yfinance should not be the first mock-client replacement if the immediate Sprint 2 goal is clean historical FX analytics.
+
+---
+
+## Alpha Vantage
+
+### What it is
+
+Alpha Vantage is a financial data API for stocks, FX, crypto, commodities, indicators and more.
+
+### Strengths
+
+* Official API-style access
+* Supports many market data types
+* Has documentation for many endpoints
+* More suitable than yfinance if the project later needs a more formal API provider
+* Could support more serious long-term data workflows
+
+### Limitations
+
+* Requires API key
+* Free tier is limited
+* Request limits can become annoying for analytics workflows
+* More setup than Frankfurter or yfinance
+* Some advanced or real-time features require paid plans
+
+### ARGUS Fit
+
+Alpha Vantage is not recommended as the first Sprint 2 client.
+
+It is worth revisiting later if ARGUS needs:
+
+* more formal market-data API access
+* indicators
+* broader asset coverage
+* a clearer path toward commercial or semi-commercial use
+
+---
+
+## Twelve Data
+
+### What it is
+
+Twelve Data is a financial market data API covering stocks, forex, ETFs, indices, crypto and more.
+
+### Strengths
+
+* Broad market coverage
+* API-first design
+* Supports JSON and other formats
+* Has SDK support
+* Better long-term candidate than unofficial data sources
+* More suitable for serious market-data workflows
+
+### Limitations
+
+* Requires API key
+* Free tier limitations apply
+* More platform dependency
+* More setup than Frankfurter
+* Probably too much for the first Sprint 2 step
+
+### ARGUS Fit
+
+Twelve Data is interesting for later.
+
+It may become relevant when ARGUS moves toward:
+
+* broader market analysis
+* paper trading
+* more reliable stock/ETF data
+* possible commercial use
+* serious dashboard or monitoring workflows
+
+It should not be the first implementation choice because Frankfurter is simpler for the current phase.
+
+---
+
+## Commercial Usage Consideration
+
+ARGUS should avoid locking itself into data sources that are only useful for experiments if the project may later become more serious.
+
+Current interpretation:
+
+| Source | Commercial Direction |
+|---|---|
+| Frankfurter | Best first choice; open-source and self-hostable, but source and data terms should still be checked before commercial use |
+| yfinance | Great for learning and research, but not ideal for commercial use without checking Yahoo terms |
+| ExchangeRate API | Commercial use depends on API plan and terms |
+| Alpha Vantage | More realistic commercial path through paid plans |
+| Twelve Data | More realistic commercial path through paid plans |
+| SerpApi / Google Finance | Better for search, enrichment or RAG context, not first market-data backbone |
+
+### Practical Decision
+
+For Sprint 2:
+
+* Use Frankfurter first.
+
+For later broader market analysis:
+
+* Add yfinance for learning and research.
+
+For possible commercial or serious paper-trading direction:
+
+* Evaluate Alpha Vantage or Twelve Data later.
+
+---
+
+## Recommended Decision
+
+### First Client to Replace Mock Time-Series Data
+
+Frankfurter
+
+### Why
+
+* Free
+* No API key
+* Simple API
+* Historical FX data
+* Easy pandas transformation
+* Perfect first real-data step
+* Keeps Sprint 2 manageable
+* Can replace mock time-series data directly
+* May later replace the existing ExchangeRate API for FX use cases
+
+---
+
+## Recommended Later Client
+
+yfinance
+
+### Why
+
+* Strong Python workflow
+* Excellent pandas fit
+* Good for stocks, ETFs and indices
+* Better fit for broader market analysis
+* Useful for signal and ML experiments
+* Good bridge from FX analytics to normal-user market analysis
+
+---
+
+## Not Recommended for First Implementation
+
+SerpApi / Google Finance
+
+### Why
+
+* Not the cleanest historical market-data source
+* Search/scraping-style API
+* Paid usage model
+* Less suitable for the first analytics data backbone
+* More useful later for enrichment, news, summaries or RAG context
+
+---
+
+## Suggested Client Structure
+
+```text
+clients/
+├─ exchange_rate_client.py      # existing live conversion client, legacy/fallback
+├─ frankfurter_client.py        # first real historical FX data client
+├─ yahoo_finance_client.py      # later broader market data client
+└─ mock_time_series_client.py   # deprecated after Frankfurter works
+```
+
+---
+
+## Suggested Internal Data Format
+
+The analytics layer should not depend on a specific API response format.
+
+Every client should normalize data into a shared internal structure.
+
+### FX Time Series
+
+```text
+date | base | target | rate
+```
+
+### General Market Time Series
+
+```text
+date | symbol | value
+```
+
+### Optional OHLC Market Data
+
+```text
+date | symbol | open | high | low | close | volume
+```
+
+This keeps analytics reusable across different sources:
+
+```text
+Frankfurter
+yfinance
+Alpha Vantage
+Twelve Data
+        ↓
+normalized DataFrame
+        ↓
+analytics metrics
+        ↓
+charts / dashboard
+```
+
+---
+
+## Final Recommendation
+
+Frankfurter should be selected as the first real data source for Sprint 2.
+
+It should replace the mock time-series client first because it is simple, free, historical and directly useful for the current analytics metrics.
+
+The existing ExchangeRate API client should remain only as a temporary live conversion or fallback client.
+
+yfinance should be added later as the broader market-analysis client when ARGUS moves beyond FX into stocks, ETFs and indices.
+
+Alpha Vantage or Twelve Data should be researched later if ARGUS needs a more serious API provider for commercial, paper-trading or production-like workflows.
+
+This keeps ARGUS realistic:
+
+```text
+Sprint 2:
+real FX analytics with Frankfurter
+
+Later:
+broader market analysis with yfinance
+
+Future:
+commercial-friendly market data provider if needed
+```
