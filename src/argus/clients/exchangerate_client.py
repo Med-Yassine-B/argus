@@ -24,6 +24,17 @@ def get_rates(curr1: str, curr2: str):
         resp.raise_for_status()
         payload = resp.json()
 
+
+        if payload["result"] == "success":
+            data["result"] = "success"
+            data["conversion_rate"] = payload["conversion_rate"]
+            return data
+        else:
+            data["result"] = "error"
+            data["error_type"] = payload.get("error_type")
+            check_error(data["error_type"])
+            return None
+
     except req.exceptions.Timeout:
         print("API hat zu lange gebraucht.")
         return None
@@ -41,15 +52,6 @@ def get_rates(curr1: str, curr2: str):
         print("Unerwartete API-Antwortstruktur.")
         return None
 
-    if payload.get("result") == "success":
-        data["result"] = "success"
-        data["conversion_rate"] = payload.get("conversion_rate")
-        return data
-    else:
-        data["result"] = "error"
-        data["error_type"] = payload.get("error_type")
-        check_error(data["error_type"])
-        return None
 
 
 def check_error(err_type: str) -> None:
