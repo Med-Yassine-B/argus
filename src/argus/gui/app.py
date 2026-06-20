@@ -1,5 +1,4 @@
 import tkinter as tk
-import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from argus.analytics.charts.trend_chart import create_trendchart
 from argus.services.calculator_service import calc, check_op
