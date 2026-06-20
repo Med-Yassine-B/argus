@@ -13,12 +13,13 @@ ARGUS is a Python-based market analytics project evolving from a small FX conver
 
 ARGUS is currently focused on building a clean local foundation:
 
-- currency conversion using live exchange-rate data
+- currency conversion using live ExchangeRate API data
+- historical market-data retrieval using yfinance
 - calculator and conversion logic
 - input validation and error handling
 - Tkinter GUI prototype
 - legacy CLI/debug interface
-- first pandas/matplotlib-based analytics prototype
+- pandas/matplotlib-based analytics prototype
 - tests and documentation
 
 > [!IMPORTANT]
@@ -66,18 +67,15 @@ Each roadmap phase is treated as a separate development sprint. The roadmap desc
 ## Current Features
 
 - Calculator
-- Currency conversion using live exchange rates
+- Currency conversion using live ExchangeRate API data
+- Historical market-data retrieval using yfinance
 - Input validation and error handling
 - Tkinter GUI prototype
 - Legacy CLI/debug interface
 - Basic pandas-based trend metrics
 - Matplotlib-based trend visualization
-- Mock time-series data for early analytics development
+- Basic client, service and analytics pipeline
 - Basic test suite
-
-> [!CAUTION]
-> Historical market data support is still limited.  
-> The current live exchange-rate client is useful for simple conversion, but future analytics work will require additional data sources such as Frankfurter or yfinance.
 
 ---
 
@@ -115,6 +113,7 @@ README.md
 
 - requests
 - python-dotenv
+- yfinance
 - pandas
 - NumPy
 - matplotlib
@@ -124,6 +123,7 @@ README.md
 ### Current data source
 
 - ExchangeRate API for live currency conversion
+- yfinance for historical market-data retrieval and analytics
 
 ---
 
@@ -136,7 +136,6 @@ Planned or likely future technologies include:
 ### Data sources
 
 - Frankfurter API for historical FX data
-- yfinance for broader market data
 - possible additional market-data APIs later
 
 ### Data processing
@@ -193,7 +192,7 @@ Before running ARGUS locally, make sure you have:
 - Python 3.11 or newer
 - Git
 - pip
-- an ExchangeRate API key for live currency conversion
+- an ExchangeRate API key for live currency conversion. Historical analytics currently use yfinance and do not require an additional API key.
 
 Recommended for development:
 
@@ -342,8 +341,8 @@ The project now has a runnable local Python application, a Tkinter GUI prototype
 
 Current focus:
 
-- start Sprint 2 — Market Analytics & Data Source Expansion
-- improve historical exchange-rate data support
+- continue Sprint 2 — Market Analytics & Data Source Expansion
+- extend historical market-data support beyond the first yfinance client
 - add stronger market metrics
 - expand pandas-based analytics workflows
 - improve dashboard usefulness without adding unnecessary chart noise
