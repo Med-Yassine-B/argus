@@ -24,7 +24,7 @@ def test_get_a_full_timeseries():
     }
     result = prepare_trend_analysis(test_curr, test_start, test_end, test_interval)
 
-    assert not ( result is None)
+    assert result is not None
 
     result_df, result_dict = result
     result_df["date"] = result_df["date"].astype("str")

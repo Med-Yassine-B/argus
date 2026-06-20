@@ -24,7 +24,6 @@ def get_rates(curr1: str, curr2: str):
         resp.raise_for_status()
         payload = resp.json()
 
-
         if payload["result"] == "success":
             data["result"] = "success"
             data["conversion_rate"] = payload["conversion_rate"]
@@ -51,7 +50,6 @@ def get_rates(curr1: str, curr2: str):
     except KeyError:
         print("Unerwartete API-Antwortstruktur.")
         return None
-
 
 
 def check_error(err_type: str) -> None:
