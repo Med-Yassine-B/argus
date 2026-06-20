@@ -1,5 +1,4 @@
 import tkinter as tk
-import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from argus.analytics.charts.trend_chart import create_trendchart
 from argus.services.calculator_service import calc, check_op
@@ -77,27 +76,10 @@ def show_trend() -> None:
     global trend_canvas
     global trend_chart_widget
 
-    mock_dates = {
-        "date": [
-            "2026-06-01",
-            "2026-06-02",
-            "2026-06-03",
-            "2026-06-04",
-            "2026-06-05",
-            "2026-06-06",
-            "2026-06-07",
-            "2026-06-08",
-            "2026-06-09",
-            "2026-06-10",
-            "2026-06-11",
-            "2026-06-12",
-            "2026-06-13",
-            "2026-06-14",
-            "2026-06-15",
-        ]
-    }
-    mock_dates = pd.DataFrame(mock_dates)
-    mock_curr = "USD"
+    curr_symbol = "EURUSD=X"
+    start = "2024-01-01"
+    end = "2025-01-01"
+    interval = "1d"
 
     calc_frame.pack_forget()
     conv_frame.pack_forget()
@@ -108,14 +90,16 @@ def show_trend() -> None:
     content.pack(side="top", fill=tk.BOTH, expand=True)
 
     if trend_canvas is None:
-        fig = create_trendchart(mock_curr, mock_dates)
+        fig = create_trendchart(curr_symbol, start, end, interval)
+        if fig is None:
+            return None
         fig.set_size_inches(7, 4)
 
         trend_canvas = FigureCanvasTkAgg(fig, master=content)
         trend_chart_widget = trend_canvas.get_tk_widget()
 
     if trend_chart_widget is None:
-        return
+        return None
     trend_canvas.draw()
     trend_chart_widget.pack(fill=tk.BOTH, expand=True)
 
