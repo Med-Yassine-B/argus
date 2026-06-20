@@ -44,9 +44,14 @@ jobs:
             echo ""
             echo "Expected format:"
             echo "  feat(#1): add feature"
-            echo "  chore(#5): add a file to .gitignore"
+            echo "  chore(#5): add file to .gitignore"
+            echo "  ci(#3): validate commit messages"
+            echo "  chore(deps): update dependencies"
             echo ""
             echo "Allowed types:"
             echo "  feat, fix, docs, style, refactor, test, chore, ci, build, perf"
+            echo ""
+            echo "Special dependency format:"
+            echo "  chore(deps): message"
             exit 1
           fi
