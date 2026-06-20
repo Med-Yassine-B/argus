@@ -23,7 +23,7 @@ jobs:
       - name: Validate commit message
         shell: bash
         run: |
-          pattern='^((feat|fix|docs|style|refactor|test|chore|ci|build|perf)\(#[0-9]+\): .{1,50}|chore\(deps\): .{1,72})$'
+          pattern='^((feat|fix|docs|style|refactor|test|chore|ci|build|perf)\(#[0-9]+\): .{1,72}|chore\(deps\): .{1,72})$'
           invalid=0
 
           while IFS= read -r commit_message; do
@@ -44,9 +44,14 @@ jobs:
             echo ""
             echo "Expected format:"
             echo "  feat(#1): add feature"
-            echo "  chore(#5): add a file to .gitignore"
+            echo "  chore(#5): add file to .gitignore"
+            echo "  ci(#3): validate commit messages"
+            echo "  chore(deps): update dependencies"
             echo ""
             echo "Allowed types:"
             echo "  feat, fix, docs, style, refactor, test, chore, ci, build, perf"
+            echo ""
+            echo "Special dependency format:"
+            echo "  chore(deps): message"
             exit 1
           fi
