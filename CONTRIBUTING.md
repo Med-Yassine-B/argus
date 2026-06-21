@@ -49,6 +49,30 @@ Bad examples:
 
 ---
 
+## Contribution Expectations
+
+Contributors are expected to keep changes focused, understandable and related to the issue or task.
+
+Please:
+
+- explain your changes clearly
+- be open to review feedback
+- improve your contribution step by step after feedback
+- avoid unrelated rewrites
+- respect the existing architecture unless there is a clear reason to change it
+- do not add scripts that automatically run `git add`, `git commit`, `git push` or create pull requests unless this was discussed first
+
+A contribution may be declined or delayed if it:
+
+- does not fit the current roadmap
+- adds too much complexity too early
+- breaks existing functionality
+- lacks necessary checks or documentation
+- duplicates existing work
+- bypasses the repository workflow
+
+---
+
 ## Branch Workflow
 
 For issue-based work, create your branch from the related GitHub issue when possible.
@@ -181,24 +205,13 @@ For analytics code:
 
 ## Secrets and API Keys
 
-Never commit secrets.
+Never commit secrets, API keys, tokens, passwords, `.env` files or local config files with private data.
 
-Do not commit:
-
-- API keys
-- tokens
-- passwords
-- `.env` files
-- local config files with private data
-
-Use a local `.env` file for secrets.
+Use a local `.env` file for secrets:
 
 ```env
 EXCHANGE_RATE_API_KEY=your_api_key_here
 ```
-
-> [!WARNING]
-> If you accidentally commit a secret, revoke it immediately and inform the maintainer.
 
 ---
 
@@ -216,54 +229,3 @@ Useful documentation includes:
 - troubleshooting notes
 
 Technical notes, research and deeper explanations belong in `docs/`.
-
----
-
-## Contribution Expectations
-
-Contributors are expected to keep changes focused, understandable and related to the issue or task.
-
-Please:
-
-- keep pull requests small and reviewable
-- follow the pull request template
-- explain your changes clearly
-- communicate if you are unsure
-- ask questions when something is unclear
-- be open to review feedback
-- improve your contribution step by step after feedback
-- avoid unrelated rewrites
-- avoid committing secrets, API keys or local machine paths
-- respect the existing architecture unless there is a clear reason to change it
-- do not add scripts that automatically run `git add`, `git commit`, `git push` or create pull requests unless this was discussed first
-
-A contribution may be declined or delayed if it:
-
-- does not fit the current roadmap
-- adds too much complexity too early
-- breaks existing functionality
-- lacks necessary checks or documentation
-- duplicates existing work
-- bypasses the repository workflow
-- does not follow the project’s quality expectations
-
----
-
-## Communication
-
-Please communicate respectfully and constructively.
-
-When giving feedback:
-
-- focus on the code or idea, not the person
-- explain the reason behind suggestions
-- be specific
-- stay open to alternatives
-
-When receiving feedback:
-
-- assume good intent
-- ask questions if something is unclear
-- improve the contribution step by step
-
-All contributors are expected to follow the project’s Code of Conduct.
