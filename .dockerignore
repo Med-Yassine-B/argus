@@ -1,0 +1,19 @@
+//Git Stuff
+.git
+.github
+.githooks
+.gitignore
+
+// Pyhon Stuff
+.venv
+__pycache__
+.pytest_cache
+
+-- Portfolio stuff
+Contributing.md
+Licence.md
+README.md
+CODE_OD_CONDUCT.md
+.ruff_cache
+docs
+.env
