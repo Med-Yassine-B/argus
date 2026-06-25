@@ -52,12 +52,7 @@ Useful for:
 Limitations:
 
 * not a server database
-* not directly supported by SQLGate
 * less suitable for multi-user product features later
-
-Fit for ARGUS:
-
-DuckDB is the best first storage choice because ARGUS currently needs local analytics, not server infrastructure.
 
 ---
 
@@ -80,10 +75,6 @@ Limitations:
 * less analytics-focused than DuckDB
 * not ideal as the main storage layer for historical market data
 * better for app-state than analytical time-series queries
-
-Fit for ARGUS:
-
-SQLite is useful later if ARGUS needs simple app-state storage, but it should not be the first storage choice for market analytics.
 
 ---
 
@@ -113,8 +104,6 @@ Limitations:
 Fit for ARGUS:
 
 PostgreSQL should be introduced later when ARGUS moves toward a server-based or cloud-ready architecture.
-
-It should not be selected first only because SQLGate is available.
 
 ---
 
@@ -317,27 +306,22 @@ Example:
 
 ## Recommended First Implementation Step
 
-The first storage implementation should be small and focused.
+The first storage implementation should not be tied to one specific data provider.
+
+ARGUS currently works with an existing ExchangeRate API client and evaluates broader market data through yfinance.  
+Frankfurter may be added later as a stronger FX-oriented historical data source.
+
+The storage layer should therefore focus on a normalized internal market-data format instead of depending on one API response structure.
 
 Recommended first step:
 
 ```text
-Frankfurter data
+active data client
 → normalize into instruments and price_bars
 → store in DuckDB
 → query with SQL
 → use results for analytics and charts
 ```
-
-Recommended first tables:
-
-```text
-data_sources
-instruments
-price_bars
-```
-
-This gives ARGUS a useful storage foundation without adding unnecessary product-level complexity too early.
 
 ---
 
