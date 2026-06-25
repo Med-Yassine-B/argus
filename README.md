@@ -120,7 +120,7 @@ README.md
 - Tkinter
 - pytest
 
-### Current data source
+### Current data sources
 
 - ExchangeRate API for live currency conversion
 - yfinance for historical market-data retrieval and analytics
@@ -140,8 +140,6 @@ Planned or likely future technologies include:
 
 ### Data processing
 
-- pandas
-- NumPy
 - possibly Polars later for larger datasets
 
 ### Storage
@@ -153,14 +151,10 @@ Planned or likely future technologies include:
 
 ### Visualization and UI
 
-- matplotlib
-- Plotly
 - NiceGUI
 
 ### DevOps and deployment
 
-- GitHub Actions
-- Docker
 - Docker Compose
 - cloud deployment later
 
@@ -192,7 +186,6 @@ Before running ARGUS locally, make sure you have:
 - Python 3.11 or newer
 - Git
 - pip
-- docker
 - an ExchangeRate API key for live currency conversion. Historical analytics currently use yfinance and do not require an additional API key.
 
 Recommended for development:
@@ -256,7 +249,7 @@ pip install -e ".[dev]"
 
 ## API Key Setup
 
-ARGUS currently uses the ExchangeRate API for live currency conversion.
+ARGUS uses the ExchangeRate API for live currency conversion. Historical analytics currently use yfinance and do not require an additional API key.
 
 ### 1. Create an API key
 
@@ -276,17 +269,7 @@ Add your API key:
 EXCHANGE_RATE_API_KEY=your_api_key_here
 ```
 
-### 3. Docker
-
-ARGUS can also be tested inside a minimal Docker container.
-
-Build the Docker image:
-
-```bash
-docker build -t argus .
-```
-
-### 4. Keep secrets private
+### 3. Keep secrets private
 
 The `.env` file must stay local and should never be committed.
 
@@ -338,7 +321,7 @@ python src/legacy/debug_main.py
 
 ## Running Tests
 
-Run the test suite:
+Run the test suite locally:
 
 ```bash
 pytest
