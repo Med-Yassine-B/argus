@@ -30,12 +30,91 @@ The first implementation should focus on historical market data and the basic en
 
 ## Storage Candidates
 
-| Option | Best Use Case | Strengths | Limitations | Fit for ARGUS |
-|---|---|---|---|---|
-| SQLite | Small local app storage | Very simple, serverless, good for settings and watchlists | Less analytics-focused | Good later for app-state, not first choice |
-| DuckDB | Local analytical storage | SQL-based, local, strong for analytical queries, good with Python/notebooks | Not a server database | Best first choice |
-| PostgreSQL | Server/product database | Strong relational database, good for web apps, users, reports and cloud setups | More setup and infrastructure | Very good later |
-| Parquet | Export/archive format | Efficient columnar format for analytical data | Not a database by itself | Useful later, not first storage layer |
+ARGUS should compare storage options based on the current project phase.
+
+The project currently needs local analytical storage, not a full server or cloud database.
+
+### DuckDB
+
+DuckDB is a local analytical database.
+
+It is a strong fit for ARGUS because it supports SQL-based analytics without requiring a database server.
+
+Useful for:
+
+* historical market data
+* local time-series analysis
+* SQL practice
+* Python-based analytics
+* notebook-based exploration
+* dashboard data preparation
+
+Limitations:
+
+* not a server database
+* not directly supported by SQLGate
+* less suitable for multi-user product features later
+
+Fit for ARGUS:
+
+DuckDB is the best first storage choice because ARGUS currently needs local analytics, not server infrastructure.
+
+---
+
+### SQLite
+
+SQLite is a simple local database.
+
+It is strong for small app storage and simple persistence.
+
+Useful for:
+
+* settings
+* small app-state data
+* simple local tables
+* later watchlists
+* lightweight metadata
+
+Limitations:
+
+* less analytics-focused than DuckDB
+* not ideal as the main storage layer for historical market data
+* better for app-state than analytical time-series queries
+
+Fit for ARGUS:
+
+SQLite is useful later if ARGUS needs simple app-state storage, but it should not be the first storage choice for market analytics.
+
+---
+
+### PostgreSQL
+
+PostgreSQL is a server-based relational database.
+
+It is a strong long-term option when ARGUS becomes more product-like.
+
+Useful for:
+
+* server-based storage
+* user-facing features
+* report history
+* watchlists
+* paper-trading history
+* richer metadata
+* cloud-ready architecture
+* SQLGate usage later
+
+Limitations:
+
+* more setup than needed right now
+* requires server or Docker setup
+* adds infrastructure complexity too early
+
+Fit for ARGUS:
+
+PostgreSQL should be introduced later when ARGUS moves toward a server-based or cloud-ready architecture.
+
+It should not be selected first only because SQLGate is available.
 
 ---
 
@@ -43,8 +122,8 @@ The first implementation should focus on historical market data and the basic en
 
 | Option | Meaning | Fit Now | Fit Later |
 |---|---|---:|---:|
-| Local storage | Database or files run locally in the project | High | High |
-| Server database | Database runs as a separate service, e.g. PostgreSQL | Medium | High |
+| Local storage | Database runs locally inside or next to the project | High | High |
+| Server database | Database runs as a separate service, for example PostgreSQL | Medium | High |
 | Cloud storage/database | Managed storage or database in the cloud | Low | High |
 
 ARGUS should start with local storage.
@@ -61,22 +140,69 @@ Server and cloud storage should come later when ARGUS has stronger product featu
 
 ---
 
-## Recommended Decision
+## Recommended First Storage Approach
 
 DuckDB should be the first storage technology for ARGUS.
 
-Why:
+Reason:
 
-* ARGUS currently needs local analytical storage
-* DuckDB is designed for analytical SQL workflows
-* it does not require a database server
+* ARGUS currently needs local analytical storage, not a full server database
+* DuckDB fits historical time-series analysis well
+* it supports SQL-based analytics without requiring a database server
 * it works well with Python and notebook-based exploration
-* it fits historical time-series and market-data analysis
-* it keeps the first implementation manageable
+* it keeps the first storage implementation manageable
+* it can later be replaced or complemented by PostgreSQL if ARGUS becomes more product-like
 
-PostgreSQL should be introduced later when ARGUS moves toward a more product-like architecture.
+The first storage implementation should focus on:
 
-SQLGate should also be kept for that later PostgreSQL phase, not for the first DuckDB phase.
+* historical market data
+* cleaned OHLCV-ready price data
+* source information
+* instruments that ARGUS can analyze
+
+PostgreSQL and SQLGate become more relevant later.
+
+For the first DuckDB phase, the goal is to build a clean local analytics workflow.
+
+---
+
+## Developer Interaction Workflow
+
+ARGUS should use a practical developer workflow for DuckDB.
+
+The goal is to make the database easy to inspect, explore and validate before logic is moved into production code.
+
+### Notebook Exploration
+
+Notebooks should be the main exploration layer.
+
+They are useful for:
+
+* opening the DuckDB database
+* testing SQL queries
+* validating imported data
+* comparing SQL results with pandas calculations
+* exploring metric logic
+* documenting research assumptions
+
+This workflow is especially useful before turning queries into reusable project code.
+
+Notebook exploration should be preferred over a GUI database tool in the first phase.
+
+### DuckDB CLI
+
+The DuckDB CLI should be used for quick database inspection.
+
+It is useful for:
+
+* checking available tables
+* running small SQL queries
+* validating stored records
+* debugging the local database file
+
+The CLI is not the main research environment, but it is useful as a fast inspection tool.
+
+A GUI tool such as DBeaver can be tested if needed, but it should stay optional.
 
 ---
 
@@ -95,3 +221,179 @@ data_sources
 instruments
 price_bars
 ```
+
+### data_sources
+
+Stores where data came from.
+
+Recommended first fields:
+
+```text
+id
+name
+provider_kind
+requires_api_key
+created_at
+updated_at
+```
+
+Example:
+
+| name | provider_kind | requires_api_key |
+|---|---|---:|
+| Frankfurter | fx_rates | false |
+| yfinance | market_prices | false |
+| FRED | macro_data | true |
+
+### instruments
+
+Stores what ARGUS can analyze.
+
+Examples:
+
+* EUR/USD
+* AAPL
+* SPY
+* S&P 500
+* BTC-USD
+
+Recommended first fields:
+
+```text
+id
+symbol
+name
+asset_class
+currency
+exchange
+base_currency
+quote_currency
+created_at
+updated_at
+```
+
+Example:
+
+| symbol | name | asset_class | currency | exchange | base_currency | quote_currency |
+|---|---|---|---|---|---|---|
+| EUR/USD | Euro / US Dollar | fx | null | null | EUR | USD |
+| AAPL | Apple Inc. | stock | USD | NASDAQ | null | null |
+| SPY | SPDR S&P 500 ETF | etf | USD | NYSE Arca | null | null |
+
+### price_bars
+
+Stores historical market data in an OHLCV-ready structure.
+
+Recommended first fields:
+
+```text
+id
+instrument_id
+source_id
+timestamp
+timeframe
+open
+high
+low
+close
+adjusted_close
+volume
+created_at
+updated_at
+```
+
+For Frankfurter, the exchange rate can be stored in `close`.
+
+The other OHLCV fields can stay empty until ARGUS uses data sources that provide them.
+
+Example:
+
+| symbol | timestamp | timeframe | open | high | low | close | adjusted_close | volume |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| EUR/USD | 2024-01-02 | 1d | null | null | null | 1.095 | null | null |
+| AAPL | 2024-01-02 | 1d | 187.15 | 188.44 | 183.89 | 185.64 | 184.25 | 50200000 |
+
+---
+
+## Recommended First Implementation Step
+
+The first storage implementation should be small and focused.
+
+Recommended first step:
+
+```text
+Frankfurter data
+→ normalize into instruments and price_bars
+→ store in DuckDB
+→ query with SQL
+→ use results for analytics and charts
+```
+
+Recommended first tables:
+
+```text
+data_sources
+instruments
+price_bars
+```
+
+This gives ARGUS a useful storage foundation without adding unnecessary product-level complexity too early.
+
+---
+
+## Future Direction
+
+Later sprints can expand the storage layer step by step.
+
+Possible later additions:
+
+| Future Area | Possible Additions |
+|---|---|
+| Better source mapping | source-specific symbols, provider metadata |
+| Watchlists | user-selected instruments |
+| Reports | generated report metadata and history |
+| Macro data | FRED indicators and observations |
+| Paper trading | simulated orders, positions and portfolio history |
+| Server architecture | PostgreSQL |
+| SQL tooling | SQLGate with PostgreSQL |
+| Cloud direction | managed PostgreSQL or cloud storage |
+
+SQLGate should be kept for a later PostgreSQL phase.
+
+It becomes useful when ARGUS moves toward:
+
+* server-based storage
+* stronger database management
+* richer metadata
+* more stable application state
+* user-facing features
+* report history
+* cloud-ready architecture
+
+Additional metadata such as documentation links, terms links or provider governance fields can also become useful later.
+
+For the first DuckDB phase, these details should stay in research documentation instead of the database schema.
+
+---
+
+## Final Recommendation
+
+ARGUS should start with DuckDB as the first local analytics storage layer.
+
+DuckDB fits the current phase best because ARGUS needs local analytical SQL workflows, not a full server database yet.
+
+The first implementation should store historical market data in an OHLCV-ready structure.
+
+The recommended first data model is:
+
+```text
+data_sources
+instruments
+price_bars
+```
+
+Notebook exploration should be the main developer workflow before SQL logic is moved into application code.
+
+The DuckDB CLI can be used for quick inspection.
+
+PostgreSQL and SQLGate should be introduced later when ARGUS moves toward a more product-like or cloud-based architecture.
