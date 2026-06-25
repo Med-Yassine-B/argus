@@ -200,6 +200,7 @@ Recommended for development:
 - VS Code
 - a virtual environment
 - pytest
+- Docker, if you want to run tests in an isolated container environment
 
 > [!NOTE]
 > Runtime dependencies are managed through `pyproject.toml`.
@@ -275,7 +276,17 @@ Add your API key:
 EXCHANGE_RATE_API_KEY=your_api_key_here
 ```
 
-### 3. Keep secrets private
+### 3. Docker
+
+ARGUS can also be tested inside a minimal Docker container.
+
+Build the Docker image:
+
+```bash
+docker build -t argus .
+```
+
+### 4. Keep secrets private
 
 The `.env` file must stay local and should never be committed.
 
@@ -285,7 +296,7 @@ The `.env` file must stay local and should never be committed.
 
 ---
 
-## Running ARGUS
+## Running ARGUS Locally
 
 Start the current Tkinter GUI:
 
@@ -294,6 +305,22 @@ python -m argus.main
 ```
 
 This starts the local ARGUS prototype with calculator, currency conversion and basic analytics views.
+
+## Running Argus in Docker
+
+ARGUS includes a minimal Docker setup for running the test suite in an isolated container environment.
+
+Build the Docker image:
+
+```bash
+docker build -t argus .
+```
+
+Run ARGUS in a container:
+
+```bash
+docker run --rm argus
+```
 
 ### Legacy CLI / Debug Interface
 
@@ -319,18 +346,6 @@ pytest
 
 > [!TIP]
 > Run tests after changing clients, services, validation logic or analytics functions.
-
----
-
-## Docker
-
-ARGUS can also be tested inside a minimal Docker container.
-
-Build the Docker image:
-
-```bash
-docker build -t argus .
-```
 
 ---
 
