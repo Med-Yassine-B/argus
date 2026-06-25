@@ -192,6 +192,7 @@ Before running ARGUS locally, make sure you have:
 - Python 3.11 or newer
 - Git
 - pip
+- docker
 - an ExchangeRate API key for live currency conversion. Historical analytics currently use yfinance and do not require an additional API key.
 
 Recommended for development:
@@ -318,6 +319,18 @@ pytest
 
 > [!TIP]
 > Run tests after changing clients, services, validation logic or analytics functions.
+
+---
+
+## Docker
+
+ARGUS can also be tested inside a minimal Docker container.
+
+Build the Docker image:
+
+```bash
+docker build -t argus .
+```
 
 ---
 
