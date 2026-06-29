@@ -48,8 +48,8 @@ def test_price_bar_can_be_created() -> None:
         close=1.89
     )
 
-    assert pricebar.source == "yfinance"
-    assert pricebar.instrument == "fx_rates"
+    assert pricebar.source == source
+    assert pricebar.instrument == instrument_rate
     assert pricebar.timestamp == date(2026, 1, 1)
     assert pricebar.timeframe == "1D"
     assert pricebar.close == 1.89
