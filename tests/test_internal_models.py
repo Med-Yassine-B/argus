@@ -56,7 +56,7 @@ def test_rate_bar_can_be_created() -> None:
     assert price_bar.source == source
     assert price_bar.instrument == instrument_rate
     assert price_bar.timestamp == date(2026, 1, 1)
-    assert price_bar.timeframe == "1D"
+    assert price_bar.timeframe == "1d"
     assert price_bar.close == 1.89
     assert price_bar.open is None
     assert price_bar.high is None
