@@ -1,28 +1,34 @@
 from dataclasses import dataclass
-from datetime import datetime,date
+from datetime import datetime, date
+
+
 @dataclass
 class DataSource:
     name: str
     provider_kind: str
     requires_api_key: bool = False
 
-@dataclass
-class Instruments:
-    symbol: str
-    name: str
-    assetclass: str
-    currency: str
-    exchange: str
-    base_currency: str
-    quote_currency: str
 
 @dataclass
-class PriveBars:
+class Instrument:
+    symbol: str
+    name: str
+    asset_class: str
+    currency: str | None = None
+    exchange: str | None = None
+    base_currency: str | None = None
+    quote_currency: str | None = None
+
+
+@dataclass
+class PriceBar:
+    source: DataSource
+    instrument: Instrument
     timestamp: date
     timeframe: str
-    open: float
-    high: float
-    low: float
     close: float
-    adjusted_close: float
-    volume: float
+    open: float | None = None
+    high: float | None = None
+    low: float | None = None
+    adjusted_close: float | None = None
+    volume: float | None = None
