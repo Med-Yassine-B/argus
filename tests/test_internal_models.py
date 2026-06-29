@@ -31,7 +31,7 @@ def test_instrument_can_be_created() -> None:
     assert instrument.exchange is None
 
 
-def test_price_bar_can_be_created() -> None:
+def test_rate_bar_can_be_created() -> None:
     source = DataSource(
         name="yfinance",
         provider_kind="fx_rates",
@@ -45,27 +45,27 @@ def test_price_bar_can_be_created() -> None:
         quote_currency="USD",
     )
 
-    pricebar = PriceBar(
+    price_bar = PriceBar(
         source=source,
         instrument=instrument_rate,
         timestamp=date(2026, 1, 1),
-        timeframe="1D",
+        timeframe="1d",
         close=1.89,
     )
 
-    assert pricebar.source == source
-    assert pricebar.instrument == instrument_rate
-    assert pricebar.timestamp == date(2026, 1, 1)
-    assert pricebar.timeframe == "1D"
-    assert pricebar.close == 1.89
-    assert pricebar.open is None
-    assert pricebar.high is None
-    assert pricebar.low is None
-    assert pricebar.adjusted_close is None
-    assert pricebar.volume is None
+    assert price_bar.source == source
+    assert price_bar.instrument == instrument_rate
+    assert price_bar.timestamp == date(2026, 1, 1)
+    assert price_bar.timeframe == "1D"
+    assert price_bar.close == 1.89
+    assert price_bar.open is None
+    assert price_bar.high is None
+    assert price_bar.low is None
+    assert price_bar.adjusted_close is None
+    assert price_bar.volume is None
 
 
-def test_stock_ohlcv_data_can_be_represented_as_price_bar() -> None:
+def test_stock_ohlcv_bar_can_be_created() -> None:
     source = DataSource(
         name="yfinance",
         provider_kind="market_prices",
