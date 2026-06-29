@@ -110,7 +110,7 @@ PostgreSQL should be introduced later when ARGUS moves toward a server-based or 
 ## Local, Server and Cloud Options
 
 | Option | Meaning | Fit Now | Fit Later |
-|---|---|---:|---:|
+| --- | --- | ---: | ---: |
 | Local storage | Database runs locally inside or next to the project | High | High |
 | Server database | Database runs as a separate service, for example PostgreSQL | Medium | High |
 | Cloud storage/database | Managed storage or database in the cloud | Low | High |
@@ -203,7 +203,7 @@ ARGUS should not use a narrow `date | value` table as the main market-data model
 
 That would work for simple exchange rates, but it would become limiting once ARGUS adds stocks, ETFs, indices or broader market APIs.
 
-The first model should focus on three tables:
+The first model should focus on three related entities:
 
 ```text
 data_sources
@@ -211,11 +211,16 @@ instruments
 price_bars
 ```
 
+> [!NOTE]
+> The fields below describe the future database-oriented structure.
+> Technical fields such as `id`, `instrument_id`, `source_id`, `created_at` and `updated_at` are expected to appear in the database layer.
+> Internal Python models may reference related objects directly, for example `source` and `instrument`, before database IDs exist.
+
 ### data_sources
 
 Stores where data came from.
 
-Recommended first fields:
+Recommended first database fields:
 
 ```text
 id
@@ -226,13 +231,13 @@ created_at
 updated_at
 ```
 
-Example:
+Example internal/source records:
 
-| name | provider_kind | requires_api_key |
-|---|---|---:|
-| Frankfurter | fx_rates | false |
-| yfinance | market_prices | false |
-| FRED | macro_data | true |
+| name             | provider_kind | requires_api_key |
+| ---------------- | ------------- | ---------------: |
+| ExchangeRate API | fx_rates      |             true |
+| yfinance         | market_prices |            false |
+| FRED             | macro_data    |             true |
 
 ### instruments
 
@@ -246,7 +251,7 @@ Examples:
 * S&P 500
 * BTC-USD
 
-Recommended first fields:
+Recommended first database fields:
 
 ```text
 id
@@ -261,19 +266,19 @@ created_at
 updated_at
 ```
 
-Example:
+Example instrument records:
 
-| symbol | name | asset_class | currency | exchange | base_currency | quote_currency |
-|---|---|---|---|---|---|---|
-| EUR/USD | Euro / US Dollar | fx | null | null | EUR | USD |
-| AAPL | Apple Inc. | stock | USD | NASDAQ | null | null |
-| SPY | SPDR S&P 500 ETF | etf | USD | NYSE Arca | null | null |
+| symbol  | name             | asset_class | currency | exchange  | base_currency | quote_currency |
+| ------- | ---------------- | ----------- | -------- | --------- | ------------- | -------------- |
+| EUR/USD | Euro / US Dollar | fx          | null     | null      | EUR           | USD            |
+| AAPL    | Apple Inc.       | stock       | USD      | NASDAQ    | null          | null           |
+| SPY     | SPDR S&P 500 ETF | etf         | USD      | NYSE Arca | null          | null           |
 
 ### price_bars
 
 Stores historical market data in an OHLCV-ready structure.
 
-Recommended first fields:
+Recommended first database fields:
 
 ```text
 id
@@ -291,16 +296,16 @@ created_at
 updated_at
 ```
 
-For Frankfurter, the exchange rate can be stored in `close`.
+FX-style exchange-rate data can be represented as a price bar by storing the rate in `close`.
 
 The other OHLCV fields can stay empty until ARGUS uses data sources that provide them.
 
-Example:
+Example price bar records shown with joined source and instrument information for readability:
 
-| symbol | timestamp | timeframe | open | high | low | close | adjusted_close | volume |
-|---|---|---|---:|---:|---:|---:|---:|---:|
-| EUR/USD | 2024-01-02 | 1d | null | null | null | 1.095 | null | null |
-| AAPL | 2024-01-02 | 1d | 187.15 | 188.44 | 183.89 | 185.64 | 184.25 | 50200000 |
+| source   | instrument | timestamp  | timeframe |   open |   high |    low |  close | adjusted_close |   volume |
+| -------- | ---------- | ---------- | --------- | -----: | -----: | -----: | -----: | -------------: | -------: |
+| yfinance | EUR/USD    | 2024-01-02 | 1d        |   null |   null |   null |  1.095 |           null |     null |
+| yfinance | AAPL       | 2024-01-02 | 1d        | 187.15 | 188.44 | 183.89 | 185.64 |         184.25 | 50200000 |
 
 ---
 
@@ -332,7 +337,7 @@ Later sprints can expand the storage layer step by step.
 Possible later additions:
 
 | Future Area | Possible Additions |
-|---|---|
+| --- | --- |
 | Better source mapping | source-specific symbols, provider metadata |
 | Watchlists | user-selected instruments |
 | Reports | generated report metadata and history |
