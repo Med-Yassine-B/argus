@@ -110,7 +110,7 @@ PostgreSQL should be introduced later when ARGUS moves toward a server-based or 
 ## Local, Server and Cloud Options
 
 | Option | Meaning | Fit Now | Fit Later |
-|---|---|---:|---:|
+| --- | --- | ---: | ---: |
 | Local storage | Database runs locally inside or next to the project | High | High |
 | Server database | Database runs as a separate service, for example PostgreSQL | Medium | High |
 | Cloud storage/database | Managed storage or database in the cloud | Low | High |
@@ -309,7 +309,6 @@ Example price bar records shown with joined source and instrument information fo
 
 ---
 
-
 ## Recommended First Implementation Step
 
 The first storage implementation should not be tied to one specific data provider.
@@ -338,7 +337,7 @@ Later sprints can expand the storage layer step by step.
 Possible later additions:
 
 | Future Area | Possible Additions |
-|---|---|
+| --- | --- |
 | Better source mapping | source-specific symbols, provider metadata |
 | Watchlists | user-selected instruments |
 | Reports | generated report metadata and history |
